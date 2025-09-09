@@ -109,41 +109,19 @@ const Contact = () => {
             </div>
           </div>
 
-          {/* Contact Form or CTA */}
+          {/* Quick Contact */}
           <div className="space-y-8">
             <Card className="p-8 bg-card border-border hover:shadow-glow-primary transition-all duration-300">
               <h3 className="text-2xl font-semibold text-foreground mb-6 text-center">
-                프로젝트 문의
+                빠른 연락
               </h3>
               
               <div className="space-y-6">
                 <div className="text-center space-y-4">
-                  <div className="text-6xl mb-4">🚀</div>
+                  <div className="text-6xl mb-4">💬</div>
                   <p className="text-muted-foreground leading-relaxed">
-                    새로운 웹 프로젝트, 협업 제안, 또는 기술적인 질문이 있으시다면 
-                    아래 버튼을 통해 연락해 주세요!
+                    협업이나 프로젝트에 관심이 있으시다면 언제든 연락해 주세요!
                   </p>
-                </div>
-                
-                <div className="space-y-4">
-                  <Button 
-                    size="lg" 
-                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-glow-primary transition-all duration-300 hover:shadow-glow-secondary hover:scale-105"
-                    onClick={() => window.open('mailto:your.email@example.com')}
-                  >
-                    <Mail className="w-5 h-5 mr-2" />
-                    이메일로 연락하기
-                  </Button>
-                  
-                  <Button 
-                    variant="outline" 
-                    size="lg"
-                    className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-105"
-                    onClick={() => window.open('#')}
-                  >
-                    <MessageCircle className="w-5 h-5 mr-2" />
-                    카카오톡으로 문의
-                  </Button>
                 </div>
               </div>
             </Card>
