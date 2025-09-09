@@ -19,7 +19,7 @@ const Hero = () => {
           <h1 className="text-5xl md:text-7xl font-bold text-foreground">
             안녕하세요, 
             <span className="bg-gradient-primary bg-clip-text text-transparent block mt-2">
-              개발자 입니다
+              mini 입니다
             </span>
           </h1>
           

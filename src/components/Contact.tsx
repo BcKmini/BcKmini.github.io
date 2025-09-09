@@ -50,7 +50,7 @@ const Contact = () => {
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-            Let's <span className="bg-gradient-primary bg-clip-text text-transparent">Connect</span>
+            <span className="bg-gradient-primary bg-clip-text text-transparent">Contact</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             새로운 프로젝트나 협업 기회에 대해 이야기하고 싶으시다면 

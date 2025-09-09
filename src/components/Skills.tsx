@@ -72,70 +72,30 @@ const Skills = () => {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {skillCategories.map((category, index) => (
             <Card 
               key={category.title}
-              className="p-8 bg-card border-border hover:shadow-glow-primary transition-all duration-300 hover:scale-105 hover:-translate-y-2"
+              className="p-6 bg-card border-border hover:shadow-glow-primary transition-all duration-300 hover:scale-105 hover:-translate-y-2"
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              <div className="flex items-start gap-4 mb-6">
-                <div className="text-4xl">{category.icon}</div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-xl font-semibold text-foreground">
-                      {category.title}
-                    </h3>
-                    <Badge 
-                      className={`${category.level === 'Advanced' ? 'bg-primary' : 'bg-secondary'} text-white`}
-                    >
-                      {category.level}
-                    </Badge>
-                  </div>
-                  <p className="text-muted-foreground text-sm mb-4">
-                    {category.description}
-                  </p>
+              <div className="text-center">
+                <div className="text-4xl mb-4">{category.icon}</div>
+                <h3 className="text-lg font-semibold text-foreground mb-4">
+                  {category.title}
+                </h3>
+                
+                {/* Skill Icons for this category */}
+                <div className="flex justify-center">
+                  <img 
+                    src={`https://skillicons.dev/icons?i=${category.iconSet}&perline=4`}
+                    alt={`${category.title} icons`}
+                    className="hover:scale-105 transition-transform duration-300"
+                  />
                 </div>
-              </div>
-              
-              {/* Skill Icons for this category */}
-              <div className="mb-4 flex justify-center">
-                <img 
-                  src={`https://skillicons.dev/icons?i=${category.iconSet}&perline=6`}
-                  alt={`${category.title} icons`}
-                  className="hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              
-              <div className="flex flex-wrap gap-2 justify-center">
-                {category.skills.map((skill) => (
-                  <Badge 
-                    key={skill}
-                    variant="secondary"
-                    className="bg-secondary hover:bg-primary hover:text-primary-foreground transition-colors duration-200 text-xs"
-                  >
-                    {skill}
-                  </Badge>
-                ))}
               </div>
             </Card>
           ))}
-        </div>
-
-        <div className="mt-16 text-center">
-          <p className="text-muted-foreground mb-8">
-            새로운 기술을 배우는 것을 좋아하며, 항상 최신 트렌드를 따라갑니다
-          </p>
-          <div className="flex flex-wrap justify-center gap-3">
-            {["AI/ML", "Web3", "Mobile", "Cloud", "DevOps"].map((area) => (
-              <Badge 
-                key={area}
-                className="bg-primary text-primary-foreground hover:shadow-glow-primary transition-all duration-200 hover:scale-110"
-              >
-                {area} 학습 중
-              </Badge>
-            ))}
-          </div>
         </div>
       </div>
     </section>

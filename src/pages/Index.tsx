@@ -1,21 +1,29 @@
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Skills from "@/components/Skills";
-import GitHubStats from "@/components/GitHubStats";
 import Projects from "@/components/Projects";
-import Vision from "@/components/Vision";
 import Contact from "@/components/Contact";
+import Navigation from "@/components/Navigation";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
-      <Hero />
-      <About />
-      <Skills />
-      <GitHubStats />
-      <Projects />
-      <Vision />
-      <Contact />
+      <Navigation />
+      <section id="hero">
+        <Hero />
+      </section>
+      <section id="about">
+        <About />
+      </section>
+      <section id="skills">
+        <Skills />
+      </section>
+      <section id="projects">
+        <Projects />
+      </section>
+      <section id="contact">
+        <Contact />
+      </section>
       
       {/* Footer */}
       <footer className="py-8 px-4 bg-card border-t border-border">
