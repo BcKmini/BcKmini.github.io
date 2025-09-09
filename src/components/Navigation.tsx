@@ -4,11 +4,11 @@ const Navigation = () => {
   const [activeSection, setActiveSection] = useState("hero");
 
   const sections = [
-    { id: "hero", label: "홈", icon: "🏠" },
-    { id: "about", label: "소개", icon: "👋" },
-    { id: "skills", label: "기술", icon: "⚡" },
-    { id: "projects", label: "프로젝트", icon: "💼" },
-    { id: "contact", label: "연락처", icon: "📬" }
+    { id: "hero", label: "Home", icon: "" },
+    { id: "about", label: "About", icon: "" },
+    { id: "skills", label: "Skills", icon: "" },
+    { id: "projects", label: "Projects", icon: "" },
+    { id: "contact", label: "Contact", icon: "" }
   ];
 
   useEffect(() => {

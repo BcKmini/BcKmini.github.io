@@ -8,63 +8,66 @@ const About = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
             About <span className="bg-gradient-primary bg-clip-text text-transparent">Me</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            열정적인 개발자로서 끊임없이 학습하고 성장하며, 
-            사용자 중심의 솔루션을 만들어갑니다.
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            I am an aspiring researcher passionate about 
+            <span className="text-primary font-semibold"> multi-modal understanding, generative AI, and robotics</span>. 
+            My long-term goal is to contribute to 
+            <span className="text-primary font-semibold"> human–AI symbiosis</span> through 
+            interpretable, adaptive, and physically grounded intelligence.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-12 items-start">
           <div className="space-y-6">
             <div className="space-y-4">
               <h3 className="text-2xl font-semibold text-foreground">
-                개발에 대한 철학
+                Research Philosophy
               </h3>
               <p className="text-muted-foreground leading-relaxed">
-                좋은 코드는 단순히 작동하는 것이 아니라, 읽기 쉽고 유지보수가 가능하며 
-                확장성이 있어야 한다고 믿습니다. 사용자의 니즈를 깊이 이해하고, 
-                최신 기술을 활용하여 효율적이고 아름다운 솔루션을 만드는 것이 목표입니다.
+                I believe that artificial intelligence should not only excel in benchmark 
+                performance but also align with human values, adaptability, and real-world 
+                applicability. My focus is on bridging 
+                <span className="font-semibold"> perception and action</span> 
+                by combining vision, language, and sensor fusion with generative models.
               </p>
             </div>
 
             <div className="space-y-4">
               <h3 className="text-2xl font-semibold text-foreground">
-                지속적인 학습
+                Why CVLAB
               </h3>
               <p className="text-muted-foreground leading-relaxed">
-                빠르게 변화하는 기술 트렌드에 발맞춰 새로운 도구와 프레임워크를 
-                학습하며, 오픈소스 프로젝트에 기여하고 개발 커뮤니티와 
-                지식을 공유하는 것을 즐깁니다.
+                CVLAB’s pioneering research in 
+                <span className="font-semibold"> multi-modal understanding</span>, 
+                <span className="font-semibold"> diffusion-based generative AI</span>, 
+                and <span className="font-semibold">robot learning</span> 
+                resonates with my vision. 
+                I aim to grow as a researcher by contributing to projects on 
+                <span className="font-semibold"> vision-language models, 3D understanding, 
+                and AI for human–robot collaboration</span>.
               </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6">
             <Card className="p-6 bg-card border-border hover:shadow-glow-secondary transition-all duration-300 hover:scale-105">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-2">3+</div>
-                <div className="text-muted-foreground">년 경험</div>
+              <div>
+                <h4 className="text-lg font-semibold mb-2">🔬 Interests</h4>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  Multi-modal learning (vision, language, sensor fusion), 
+                  generative AI, 3D scene understanding, and robot policy learning.
+                </p>
               </div>
             </Card>
-            
+
             <Card className="p-6 bg-card border-border hover:shadow-glow-secondary transition-all duration-300 hover:scale-105">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-2">50+</div>
-                <div className="text-muted-foreground">완료 프로젝트</div>
-              </div>
-            </Card>
-            
-            <Card className="p-6 bg-card border-border hover:shadow-glow-secondary transition-all duration-300 hover:scale-105">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-2">15+</div>
-                <div className="text-muted-foreground">사용 기술</div>
-              </div>
-            </Card>
-            
-            <Card className="p-6 bg-card border-border hover:shadow-glow-secondary transition-all duration-300 hover:scale-105">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-2">100%</div>
-                <div className="text-muted-foreground">열정</div>
+              <div>
+                <h4 className="text-lg font-semibold mb-2">🎯 Goal</h4>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  To develop AI systems that can perceive, reason, and act in 
+                  complex real-world environments while fostering 
+                  human–AI collaboration.
+                </p>
               </div>
             </Card>
           </div>

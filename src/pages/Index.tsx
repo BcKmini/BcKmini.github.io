@@ -29,10 +29,7 @@ const Index = () => {
       <footer className="py-8 px-4 bg-card border-t border-border">
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-muted-foreground">
-            © 2024 Developer Portfolio. Made with ❤️ using React & Tailwind CSS
-          </p>
-          <p className="text-muted-foreground text-sm mt-2">
-            "Code is poetry, and every bug is a haiku waiting to be debugged." 🐛✨
+            © 2025 Developer Portfolio. BckMini
           </p>
         </div>
       </footer>

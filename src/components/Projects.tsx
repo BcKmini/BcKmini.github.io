@@ -1,112 +1,146 @@
+import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Github, Star, GitFork, Eye } from "lucide-react";
+import { Github, Star, GitFork, Eye } from "lucide-react";
+
+type Project = {
+  title: string;
+  description: string;
+  image: string;
+  tech: string[];
+  github: string;
+  demo: string;
+  githubRepo: string; // "owner/repo"
+  stats: { stars: number; forks: number; watchers: number };
+  featured: boolean;
+  status: string;
+  category: string;
+};
 
 const Projects = () => {
-  const projects = [
+  const [projects, setProjects] = useState<Project[]>([
+    // 🔹 Other Projects (최신순)
     {
-      title: "E-Commerce Platform",
-      description: "React와 Node.js로 구축한 풀스택 이커머스 플랫폴입니다. 사용자 인증, 결제 시스템, 관리자 대시보드를 포함합니다.",
-      image: "🛒",
-      tech: ["React", "Node.js", "MongoDB", "Stripe"],
-      // TODO: 실제 GitHub 저장소 URL로 교체하세요
-      // 예시: github: "https://github.com/yourusername/ecommerce-platform",
-      github: "https://github.com/yourusername/ecommerce-platform", // ← 본인의 실제 GitHub 저장소 URL로 변경
-      demo: "https://your-ecommerce-demo.vercel.app", // ← 실제 배포 URL로 변경
-      stats: { stars: 24, forks: 8, watchers: 12 },
-      featured: true,
-      status: "완료", // 상태: 완료, 진행중, 계획중
-      category: "Full Stack"
-    },
-    {
-      title: "Task Management App",
-      description: "팀 협업을 위한 태스크 관리 애플리케이션입니다. 실시간 알림과 칸반 보드 기능을 제공합니다.",
-      image: "📋",
-      tech: ["Vue.js", "Firebase", "Tailwind CSS"],
-      // TODO: 실제 GitHub 저장소 URL로 교체하세요
-      github: "https://github.com/yourusername/task-manager", // ← 본인의 실제 GitHub 저장소 URL로 변경
-      demo: "https://your-taskmanager-demo.vercel.app", // ← 실제 배포 URL로 변경
-      stats: { stars: 15, forks: 3, watchers: 8 },
-      featured: true,
-      status: "진행중",
-      category: "Frontend"
-    },
-    {
-      title: "Portfolio Website", 
-      description: "반응형 포트폴리오 웹사이트로 SEO 최적화와 다크모드를 지원합니다.",
-      image: "💼",
-      tech: ["Next.js", "TypeScript", "Framer Motion"],
-      // TODO: 실제 GitHub 저장소 URL로 교체하세요
-      github: "https://github.com/yourusername/portfolio", // ← 본인의 실제 GitHub 저장소 URL로 변경
-      demo: "https://your-portfolio.com", // ← 실제 배포 URL로 변경
-      stats: { stars: 32, forks: 12, watchers: 20 },
-      featured: false,
-      status: "완료",
-      category: "Frontend"
-    },
-    {
-      title: "Weather Dashboard",
-      description: "실시간 날씨 정보를 제공하는 대시보드 애플리케이션입니다. 차트와 지도 시각화를 포함합니다.",
-      image: "🌤️",
-      tech: ["React", "Chart.js", "OpenWeather API"],
-      // TODO: 실제 GitHub 저장소 URL로 교체하세요
-      github: "https://github.com/yourusername/weather-dashboard", // ← 본인의 실제 GitHub 저장소 URL로 변경
-      demo: "https://your-weather-app.vercel.app", // ← 실제 배포 URL로 변경
-      stats: { stars: 18, forks: 6, watchers: 10 },
-      featured: false,
-      status: "완료",
-      category: "Frontend"
-    },
-    {
-      title: "Blog Platform",
-      description: "마크다운 지원과 댓글 시스템을 갖춘 개인 블로그 플랫폼입니다.",
+      title: "NoteFlow",
+      description:
+        "An AI-powered learning platform that provides real-time speech-to-text notes, automatic summarization, and quiz generation. Graduation project currently in progress.",
       image: "📝",
-      tech: ["Gatsby", "GraphQL", "Netlify CMS"],
-      // TODO: 실제 GitHub 저장소 URL로 교체하세요
-      github: "https://github.com/yourusername/blog-platform", // ← 본인의 실제 GitHub 저장소 URL로 변경
-      demo: "https://your-blog.netlify.app", // ← 실제 배포 URL로 변경
-      stats: { stars: 9, forks: 2, watchers: 5 },
+      tech: ["React", "Vite", "Tailwind", "TypeScript", "FastAPI", "MySQL", "Electron", "OpenCV"],
+      github: "https://github.com/KKU-NoteFlow", // 수정 필요
+      demo: "https://your-noteflow-demo.vercel.app", // 수정 필요
+      githubRepo: "yourusername/noteflow", // 수정 필요
+      stats: { stars: 0, forks: 0, watchers: 0 },
       featured: false,
-      status: "완료",
-      category: "Full Stack"
+      status: "In Progress",
+      category: "AI/EdTech",
     },
     {
-      title: "Chat Application",
-      description: "Socket.io를 활용한 실시간 채팅 애플리케이션입니다. 파일 공유와 이모지 반응을 지원합니다.",
-      image: "💬",
-      tech: ["Socket.io", "Express", "React"],
-      // TODO: 실제 GitHub 저장소 URL로 교체하세요
-      github: "https://github.com/yourusername/chat-app", // ← 본인의 실제 GitHub 저장소 URL로 변경
-      demo: "https://your-chat-app.herokuapp.com", // ← 실제 배포 URL로 변경
-      stats: { stars: 21, forks: 7, watchers: 14 },
+      title: "Wildlife Observation Service",
+      description:
+        "A FastAPI + MySQL based system for collecting wildlife observations (photo, video, audio). Integrates Kakao Map and OpenWeather API for real-time context such as location, altitude, and weather.",
+      image: "🐦",
+      tech: ["FastAPI", "MySQL", "React", "Vite", "OpenWeather API", "Kakao Map API"],
+      github: "https://github.com/BcKmini/Collection-bird", // 수정 필요
+      demo: "https://your-wildlife-demo.vercel.app", // 수정 필요
+      githubRepo: "yourusername/wildlife-observation", // 수정 필요
+      stats: { stars: 0, forks: 0, watchers: 0 },
       featured: false,
-      status: "진행중",
-      category: "Backend"
-    }
-  ];
+      status: "Completed",
+      category: "AI/Environment",
+    },
+    {
+      title: "Integrated Medical Management Service",
+      description:
+        "A PHP & MySQL based platform integrating hospitals, pharmacies, and patients. Features include digital prescriptions, medical facility search (Kakao Map + Public Data), and review system.",
+      image: "🏥",
+      tech: ["PHP", "MySQL", "HTML", "CSS", "JavaScript", "Kakao Map API", "Public Data API"],
+      github: "https://github.com/BcKmini/Database", // 수정 필요
+      demo: "https://your-medical-service-demo.vercel.app", // 수정 필요
+      githubRepo: "yourusername/medical-service", // 수정 필요
+      stats: { stars: 0, forks: 0, watchers: 0 },
+      featured: false,
+      status: "Completed",
+      category: "Healthcare",
+    },
 
-  const featuredProjects = projects.filter(p => p.featured);
-  const otherProjects = projects.filter(p => !p.featured);
+    // 🔹 Featured Projects
+    {
+      title: "Cheonan Urban Regeneration Chatbot",
+      description:
+        "A custom AI chatbot service for the Cheonan Urban Regeneration Support Center. Helps citizens and visitors quickly access information such as greetings, organization, projects, directions, and announcements.",
+      image: "🤖",
+      tech: ["React", "FastAPI", "Redis", "LangChain", "OpenAI API"],
+      github: "https://github.com/KT-TeamProject-11",
+      demo: "https://cheonan-chatbot-demo.vercel.app",
+      githubRepo: "bckmini/cheonan-chatbot",
+      stats: { stars: 0, forks: 0, watchers: 0 },
+      featured: true,
+      status: "Completed",
+      category: "Public Sector",
+    },
+    {
+      title: "Video Timeline Detection Service",
+      description:
+        "A FastAPI-based service developed for the National Institute of Ecology. Detects roe deer in uploaded observation videos using YOLO11, marks timelines, and exports clips/data (CSV/JSON/MP4).",
+      image: "🎥",
+      tech: ["FastAPI", "MySQL", "YOLO11", "OpenCV", "FFmpeg"],
+      github: "https://github.com/BcKmini/CCTV_Timeline",
+      demo: "https://video-timeline-demo.vercel.app",
+      githubRepo: "bckmini/video-timeline-service",
+      stats: { stars: 0, forks: 0, watchers: 0 },
+      featured: true,
+      status: "Completed",
+      category: "AI/Computer Vision",
+    },
+  ]);
 
-  // GitHub 링크 클릭 핸들러 함수
+  // 🔹 Fetch GitHub Stats
+  useEffect(() => {
+    const fetchGitHubStats = async () => {
+      const updated = await Promise.all(
+        projects.map(async (project) => {
+          try {
+            const res = await fetch(`https://api.github.com/repos/${project.githubRepo}`);
+            if (!res.ok) throw new Error("GitHub API error");
+            const data = await res.json();
+            return {
+              ...project,
+              stats: {
+                stars: data.stargazers_count || 0,
+                forks: data.forks_count || 0,
+                watchers: data.subscribers_count || 0,
+              },
+            };
+          } catch (err) {
+            console.error(`Failed to fetch stats for ${project.githubRepo}`, err);
+            return project;
+          }
+        })
+      );
+      setProjects(updated);
+    };
+
+    fetchGitHubStats();
+  }, []);
+
+  const featuredProjects = projects.filter((p) => p.featured);
+  const otherProjects = projects.filter((p) => !p.featured);
+
   const handleGitHubClick = (githubUrl: string) => {
-    // 새 탭에서 GitHub 저장소 열기
-    window.open(githubUrl, '_blank', 'noopener,noreferrer');
-  };
-
-  // 데모 링크 클릭 핸들러 함수
-  const handleDemoClick = (demoUrl: string) => {
-    // 새 탭에서 라이브 데모 열기
-    window.open(demoUrl, '_blank', 'noopener,noreferrer');
+    window.open(githubUrl, "_blank", "noopener,noreferrer");
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case '완료': return 'bg-green-500';
-      case '진행중': return 'bg-yellow-500';
-      case '계획중': return 'bg-blue-500';
-      default: return 'bg-gray-500';
+      case "Completed":
+        return "bg-green-500";
+      case "In Progress":
+        return "bg-yellow-500";
+      case "Planned":
+        return "bg-blue-500";
+      default:
+        return "bg-gray-500";
     }
   };
 
@@ -118,15 +152,14 @@ const Projects = () => {
             Featured <span className="bg-gradient-primary bg-clip-text text-transparent">Projects</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            다양한 기술을 활용하여 개발한 프로젝트들입니다. 
-            각 프로젝트는 실제 문제를 해결하기 위해 만들어졌습니다.
+            A selection of projects showcasing my experience in AI, full-stack development, and public sector solutions.
           </p>
         </div>
 
         {/* Featured Projects */}
         <div className="grid lg:grid-cols-2 gap-8 mb-16">
-          {featuredProjects.map((project, index) => (
-            <Card 
+          {featuredProjects.map((project) => (
+            <Card
               key={project.title}
               className="overflow-hidden bg-card border-border hover:shadow-glow-primary transition-all duration-300 hover:scale-105 group"
             >
@@ -144,14 +177,12 @@ const Projects = () => {
                     </Badge>
                   </div>
                 </div>
-                
+
                 <h3 className="text-2xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors duration-200">
                   {project.title}
                 </h3>
-                
-                <p className="text-muted-foreground mb-6 leading-relaxed">
-                  {project.description}
-                </p>
+
+                <p className="text-muted-foreground mb-6 leading-relaxed">{project.description}</p>
 
                 {/* GitHub Stats */}
                 <div className="flex items-center gap-4 mb-6 text-muted-foreground text-sm">
@@ -168,10 +199,10 @@ const Projects = () => {
                     <span>{project.stats.watchers}</span>
                   </div>
                 </div>
-                
+
                 <div className="flex flex-wrap gap-2 mb-6">
                   {project.tech.map((tech) => (
-                    <Badge 
+                    <Badge
                       key={tech}
                       variant="secondary"
                       className="bg-secondary hover:bg-primary hover:text-primary-foreground transition-colors duration-200"
@@ -180,23 +211,10 @@ const Projects = () => {
                     </Badge>
                   ))}
                 </div>
-                
+
                 <div className="flex gap-3">
-                  {/* 
-                    GitHub 링크 버튼 - 클릭 시 실제 GitHub 저장소로 이동
-                    사용법: 위의 projects 배열에서 각 프로젝트의 github 필드를 
-                    본인의 실제 GitHub 저장소 URL로 변경하세요
-                  */}
-                  <Button 
-                    size="sm" 
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground"
-                    onClick={() => handleDemoClick(project.demo)}
-                  >
-                    <ExternalLink className="w-4 h-4 mr-2" />
-                    Live Demo
-                  </Button>
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     size="sm"
                     className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
                     onClick={() => handleGitHubClick(project.github)}
@@ -215,10 +233,10 @@ const Projects = () => {
           <h3 className="text-3xl font-bold text-foreground mb-8 text-center">
             Other <span className="bg-gradient-primary bg-clip-text text-transparent">Projects</span>
           </h3>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {otherProjects.map((project, index) => (
-              <Card 
+            {otherProjects.map((project) => (
+              <Card
                 key={project.title}
                 className="p-6 bg-card border-border hover:shadow-glow-secondary transition-all duration-300 hover:scale-105 group"
               >
@@ -230,16 +248,16 @@ const Projects = () => {
                     {project.status}
                   </Badge>
                 </div>
-                
+
                 <h4 className="text-xl font-semibold text-foreground mb-3 group-hover:text-primary transition-colors duration-200">
                   {project.title}
                 </h4>
-                
+
                 <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
                   {project.description}
                 </p>
 
-                {/* GitHub Stats for smaller cards */}
+                {/* GitHub Stats */}
                 <div className="flex items-center gap-3 mb-4 text-muted-foreground text-xs">
                   <div className="flex items-center gap-1">
                     <Star className="w-3 h-3" />
@@ -250,10 +268,10 @@ const Projects = () => {
                     <span>{project.stats.forks}</span>
                   </div>
                 </div>
-                
+
                 <div className="flex flex-wrap gap-1 mb-4">
                   {project.tech.map((tech) => (
-                    <Badge 
+                    <Badge
                       key={tech}
                       variant="secondary"
                       className="text-xs bg-secondary hover:bg-primary hover:text-primary-foreground transition-colors duration-200"
@@ -262,24 +280,11 @@ const Projects = () => {
                     </Badge>
                   ))}
                 </div>
-                
+
                 <div className="flex gap-2">
-                  {/* 
-                    작은 프로젝트 카드의 버튼들도 동일하게 GitHub 링크 연결
-                    handleDemoClick과 handleGitHubClick 함수 사용
-                  */}
-                  <Button 
-                    size="sm" 
-                    variant="outline" 
-                    className="flex-1 text-xs"
-                    onClick={() => handleDemoClick(project.demo)}
-                  >
-                    <ExternalLink className="w-3 h-3 mr-1" />
-                    Demo
-                  </Button>
-                  <Button 
-                    size="sm" 
-                    variant="outline" 
+                  <Button
+                    size="sm"
+                    variant="outline"
                     className="flex-1 text-xs"
                     onClick={() => handleGitHubClick(project.github)}
                   >
@@ -292,15 +297,16 @@ const Projects = () => {
           </div>
         </div>
 
+        {/* GitHub Profile Button */}
         <div className="text-center mt-12">
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             size="lg"
             className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-            onClick={() => handleGitHubClick('https://github.com/yourusername')} // ← 본인의 GitHub 프로필 URL로 변경
+            onClick={() => handleGitHubClick("https://github.com/bckmini")}
           >
             <Github className="w-5 h-5 mr-2" />
-            GitHub에서 더 많은 프로젝트 보기
+            View more projects on GitHub
           </Button>
         </div>
       </div>

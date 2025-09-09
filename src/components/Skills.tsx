@@ -24,8 +24,8 @@ const Skills = () => {
     },
     {
       title: "Framework",
-      iconSet: "electron,jupyter,tensorflow,pytorch",
-      skills: ["Electron", "Jupyter", "TensorFlow", "PyTorch"]
+      iconSet: "electron,fastapi,tensorflow,pytorch",
+      skills: ["Electron", "fastapi", "TensorFlow", "PyTorch"]
     },
     {
       title: "DevOps",
@@ -41,9 +41,7 @@ const Skills = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
             Technical <span className="bg-gradient-primary bg-clip-text text-transparent">Stack</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            다양한 기술 스택을 활용한 풀스택 개발 역량
-          </p>
+         
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-5xl mx-auto">
