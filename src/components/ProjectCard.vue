@@ -2,50 +2,55 @@
 defineProps({ project: { type: Object, required: true } });
 const emit = defineEmits(["open"]);
 
-function onMove(e) {
-  const card = e.currentTarget;
-  const rect = card.getBoundingClientRect();
-  card.style.setProperty("--mx", `${e.clientX - rect.left}px`);
-  card.style.setProperty("--my", `${e.clientY - rect.top}px`);
-}
-
 function onImgError(e) {
   e.target.remove();
+}
+
+function openLink(e, url) {
+  e.stopPropagation();
+  window.open(url, "_blank", "noopener");
 }
 </script>
 
 <template>
-  <article
-    class="proj-card"
+  <li
+    class="console-row"
     tabindex="0"
     role="button"
     :aria-haspopup="'dialog'"
     @click="emit('open', project)"
     @keydown.enter.prevent="emit('open', project)"
     @keydown.space.prevent="emit('open', project)"
-    @mousemove="onMove"
   >
-    <div class="proj-thumb" :data-label="project.label" :style="!project.thumb ? { background: project.thumbGradient } : {}">
-      <span>{{ project.tag }}</span>
-      <img v-if="project.thumb" :src="project.thumb" alt="" loading="lazy" @error="onImgError" />
+    <span class="cr-accent"></span>
 
-      <div class="svc-badge">
-        <span class="svc-dot"></span>
-        <span class="svc-name">{{ project.service }}</span>
-      </div>
-      <span class="svc-status-badge">exited</span>
+    <div class="cr-thumb" :style="!project.thumb ? { background: project.thumbGradient } : {}">
+      <img v-if="project.thumb" :src="project.thumb" alt="" loading="lazy" @error="onImgError" />
+      <span v-else class="cr-thumb-fallback">{{ project.num }}</span>
     </div>
-    <div class="proj-body">
-      <div class="proj-card-top">
-        <span class="proj-num">{{ project.num }}</span>
-        <span class="proj-open">＋</span>
+
+    <div class="cr-main">
+      <div class="cr-head">
+        <span class="svc-dot"></span>
+        <span class="cr-name">{{ project.service }}</span>
+        <span class="cr-status">active (exited)</span>
       </div>
-      <h3>{{ project.title }}</h3>
-      <p class="proj-card-meta">{{ project.meta }}</p>
-      <p class="proj-card-desc">{{ project.desc }}</p>
-      <ul class="chips">
+      <h3 class="cr-title">{{ project.title }}</h3>
+      <p class="cr-tags">
+        <span><b>period</b> {{ project.meta.split(" · ")[0] }}</span>
+        <span><b>role</b> {{ project.meta.split(" · ")[1] }}</span>
+        <span v-if="project.meta.split(' · ')[2]"><b>team</b> {{ project.meta.split(" · ")[2] }}</span>
+      </p>
+      <p class="cr-desc">{{ project.desc }}</p>
+      <ul class="chips cr-chips">
         <li v-for="c in project.chips" :key="c">{{ c }}</li>
       </ul>
+
+      <div class="cr-foot">
+        <span class="cr-metric" v-if="project.stats[0]"><b>{{ project.stats[0].value }}</b>{{ project.stats[0].label }}</span>
+        <button type="button" class="cr-link" @click="openLink($event, project.link)">source ↗</button>
+        <span class="cr-view">자세히 보기 <span class="proj-open">＋</span></span>
+      </div>
     </div>
-  </article>
+  </li>
 </template>

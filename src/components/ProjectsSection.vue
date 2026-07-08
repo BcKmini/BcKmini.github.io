@@ -11,10 +11,22 @@ const active = ref(null);
 <template>
   <div class="section" v-reveal data-snap-section data-key="projects" data-label="프로젝트">
     <h2 class="sec"><span>02.</span> 프로젝트</h2>
-    <p class="sec-sub">카드를 누르면 사용 기술과 문제 해결 과정을 자세히 볼 수 있습니다.</p>
 
-    <div class="proj-grid">
-      <ProjectCard v-for="p in projects" :key="p.id" :project="p" @open="active = $event" />
+    <div class="term-window">
+      <div class="term-bar">
+        <span class="term-dot term-dot-red"></span>
+        <span class="term-dot term-dot-amber"></span>
+        <span class="term-dot term-dot-green"></span>
+        <span class="term-bar-title">cloud services list --region=all</span>
+      </div>
+      <div class="console-head">
+        <span class="ch-svc">SERVICE</span>
+        <span class="ch-meta">DETAILS</span>
+        <span class="ch-status">STATUS</span>
+      </div>
+      <ul class="console-list">
+        <ProjectCard v-for="p in projects" :key="p.id" :project="p" @open="active = $event" />
+      </ul>
     </div>
   </div>
 
