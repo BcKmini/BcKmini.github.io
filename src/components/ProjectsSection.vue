@@ -9,7 +9,7 @@ const active = ref(null);
 </script>
 
 <template>
-  <div class="section" v-reveal>
+  <div class="section" v-reveal data-snap-section data-key="projects" data-label="프로젝트">
     <h2 class="sec"><span>02.</span> 프로젝트</h2>
     <p class="sec-sub">카드를 누르면 사용 기술과 문제 해결 과정을 자세히 볼 수 있습니다.</p>
 

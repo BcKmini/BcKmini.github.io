@@ -4,7 +4,7 @@ import { vReveal } from "../composables/useReveal";
 </script>
 
 <template>
-  <div class="section" v-reveal>
+  <div class="section" v-reveal data-snap-section data-key="awards" data-label="수상">
     <h2 class="sec"><span>04.</span> 수상 및 공모전</h2>
     <ul class="rows">
       <li v-for="a in awards" :key="a.title" class="row">

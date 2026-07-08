@@ -1,22 +1,39 @@
 <script setup>
-import { onMounted, onUnmounted, computed } from "vue";
+import { onMounted, onUnmounted, computed, ref, watch } from "vue";
 import NoteflowDiagram from "./diagrams/NoteflowDiagram.vue";
+import NoteflowErdDiagram from "./diagrams/NoteflowErdDiagram.vue";
 import CctvDiagram from "./diagrams/CctvDiagram.vue";
+import CctvErdDiagram from "./diagrams/CctvErdDiagram.vue";
 import HodongDiagram from "./diagrams/HodongDiagram.vue";
+import HodongPipelineDiagram from "./diagrams/HodongPipelineDiagram.vue";
 import BirdDiagram from "./diagrams/BirdDiagram.vue";
+import BirdErdDiagram from "./diagrams/BirdErdDiagram.vue";
 import MedicalDiagram from "./diagrams/MedicalDiagram.vue";
+import MedicalErdDiagram from "./diagrams/MedicalErdDiagram.vue";
 
 const props = defineProps({ project: { type: Object, required: true } });
 const emit = defineEmits(["close"]);
 
-const diagrams = {
+const diagramComponents = {
   noteflow: NoteflowDiagram,
+  noteflowErd: NoteflowErdDiagram,
   cctv: CctvDiagram,
+  cctvErd: CctvErdDiagram,
   hodong: HodongDiagram,
+  hodongPipeline: HodongPipelineDiagram,
   bird: BirdDiagram,
+  birdErd: BirdErdDiagram,
   medical: MedicalDiagram,
+  medicalErd: MedicalErdDiagram,
 };
-const DiagramComp = computed(() => diagrams[props.project.diagram]);
+
+const activeDiagram = ref(props.project.diagrams[0].key);
+watch(() => props.project, (p) => (activeDiagram.value = p.diagrams[0].key));
+
+const DiagramComp = computed(() => {
+  const d = props.project.diagrams.find((d) => d.key === activeDiagram.value);
+  return diagramComponents[d.component];
+});
 
 function onKeydown(e) {
   if (e.key === "Escape") emit("close");
@@ -52,7 +69,17 @@ onUnmounted(() => {
           <img :src="project.thumb" :alt="project.title + ' 화면'" loading="lazy" @error="($event) => ($event.target.closest('figure').style.display = 'none')" />
         </figure>
 
-        <h4>아키텍처</h4>
+        <h4>아키텍처 &amp; 데이터 모델</h4>
+        <div class="diagram-tabs">
+          <button
+            v-for="d in project.diagrams"
+            :key="d.key"
+            type="button"
+            class="filter-chip"
+            :class="{ active: activeDiagram === d.key }"
+            @click="activeDiagram = d.key"
+          >{{ d.label }}</button>
+        </div>
         <component :is="DiagramComp" />
 
         <h4>사용 기술과 이유</h4>

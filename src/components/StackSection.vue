@@ -18,7 +18,7 @@ function onError(e) {
 </script>
 
 <template>
-  <div class="section" v-reveal>
+  <div class="section" v-reveal data-snap-section data-key="stack" data-label="스택">
     <h2 class="sec"><span>01.</span> 기술 스택</h2>
 
     <div class="stack-filters">

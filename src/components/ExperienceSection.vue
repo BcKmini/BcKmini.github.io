@@ -17,7 +17,7 @@ function isOngoing(item) {
 </script>
 
 <template>
-  <div class="section" v-reveal>
+  <div class="section" v-reveal data-snap-section data-key="experience" data-label="경험">
     <h2 class="sec"><span>03.</span> 경험</h2>
     <ul class="rows">
       <li v-for="item in experience" :key="item.title + item.date" class="row">

@@ -15,7 +15,10 @@ export const projects = [
       { value: "90%+", label: "한국어 STT 정확도" },
       { value: "<20초", label: "문제 생성 지연" },
     ],
-    diagram: "noteflow",
+    diagrams: [
+      { key: "flow", label: "아키텍처", component: "noteflow" },
+      { key: "erd", label: "데이터 모델", component: "noteflowErd" },
+    ],
     tech: [
       {
         name: "FastAPI + Background Tasks",
@@ -51,7 +54,10 @@ export const projects = [
       { value: "-80%", label: "정보 획득 시간" },
       { value: "-30%", label: "민원 응대 부담" },
     ],
-    diagram: "hodong",
+    diagrams: [
+      { key: "flow", label: "요청 흐름", component: "hodong" },
+      { key: "pipeline", label: "인덱싱 파이프라인", component: "hodongPipeline" },
+    ],
     tech: [
       {
         name: "다층 응답 라우팅 설계",
@@ -80,14 +86,17 @@ export const projects = [
     thumb: "https://raw.githubusercontent.com/KU-AILAB/CCTV_Timeline/main/assets/timeline_marking.png",
     title: "동영상 타임라인 검출 서비스",
     meta: "2025.04 – 2025.06 · Lead Backend · 팀 2명 · 국립생태원 연계",
-    desc: "야생동물 CCTV 영상에서 객체 출현 구간을 자동 검출해 타임라인으로 정리하는 분석 자동화 서비스",
+    desc: "야생동물(고라니 등) CCTV 영상에서 객체 출현 구간을 자동 검출해 타임라인으로 정리하는 분석 자동화 서비스",
     chips: ["YOLO11", "OpenCV", "FFmpeg", "FastAPI"],
     stats: [
       { value: "100%", label: "50GB+ 업로드 성공률" },
       { value: "4.5×", label: "분석 속도 (24h→30분)" },
       { value: "-40%", label: "서버 자원 점유율" },
     ],
-    diagram: "cctv",
+    diagrams: [
+      { key: "flow", label: "아키텍처", component: "cctv" },
+      { key: "erd", label: "데이터 모델", component: "cctvErd" },
+    ],
     tech: [
       {
         name: "Service Worker + 청크 업로드",
@@ -123,7 +132,10 @@ export const projects = [
       { value: "75%", label: "생태 데이터 일치율" },
       { value: "0건", label: "외부 장애 전파" },
     ],
-    diagram: "bird",
+    diagrams: [
+      { key: "flow", label: "아키텍처", component: "bird" },
+      { key: "erd", label: "데이터 모델", component: "birdErd" },
+    ],
     tech: [
       {
         name: "외부 API 통합 (Kakao Map + OpenWeatherMap)",
@@ -159,15 +171,18 @@ export const projects = [
       { value: "3-Role", label: "RBAC 권한 격리" },
       { value: "0%", label: "데이터 결함률" },
     ],
-    diagram: "medical",
+    diagrams: [
+      { key: "flow", label: "아키텍처", component: "medical" },
+      { key: "erd", label: "데이터 모델", component: "medicalErd" },
+    ],
     tech: [
       {
         name: "MySQL 공간 인덱스",
         desc: "전국 수만 건 의료기관의 반경 검색이 풀 테이블 스캔으로 2초 이상 걸리던 것을 좌표를 포인트 타입으로 정규화하고 공간 인덱스 + MBR 연산으로 최적화 — 응답 0.3초(85% 단축).",
       },
       {
-        name: "RBAC 권한 격리",
-        desc: "환자·의사·약사 3개 그룹을 정의하고 엔드포인트 수준에서 상호 데이터 접근을 격리. 처방전은 다운로드 완료 즉시 DB 메타데이터와 파일을 영구 삭제하는 휘발성 저장으로 유출 리스크를 원천 차단했습니다.",
+        name: "RBAC 권한 격리 (Personal · Hospital · Pharmacy)",
+        desc: "환자(Personal)·병원(Hospital)·약국(Pharmacy) 3개 테이블을 역할별로 분리하고 엔드포인트 수준에서 상호 데이터 접근을 격리. 처방전은 다운로드 완료 즉시 DB 메타데이터와 파일을 영구 삭제하는 휘발성 저장으로 유출 리스크를 원천 차단했습니다.",
       },
       {
         name: "FK 제약 + 진료 기반 리뷰 인증",
