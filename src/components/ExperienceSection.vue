@@ -2,18 +2,12 @@
 import { experience } from "../data/experience";
 import { isOngoing } from "../composables/useOngoing";
 import { vReveal } from "../composables/useReveal";
-
-// 커밋 해시처럼 보이는 짧은 hex — 항목 내용 기반으로 항상 같은 값이 나오도록 결정론적으로 생성
-function fakeHash(str) {
-  let h = 0;
-  for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0;
-  return h.toString(16).padStart(7, "0").slice(0, 7);
-}
 </script>
 
 <template>
-  <div class="section" v-reveal data-snap-section data-key="experience" data-label="경험">
-    <h2 class="sec"><span>03.</span> 경험</h2>
+  <div class="section" v-reveal data-snap-section data-key="experience" data-label="경력">
+    <h2 class="sec"><span>02.</span> 경력 · 연구</h2>
+    <p class="sec-sub">실제 기술 산출물이 있는 경험입니다. 교육 이수·활동 이력은 아래 "교육 · 활동"에 따로 정리했습니다.</p>
 
     <div class="term-window">
       <div class="term-bar">
@@ -30,7 +24,6 @@ function fakeHash(str) {
           </div>
           <div class="git-content">
             <p class="git-meta">
-              <span class="git-hash">{{ fakeHash(item.title + item.date) }}</span>
               <span class="git-date">{{ item.date }}</span>
               <span v-if="isOngoing(item)" class="live-pill"><span class="live-pill-dot"></span>진행중</span>
             </p>

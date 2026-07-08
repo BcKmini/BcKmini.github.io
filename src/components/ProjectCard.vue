@@ -1,6 +1,17 @@
 <script setup>
+import { ref } from "vue";
+
 defineProps({ project: { type: Object, required: true } });
 const emit = defineEmits(["open"]);
+
+const expanded = ref(false);
+
+function onMove(e) {
+  const card = e.currentTarget;
+  const rect = card.getBoundingClientRect();
+  card.style.setProperty("--mx", `${e.clientX - rect.left}px`);
+  card.style.setProperty("--my", `${e.clientY - rect.top}px`);
+}
 
 function onImgError(e) {
   e.target.remove();
@@ -13,44 +24,58 @@ function openLink(e, url) {
 </script>
 
 <template>
-  <li
-    class="console-row"
-    tabindex="0"
-    role="button"
-    :aria-haspopup="'dialog'"
-    @click="emit('open', project)"
-    @keydown.enter.prevent="emit('open', project)"
-    @keydown.space.prevent="emit('open', project)"
-  >
-    <span class="cr-accent"></span>
-
-    <div class="cr-thumb" :style="!project.thumb ? { background: project.thumbGradient } : {}">
+  <article class="proj-card" @mousemove="onMove">
+    <div
+      class="proj-thumb"
+      :data-label="project.label"
+      :style="!project.thumb ? { background: project.thumbGradient } : {}"
+      role="button"
+      tabindex="0"
+      :aria-haspopup="'dialog'"
+      @click="emit('open', project)"
+      @keydown.enter.prevent="emit('open', project)"
+      @keydown.space.prevent="emit('open', project)"
+    >
+      <span>{{ project.tag }}</span>
       <img v-if="project.thumb" :src="project.thumb" alt="" loading="lazy" @error="onImgError" />
-      <span v-else class="cr-thumb-fallback">{{ project.num }}</span>
-    </div>
 
-    <div class="cr-main">
-      <div class="cr-head">
+      <div class="svc-badge">
         <span class="svc-dot"></span>
-        <span class="cr-name">{{ project.service }}</span>
-        <span class="cr-status">active (exited)</span>
+        <span class="svc-name">{{ project.service }}</span>
       </div>
-      <h3 class="cr-title">{{ project.title }}</h3>
-      <p class="cr-tags">
-        <span><b>period</b> {{ project.meta.split(" · ")[0] }}</span>
-        <span><b>role</b> {{ project.meta.split(" · ")[1] }}</span>
-        <span v-if="project.meta.split(' · ')[2]"><b>team</b> {{ project.meta.split(" · ")[2] }}</span>
-      </p>
-      <p class="cr-desc">{{ project.desc }}</p>
-      <ul class="chips cr-chips">
-        <li v-for="c in project.chips" :key="c">{{ c }}</li>
-      </ul>
+      <span class="svc-status-badge">exited</span>
+    </div>
 
-      <div class="cr-foot">
-        <span class="cr-metric" v-if="project.stats[0]"><b>{{ project.stats[0].value }}</b>{{ project.stats[0].label }}</span>
-        <button type="button" class="cr-link" @click="openLink($event, project.link)">source ↗</button>
-        <span class="cr-view">자세히 보기 <span class="proj-open">＋</span></span>
+    <div class="proj-body">
+      <div class="proj-card-top">
+        <span class="proj-num">{{ project.num }}</span>
+        <button
+          type="button"
+          class="proj-open"
+          :class="{ 'is-open': expanded }"
+          :aria-expanded="expanded"
+          aria-label="상세 내용 펼치기"
+          @click="expanded = !expanded"
+        >⌄</button>
+      </div>
+      <h3>{{ project.title }}</h3>
+      <p class="proj-card-meta">{{ project.meta }}</p>
+      <p class="proj-card-desc" :class="{ clamp: !expanded }">{{ project.desc }}</p>
+
+      <div class="proj-expand" :class="{ open: expanded }">
+        <div class="proj-expand-inner">
+          <ul class="chips">
+            <li v-for="c in project.chips" :key="c">{{ c }}</li>
+          </ul>
+          <div class="cr-foot">
+            <span class="cr-metric" v-if="project.stats[0]"><b>{{ project.stats[0].value }}</b>{{ project.stats[0].label }}</span>
+            <button type="button" class="cr-link" @click="openLink($event, project.link)">source ↗</button>
+            <button type="button" class="cr-view" @click="emit('open', project)">
+              자세히 보기<span class="cr-view-icon">＋</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-  </li>
+  </article>
 </template>
