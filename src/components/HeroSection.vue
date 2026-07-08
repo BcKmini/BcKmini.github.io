@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 import { useSectionNav } from "../composables/useSectionNav";
 
-const avatar = "https://avatars.githubusercontent.com/u/151009045?v=4";
+const avatar = "/assets/profile.jpg";
 const show = ref(false);
 const { activeKey, jump } = useSectionNav();
 
@@ -40,12 +40,10 @@ function onLeave(e) {
         </div>
         <div class="hero-term-body">
           <p class="tline"><span class="tprompt">$</span> whoami</p>
-          <p class="tout">김경민 — <strong>Cloud Platform Engineer</strong></p>
-          <p class="tline"><span class="tprompt">$</span> cat mission.txt</p>
+          <p class="tout">김경민</p>
+          <p class="tline"><span class="tprompt">$</span> cat about.txt</p>
           <p class="tout tout-desc">
-            AI와 클라우드를 <em>하나의 흐름</em>으로 잇는 개발자입니다. 멀티모달 플랫폼 개발 경험으로
-            AI 워크로드의 특성을 이해하고, 클라우드 네이티브 구조 위에서 안정적으로 배포·운영합니다.
-            기술적 제약 없이 비즈니스가 확장되는 <strong>AI Native 환경</strong>이 목표입니다.
+            개발자 김경민의 프로젝트, 기술 스택, 경력을 정리한 포트폴리오 사이트입니다.
           </p>
           <p class="tline"><span class="tprompt">$</span> cat contact.env<span class="tcursor"></span></p>
         </div>

@@ -27,7 +27,10 @@ import { vReveal } from "../composables/useReveal";
               <span class="git-date">{{ item.date }}</span>
               <span v-if="isOngoing(item)" class="live-pill"><span class="live-pill-dot"></span>진행중</span>
             </p>
-            <h3>{{ item.title }}</h3>
+            <h3>
+              {{ item.title }}
+              <em v-if="item.type" class="tag tag-accent">{{ item.type }}</em>
+            </h3>
             <p v-if="item.descHtml" v-html="item.descHtml"></p>
             <p v-else>{{ item.desc }}</p>
           </div>

@@ -2,29 +2,8 @@
 import { ref, computed, onMounted } from "vue";
 import { useGiscus } from "../composables/useGiscus";
 
-const VELOG_USERNAME = "mi_nini";
-
-// Velog GraphQL은 CORS를 열어주지 않아서 프록시로 감싸 전체 글(최대 60개)을 가져오고,
-// 실패하면 rss2json(최대 10개)로 폴백한다.
-const GQL_QUERY =
-  "query Posts($username: String, $limit: Int){ posts(username:$username, limit:$limit){ title short_description thumbnail released_at url_slug } }";
-
-function velogGraphqlUrl() {
-  const params = new URLSearchParams({
-    query: GQL_QUERY,
-    variables: JSON.stringify({ username: VELOG_USERNAME, limit: 60 }),
-  });
-  return `https://v2.velog.io/graphql?${params.toString()}`;
-}
-
-const CORS_PROXIES = [
-  (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-  (url) => `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
-];
-
-const RSS2JSON =
-  "https://api.rss2json.com/v1/api.json?rss_url=" +
-  encodeURIComponent(`https://v2.velog.io/rss/@${VELOG_USERNAME}`);
+const VELOG_RSS = "https://api.rss2json.com/v1/api.json?rss_url=" +
+  encodeURIComponent("https://v2.velog.io/rss/@mi_nini");
 
 const posts = ref([]);
 const status = ref("loading"); // loading | ok | error
@@ -44,46 +23,11 @@ function stripHtml(html) {
   return (div.textContent || "").trim();
 }
 
-async function fetchViaGraphql() {
-  const target = velogGraphqlUrl();
-  for (const wrap of CORS_PROXIES) {
-    try {
-      const res = await fetch(wrap(target));
-      if (!res.ok) continue;
-      const data = await res.json();
-      const list = data?.data?.posts;
-      if (!Array.isArray(list) || !list.length) continue;
-
-      return list.map((p) => ({
-        title: p.title,
-        link: `https://velog.io/@${VELOG_USERNAME}/${encodeURIComponent(p.url_slug)}`,
-        date: p.released_at.slice(0, 10),
-        thumb: p.thumbnail || null,
-        snippet: (p.short_description || "").slice(0, 120),
-      }));
-    } catch {
-      continue;
-    }
-  }
-  return null;
-}
-
-async function fetchViaRss2json() {
-  const res = await fetch(RSS2JSON);
-  const data = await res.json();
-  if (data.status !== "ok" || !Array.isArray(data.items) || !data.items.length) {
-    throw new Error("no posts");
-  }
-  return data.items.map((item) => {
-    const thumb = item.thumbnail || (item.description.match(/<img[^>]+src="([^"]+)"/) || [])[1];
-    return {
-      title: item.title,
-      link: item.link,
-      date: (item.pubDate || "").slice(0, 10),
-      thumb: thumb || null,
-      snippet: stripHtml(item.description).slice(0, 120),
-    };
-  });
+function cardData(item) {
+  const thumb = item.thumbnail || (item.description.match(/<img[^>]+src="([^"]+)"/) || [])[1];
+  const date = (item.pubDate || "").slice(0, 10);
+  const snippet = stripHtml(item.description).slice(0, 120);
+  return { thumb, date, snippet };
 }
 
 const seriesList = computed(() => {
@@ -100,9 +44,11 @@ const filtered = computed(() => {
     activeSeries.value === "all"
       ? posts.value
       : posts.value.filter((p) => extractSeries(p.title) === activeSeries.value);
-  const sorted = [...bySeries].sort((a, b) =>
-    sortOrder.value === "new" ? b.date.localeCompare(a.date) : a.date.localeCompare(b.date)
-  );
+  const sorted = [...bySeries].sort((a, b) => {
+    const da = cardData(a).date;
+    const db = cardData(b).date;
+    return sortOrder.value === "new" ? db.localeCompare(da) : da.localeCompare(db);
+  });
   return sorted;
 });
 
@@ -112,8 +58,12 @@ function fmt(date) {
 
 onMounted(async () => {
   try {
-    const viaGraphql = await fetchViaGraphql();
-    posts.value = viaGraphql ?? (await fetchViaRss2json());
+    const res = await fetch(VELOG_RSS);
+    const data = await res.json();
+    if (data.status !== "ok" || !Array.isArray(data.items) || !data.items.length) {
+      throw new Error("no posts");
+    }
+    posts.value = data.items;
     status.value = "ok";
   } catch {
     status.value = "error";
@@ -129,7 +79,7 @@ onMounted(async () => {
       <p class="eyebrow">Writing</p>
       <h1>블로그</h1>
       <p class="lede">
-        배운 것을 기록합니다.
+        배운 것을 기록합니다. 최근 10개의 글만 표시되며, 더 많은 글은 Velog에서 볼 수 있습니다.
         <a class="inline-link" href="https://velog.io/@mi_nini/posts" target="_blank" rel="noopener">velog.io/@mi_nini ↗</a>
       </p>
     </div>
@@ -163,7 +113,7 @@ onMounted(async () => {
         <span class="term-dot term-dot-red"></span>
         <span class="term-dot term-dot-amber"></span>
         <span class="term-dot term-dot-green"></span>
-        <span class="term-bar-title">tail -f velog.log --lines={{ posts.length || '…' }}</span>
+        <span class="term-bar-title">tail -n 10 velog.log</span>
       </div>
       <div class="blog-grid">
         <p v-if="status === 'loading'" class="status-text">글을 불러오는 중…</p>
@@ -182,18 +132,18 @@ onMounted(async () => {
             rel="noopener"
           >
             <img
-              v-if="item.thumb"
+              v-if="cardData(item).thumb"
               class="blog-thumb"
-              :src="item.thumb"
+              :src="cardData(item).thumb"
               alt=""
               loading="lazy"
               @error="($event) => ($event.target.outerHTML = '<div class=\'blog-thumb-fallback\'>&lt;/&gt;</div>')"
             />
             <div v-else class="blog-thumb-fallback">&lt;/&gt;</div>
             <div class="blog-body">
-              <span class="blog-date">{{ fmt(item.date) }}</span>
+              <span class="blog-date">{{ fmt(cardData(item).date) }}</span>
               <h3 class="blog-title">{{ item.title }}</h3>
-              <p class="blog-snippet">{{ item.snippet }}</p>
+              <p class="blog-snippet">{{ cardData(item).snippet }}</p>
             </div>
           </a>
         </template>
