@@ -604,6 +604,18 @@ html.snap-suspend { scroll-snap-type: none !important; }
 /* ============ 세그먼트 필터 칩 (스택/블로그 공용) ============ */
 .stack-filters, .blog-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
 
+.blog-toolbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.blog-toolbar .blog-filters { margin-bottom: 0; flex: 1; }
+
+.blog-sort { display: flex; gap: 8px; margin-bottom: 18px; }
+
 .filter-chip {
   font-family: "JetBrains Mono", ui-monospace, monospace;
   font-size: 0.78rem;

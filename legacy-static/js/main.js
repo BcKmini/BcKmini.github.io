@@ -106,7 +106,7 @@ function renderBlogFilters(items) {
     wrap.appendChild(btn);
   };
 
-  addChip(`전체 · ${items.length}`, "all");
+  addChip(`all · ${items.length}`, "all");
   series.forEach((s) => {
     const count = items.filter((i) => extractSeries(i.title) === s).length;
     addChip(`${s} · ${count}`, s);

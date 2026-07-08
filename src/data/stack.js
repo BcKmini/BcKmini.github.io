@@ -3,7 +3,7 @@ const si = (slug) => `https://cdn.simpleicons.org/${slug}`;
 const openaiIcon = "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/openai.svg";
 
 export const categories = [
-  { key: "all", label: "전체" },
+  { key: "all", label: "all" },
   { key: "lang", label: "Language" },
   { key: "frontend", label: "Frontend" },
   { key: "backend", label: "Backend · DB" },
