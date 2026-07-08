@@ -142,7 +142,14 @@ main.container { padding: clamp(48px, 8vw, 84px) auto clamp(64px, 11vw, 110px); 
 .tab-panel { padding: clamp(48px, 8vw, 84px) 0 clamp(64px, 11vw, 110px); }
 
 /* ============ fullpage 스타일 스냅 스크롤 ============ */
-html.snap-home { scroll-snap-type: y proximity; }
+/* 데스크톱에서만 스냅 적용 — 모바일은 콘텐츠가 훨씬 길어 자연 스크롤이 더 매끄럽다 */
+@media (min-width: 901px) {
+  html.snap-home { scroll-snap-type: y proximity; }
+}
+
+/* 커스텀 easing 스크롤 중에는 네이티브 스냅 엔진이 도착 지점을 재보정하며
+   튀는 현상이 생기므로 애니메이션 동안 잠시 꺼둔다 */
+html.snap-suspend { scroll-snap-type: none !important; }
 
 [data-snap-section] { scroll-snap-align: start; scroll-margin-top: 62px; }
 
@@ -224,6 +231,49 @@ html.snap-home { scroll-snap-type: y proximity; }
 .hero-text h1 .reveal-line:nth-of-type(3) { transition-delay: 0.35s; }
 .hero-text .lede.reveal-line { transition-delay: 0.45s; display: block; }
 .hero-text .contact-card.reveal-line { transition-delay: 0.55s; display: grid; }
+
+.scroll-cue {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(8px, 3vh, 28px);
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  border: none;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.4s, transform 0.4s;
+}
+
+.scroll-cue:hover { color: var(--accent); opacity: 1; }
+
+.scroll-cue.hide { opacity: 0; transform: translateX(-50%) translateY(8px); pointer-events: none; }
+
+.scroll-cue-label {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.scroll-cue-chevron {
+  font-size: 1.3rem;
+  line-height: 1;
+  animation: cue-bounce 1.8s ease-in-out infinite;
+}
+
+@keyframes cue-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+@media (max-width: 900px) {
+  .scroll-cue { display: none; }
+}
 
 .hero-blobs {
   position: absolute;

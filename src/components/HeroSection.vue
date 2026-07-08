@@ -1,8 +1,10 @@
 <script setup>
 import { ref, onMounted } from "vue";
+import { useSectionNav } from "../composables/useSectionNav";
 
 const avatar = "https://avatars.githubusercontent.com/u/151009045?v=4";
 const show = ref(false);
+const { activeKey, jump } = useSectionNav();
 
 onMounted(() => requestAnimationFrame(() => (show.value = true)));
 
@@ -60,5 +62,16 @@ function onLeave(e) {
     <div class="avatar-frame" @mousemove="onMove" @mouseleave="onLeave">
       <img class="avatar" :src="avatar" alt="김경민 프로필 사진" />
     </div>
+
+    <button
+      type="button"
+      class="scroll-cue"
+      :class="{ hide: activeKey !== 'hero' }"
+      aria-label="다음 섹션으로 스크롤"
+      @click="jump(1)"
+    >
+      <span class="scroll-cue-label">Scroll</span>
+      <span class="scroll-cue-chevron">⌄</span>
+    </button>
   </div>
 </template>
