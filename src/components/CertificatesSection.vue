@@ -17,7 +17,7 @@ import { vReveal } from "../composables/useReveal";
         <li v-for="c in certificates" :key="c.title" class="row">
           <span class="row-date">{{ c.date }}</span>
           <div class="row-body">
-            <h3><span class="cert-check">✓</span> {{ c.title }}</h3>
+            <h3>{{ c.title }}</h3>
             <p>{{ c.host }}</p>
           </div>
         </li>
