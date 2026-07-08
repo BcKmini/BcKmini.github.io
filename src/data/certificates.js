@@ -1,0 +1,6 @@
+export const certificates = [
+  { date: "2025.12", title: "정보처리기사", host: "한국산업인력공단" },
+  { date: "2025.07", title: "빅데이터분석기사", host: "과학기술정보통신부 / 국가데이터처" },
+  { date: "2024.11", title: "ADsP (데이터분석 준전문가)", host: "과학기술정보통신부 / 국가데이터처" },
+  { date: "2024.09", title: "AICE Basic", host: "KT / 한국경제신문" },
+];

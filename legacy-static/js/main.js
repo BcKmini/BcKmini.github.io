@@ -11,7 +11,10 @@ function activateTab(name) {
     tab.classList.toggle("active", tab.dataset.tabLink === name);
   });
 
-  if (name === "blog") loadBlogPosts();
+  if (name === "blog") {
+    loadBlogPosts();
+    loadGiscus();
+  }
   if (name === "stats") openStats();
 }
 
@@ -31,16 +34,133 @@ document.querySelectorAll("[data-tab-link]").forEach((link) => {
 
 window.addEventListener("popstate", () => activateTab(currentTab()));
 
+// ============ 기술 스택 필터 칩 ============
+document.querySelectorAll(".stack-filters .filter-chip").forEach((chip) => {
+  chip.addEventListener("click", () => {
+    const cat = chip.dataset.cat;
+
+    document.querySelectorAll(".stack-filters .filter-chip").forEach((c) =>
+      c.classList.toggle("active", c === chip)
+    );
+
+    document.querySelectorAll(".stack-grid-all .tech").forEach((item) => {
+      item.hidden = cat !== "all" && item.dataset.cat !== cat;
+    });
+
+    document.querySelectorAll(".stack-notes p").forEach((note) => {
+      note.hidden = cat !== "all" && note.dataset.cat !== cat;
+    });
+  });
+});
+
 // ============ Velog 블로그 카드 ============
 const VELOG_RSS = "https://api.rss2json.com/v1/api.json?rss_url=" +
   encodeURIComponent("https://v2.velog.io/rss/@mi_nini");
 
 let blogLoaded = false;
+let allBlogItems = [];
+let activeSeries = "all";
 
 function stripHtml(html) {
   const div = document.createElement("div");
   div.innerHTML = html;
   return (div.textContent || "").trim();
+}
+
+// "KT-A 12주차 / AWS, Kubernetes" → "KT-A" 시리즈로 묶기
+function extractSeries(title) {
+  const m = title.match(/^(.+?)\s*\d+주차/);
+  return m ? m[1].trim() : "기타";
+}
+
+function renderBlogFilters(items) {
+  const wrap = document.getElementById("blog-filters");
+  const series = [];
+  items.forEach((item) => {
+    const s = extractSeries(item.title);
+    if (!series.includes(s)) series.push(s);
+  });
+
+  if (series.length <= 1) {
+    wrap.hidden = true;
+    return;
+  }
+
+  wrap.hidden = false;
+  wrap.innerHTML = "";
+
+  const addChip = (label, value) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "filter-chip";
+    btn.dataset.value = value;
+    if (value === activeSeries) btn.classList.add("active");
+    btn.textContent = label;
+    btn.addEventListener("click", () => {
+      activeSeries = value;
+      wrap.querySelectorAll(".filter-chip").forEach((c) =>
+        c.classList.toggle("active", c.dataset.value === value)
+      );
+      renderBlogCards(allBlogItems);
+    });
+    wrap.appendChild(btn);
+  };
+
+  addChip(`전체 · ${items.length}`, "all");
+  series.forEach((s) => {
+    const count = items.filter((i) => extractSeries(i.title) === s).length;
+    addChip(`${s} · ${count}`, s);
+  });
+}
+
+function renderBlogCards(items) {
+  const grid = document.getElementById("blog-grid");
+  grid.innerHTML = "";
+
+  const filtered = activeSeries === "all"
+    ? items
+    : items.filter((item) => extractSeries(item.title) === activeSeries);
+
+  filtered.forEach((item) => {
+    const card = document.createElement("a");
+    card.className = "blog-card";
+    card.href = item.link;
+    card.target = "_blank";
+    card.rel = "noopener";
+
+    const thumb = item.thumbnail ||
+      (item.description.match(/<img[^>]+src="([^"]+)"/) || [])[1];
+
+    const date = (item.pubDate || "").slice(0, 10).replace(/-/g, ".");
+    const snippet = stripHtml(item.description).slice(0, 120);
+
+    card.innerHTML = `
+      ${thumb
+        ? `<img class="blog-thumb" src="${thumb}" alt="" loading="lazy" />`
+        : `<div class="blog-thumb-fallback">&lt;/&gt;</div>`}
+      <div class="blog-body">
+        <span class="blog-date">${date}</span>
+        <h3 class="blog-title"></h3>
+        <p class="blog-snippet"></p>
+      </div>`;
+    card.querySelector(".blog-title").textContent = item.title;
+    card.querySelector(".blog-snippet").textContent = snippet;
+
+    // 썸네일 로드 실패 시 폴백으로 교체
+    const img = card.querySelector(".blog-thumb");
+    if (img) img.addEventListener("error", () => {
+      const fb = document.createElement("div");
+      fb.className = "blog-thumb-fallback";
+      fb.textContent = "</>";
+      img.replaceWith(fb);
+    });
+
+    grid.appendChild(card);
+  });
+
+  if (!filtered.length) {
+    grid.innerHTML = `<p class="blog-status">해당 시리즈의 글이 없습니다.</p>`;
+  }
 }
 
 async function loadBlogPosts() {
@@ -53,51 +173,62 @@ async function loadBlogPosts() {
     const res = await fetch(VELOG_RSS);
     const data = await res.json();
     if (data.status !== "ok" || !Array.isArray(data.items)) throw new Error("rss error");
+    if (!data.items.length) throw new Error("no posts");
 
-    grid.innerHTML = "";
-    data.items.forEach((item) => {
-      const card = document.createElement("a");
-      card.className = "blog-card";
-      card.href = item.link;
-      card.target = "_blank";
-      card.rel = "noopener";
-
-      const thumb = item.thumbnail ||
-        (item.description.match(/<img[^>]+src="([^"]+)"/) || [])[1];
-
-      const date = (item.pubDate || "").slice(0, 10).replace(/-/g, ".");
-      const snippet = stripHtml(item.description).slice(0, 120);
-
-      card.innerHTML = `
-        ${thumb
-          ? `<img class="blog-thumb" src="${thumb}" alt="" loading="lazy" />`
-          : `<div class="blog-thumb-fallback">&lt;/&gt;</div>`}
-        <div class="blog-body">
-          <span class="blog-date">${date}</span>
-          <h3 class="blog-title"></h3>
-          <p class="blog-snippet"></p>
-        </div>`;
-      card.querySelector(".blog-title").textContent = item.title;
-      card.querySelector(".blog-snippet").textContent = snippet;
-
-      // 썸네일 로드 실패 시 폴백으로 교체
-      const img = card.querySelector(".blog-thumb");
-      if (img) img.addEventListener("error", () => {
-        const fb = document.createElement("div");
-        fb.className = "blog-thumb-fallback";
-        fb.textContent = "</>";
-        img.replaceWith(fb);
-      });
-
-      grid.appendChild(card);
-    });
-
-    if (!grid.children.length) throw new Error("no posts");
+    allBlogItems = data.items;
+    renderBlogFilters(allBlogItems);
+    renderBlogCards(allBlogItems);
   } catch {
     grid.innerHTML =
       `<p class="blog-status">글을 불러오지 못했습니다. ` +
       `<a class="inline-link" href="https://velog.io/@mi_nini/posts" target="_blank" rel="noopener">Velog에서 보기 ↗</a></p>`;
   }
+}
+
+// ============ 방명록 (giscus — GitHub Discussions 기반, 영구 저장) ============
+// 배포 후 https://giscus.app 에서 BcKmini/BcKmini.github.io 저장소로 발급받은
+// data-repo-id / data-category-id 값으로 아래 두 줄을 교체해야 방명록이 동작합니다.
+const GISCUS_REPO_ID = "REPLACE_WITH_REPO_ID";
+const GISCUS_CATEGORY_ID = "REPLACE_WITH_CATEGORY_ID";
+
+let giscusLoaded = false;
+
+function loadGiscus() {
+  if (giscusLoaded) return;
+  giscusLoaded = true;
+
+  const mount = document.getElementById("giscus-comments");
+  if (GISCUS_REPO_ID.startsWith("REPLACE")) {
+    mount.innerHTML = `<p class="blog-status">방명록 설정이 아직 완료되지 않았습니다.</p>`;
+    return;
+  }
+
+  const script = document.createElement("script");
+  script.src = "https://giscus.app/client.js";
+  script.async = true;
+  script.crossOrigin = "anonymous";
+  script.setAttribute("data-repo", "BcKmini/BcKmini.github.io");
+  script.setAttribute("data-repo-id", GISCUS_REPO_ID);
+  script.setAttribute("data-category", "General");
+  script.setAttribute("data-category-id", GISCUS_CATEGORY_ID);
+  script.setAttribute("data-mapping", "specific");
+  script.setAttribute("data-term", "portfolio-guestbook");
+  script.setAttribute("data-strict", "0");
+  script.setAttribute("data-reactions-enabled", "1");
+  script.setAttribute("data-emit-metadata", "0");
+  script.setAttribute("data-input-position", "top");
+  script.setAttribute("data-theme", root.getAttribute("data-theme") === "dark" ? "dark_dimmed" : "light");
+  script.setAttribute("data-lang", "ko");
+  mount.appendChild(script);
+}
+
+function syncGiscusTheme(isDark) {
+  const iframe = document.querySelector("iframe.giscus-frame");
+  if (!iframe) return;
+  iframe.contentWindow.postMessage(
+    { giscus: { setConfig: { theme: isDark ? "dark_dimmed" : "light" } } },
+    "https://giscus.app"
+  );
 }
 
 const COUNTER = "https://abacus.jasoncameron.dev";
@@ -275,7 +406,39 @@ document.getElementById("theme-toggle").addEventListener("click", () => {
     root.setAttribute("data-theme", "dark");
     localStorage.setItem("theme", "dark");
   }
+  syncGiscusTheme(!isDark);
 });
+
+// ============ "진행중" 자동 배지 ============
+// data-start/data-end(YYYY-MM)를 가진 항목을 방문 시점의 실제 날짜와 비교해
+// 오늘이 그 구간 안에 있으면 자동으로 "진행중" 배지를 붙인다.
+// 값을 수정할 필요 없이 날짜가 지나면 배지가 저절로 붙거나 사라진다.
+function markOngoing() {
+  const monthKey = (y, m) => y * 12 + (m - 1);
+  const now = new Date();
+  const nowKey = monthKey(now.getFullYear(), now.getMonth() + 1);
+
+  const parseKey = (str) => {
+    const [y, m] = str.split("-").map(Number);
+    return monthKey(y, m);
+  };
+
+  document.querySelectorAll("[data-start]").forEach((el) => {
+    const start = parseKey(el.dataset.start);
+    const end = el.dataset.end ? parseKey(el.dataset.end) : Infinity;
+    const h3 = el.querySelector("h3");
+    if (!h3 || h3.querySelector(".tag-live")) return;
+
+    if (nowKey >= start && nowKey <= end) {
+      const tag = document.createElement("em");
+      tag.className = "tag tag-live";
+      tag.textContent = "진행중";
+      h3.appendChild(tag);
+    }
+  });
+}
+
+markOngoing();
 
 // ============ 섹션 스크롤 리빌 ============
 const io = "IntersectionObserver" in window
