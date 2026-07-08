@@ -6,7 +6,7 @@ import { vReveal } from "../composables/useReveal";
 
 <template>
   <div class="section" v-reveal data-snap-section data-key="experience" data-label="경력">
-    <h2 class="sec"><span>02.</span> 경력 · 연구</h2>
+    <h2 class="sec"><span>03.</span> 경력 · 연구</h2>
     <p class="sec-sub">실제 기술 산출물이 있는 경험입니다. 교육 이수·활동 이력은 아래 "교육 · 활동"에 따로 정리했습니다.</p>
 
     <div class="term-window">

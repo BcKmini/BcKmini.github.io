@@ -10,7 +10,7 @@ const active = ref(null);
 
 <template>
   <div class="section" v-reveal data-snap-section data-key="projects" data-label="프로젝트">
-    <h2 class="sec"><span>01.</span> 프로젝트</h2>
+    <h2 class="sec"><span>02.</span> 프로젝트</h2>
     <p class="sec-sub">사진을 누르면 자세한 아키텍처와 기술 설명을 볼 수 있고, 화살표를 누르면 요약을 펼쳐볼 수 있습니다.</p>
 
     <div class="proj-grid">

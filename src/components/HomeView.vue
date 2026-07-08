@@ -1,8 +1,8 @@
 <script setup>
 import HeroSection from "./HeroSection.vue";
+import StackSection from "./StackSection.vue";
 import ProjectsSection from "./ProjectsSection.vue";
 import ExperienceSection from "./ExperienceSection.vue";
-import StackSection from "./StackSection.vue";
 import AwardsSection from "./AwardsSection.vue";
 import CertificatesSection from "./CertificatesSection.vue";
 import ActivitiesSection from "./ActivitiesSection.vue";
@@ -11,9 +11,9 @@ import ActivitiesSection from "./ActivitiesSection.vue";
 <template>
   <section class="tab-panel active">
     <HeroSection />
+    <StackSection />
     <ProjectsSection />
     <ExperienceSection />
-    <StackSection />
     <AwardsSection />
     <CertificatesSection />
     <ActivitiesSection />
