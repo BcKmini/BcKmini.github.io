@@ -683,16 +683,6 @@ html.snap-suspend { scroll-snap-type: none !important; }
 
 .proj-card:hover, .proj-card:focus-visible { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: var(--accent); outline: none; }
 
-.svc-strip {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
-  background: color-mix(in srgb, var(--bg) 55%, var(--surface));
-  border-bottom: 1px solid var(--border);
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-}
-
 .svc-dot {
   width: 7px;
   height: 7px;
@@ -704,8 +694,37 @@ html.snap-suspend { scroll-snap-type: none !important; }
 
 [data-theme="dark"] .svc-dot { background: #4ade80; }
 
-.svc-name { font-size: 0.74rem; font-weight: 600; color: var(--text); }
-.svc-status { margin-left: auto; font-size: 0.68rem; color: var(--muted); }
+.svc-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  background: rgba(10, 10, 10, 0.55);
+  backdrop-filter: blur(6px);
+  border-radius: 999px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+}
+
+.svc-badge .svc-name { font-size: 0.68rem; font-weight: 600; color: #fff; }
+
+.svc-status-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.64rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(10, 10, 10, 0.55);
+  backdrop-filter: blur(6px);
+  padding: 4px 9px;
+  border-radius: 999px;
+}
 
 .proj-thumb {
   position: relative;
@@ -886,8 +905,49 @@ html.snap-suspend { scroll-snap-type: none !important; }
   z-index: 1;
 }
 
-.git-dot.live { background: #22c55e; box-shadow: 0 0 0 3px color-mix(in srgb, #22c55e 25%, transparent); }
-[data-theme="dark"] .git-dot.live { background: #4ade80; }
+.git-dot.live {
+  width: 12px;
+  height: 12px;
+  margin-top: 4px;
+  margin-left: -1px;
+  background: #22c55e;
+  box-shadow: 0 0 0 4px color-mix(in srgb, #22c55e 22%, transparent), 0 0 14px 2px color-mix(in srgb, #22c55e 55%, transparent);
+  animation: pulse-live 1.6s ease-in-out infinite;
+}
+[data-theme="dark"] .git-dot.live { background: #4ade80; box-shadow: 0 0 0 4px color-mix(in srgb, #4ade80 25%, transparent), 0 0 14px 2px color-mix(in srgb, #4ade80 60%, transparent); }
+
+.git-row-live {
+  position: relative;
+  margin: 0 -22px;
+  padding: 0 22px;
+  background: linear-gradient(90deg, color-mix(in srgb, #22c55e 9%, transparent), transparent 70%);
+  border-radius: 10px;
+}
+[data-theme="dark"] .git-row-live { background: linear-gradient(90deg, color-mix(in srgb, #4ade80 12%, transparent), transparent 70%); }
+
+.live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #fff;
+  background: #16a34a;
+  padding: 3px 11px 3px 8px;
+  border-radius: 999px;
+  box-shadow: 0 0 0 1px color-mix(in srgb, #22c55e 40%, transparent), 0 2px 8px color-mix(in srgb, #22c55e 45%, transparent);
+}
+[data-theme="dark"] .live-pill { background: #15803d; color: #ecfdf5; }
+
+.live-pill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #fff;
+  animation: pulse-live 1.3s ease-in-out infinite;
+}
 
 .git-line {
   position: absolute;
@@ -936,9 +996,6 @@ html.snap-suspend { scroll-snap-type: none !important; }
 .tag-amber { color: var(--amber); border: 1px solid var(--amber); }
 .tag-muted { color: var(--muted); border: 1px solid var(--border); }
 
-.tag-live { display: inline-flex; align-items: center; gap: 6px; color: #16a34a; border: 1px solid #16a34a; }
-[data-theme="dark"] .tag-live { color: #4ade80; border-color: #4ade80; }
-.tag-live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; animation: pulse-live 1.6s ease-in-out infinite; }
 @keyframes pulse-live { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.35; transform: scale(0.7); } }
 
 /* ============ 블로그 ============ */
