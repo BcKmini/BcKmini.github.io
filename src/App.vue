@@ -3,6 +3,8 @@ import { onMounted } from "vue";
 import { useTab } from "./composables/useTab";
 import { useTheme } from "./composables/useTheme";
 import { useVisitCounter } from "./composables/useVisitCounter";
+import { useBootSequence } from "./composables/useBootSequence";
+import BootSequence from "./components/BootSequence.vue";
 import ScrollProgress from "./components/ScrollProgress.vue";
 import AppHeader from "./components/AppHeader.vue";
 import AppFooter from "./components/AppFooter.vue";
@@ -13,6 +15,7 @@ import StatsView from "./components/StatsView.vue";
 const { tab, initPopstate } = useTab();
 const { init: initTheme } = useTheme();
 const { recordVisit } = useVisitCounter();
+const { done: bootDone } = useBootSequence();
 
 initTheme();
 initPopstate();
@@ -21,6 +24,9 @@ onMounted(() => recordVisit());
 </script>
 
 <template>
+  <Transition name="boot-fade">
+    <BootSequence v-if="!bootDone" />
+  </Transition>
   <ScrollProgress />
   <AppHeader />
   <main class="container">

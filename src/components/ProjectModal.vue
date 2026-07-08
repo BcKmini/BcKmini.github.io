@@ -50,17 +50,26 @@ onUnmounted(() => {
 
 <template>
   <div class="modal-overlay" @click.self="emit('close')">
-    <div class="modal" role="dialog" aria-modal="true">
-      <button class="modal-close" aria-label="닫기" @click="emit('close')">✕</button>
+    <div class="modal term-window" role="dialog" aria-modal="true">
+      <div class="term-bar">
+        <span class="term-dot term-dot-red"></span>
+        <span class="term-dot term-dot-amber"></span>
+        <span class="term-dot term-dot-green"></span>
+        <span class="term-bar-title">{{ project.service }}</span>
+        <button class="modal-close" aria-label="닫기" @click="emit('close')">✕</button>
+      </div>
       <div class="modal-content">
-        <p class="m-num">Project {{ project.num }}</p>
+        <p class="m-num">Project {{ project.num }} · <span class="svc-status-inline">active (exited)</span></p>
         <h3>{{ project.title }}</h3>
         <p class="m-meta">{{ project.meta }}</p>
+
+        <p class="term-label"><span class="tprompt">$</span> cat description.md</p>
         <p class="m-desc">{{ project.desc }}</p>
         <ul class="chips">
           <li v-for="c in project.chips" :key="c">{{ c }}</li>
         </ul>
 
+        <p class="term-label"><span class="tprompt">$</span> ./metrics.sh</p>
         <ul class="m-stats">
           <li v-for="s in project.stats" :key="s.label"><b>{{ s.value }}</b><span>{{ s.label }}</span></li>
         </ul>

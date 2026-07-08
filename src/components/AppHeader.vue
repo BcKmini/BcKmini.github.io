@@ -7,9 +7,9 @@ const { tab, goTo } = useTab();
 const { isDark, toggle } = useTheme();
 
 const navLinks = [
-  { key: "home", label: "홈" },
-  { key: "blog", label: "블로그" },
-  { key: "stats", label: "통계" },
+  { key: "home", label: "~/home" },
+  { key: "blog", label: "~/blog" },
+  { key: "stats", label: "~/stats" },
 ];
 
 const navRef = ref(null);
@@ -25,10 +25,49 @@ function moveThumb() {
 
 watch(tab, moveThumb, { immediate: true });
 window.addEventListener("resize", moveThumb);
+
+// ============ 커맨드 입력 ============
+const cmdInput = ref("");
+const cmdError = ref("");
+let errorTimer = null;
+
+const COMMANDS = {
+  home: "home", about: "home", whoami: "home",
+  blog: "blog", posts: "blog", velog: "blog",
+  stats: "stats", top: "stats", monitor: "stats",
+};
+
+function runCommand() {
+  const raw = cmdInput.value.trim().toLowerCase();
+  cmdInput.value = "";
+  if (!raw) return;
+
+  if (raw === "help") {
+    cmdError.value = "commands: home · blog · stats";
+  } else if (COMMANDS[raw]) {
+    goTo(COMMANDS[raw]);
+    return;
+  } else {
+    cmdError.value = `command not found: ${raw}`;
+  }
+
+  clearTimeout(errorTimer);
+  errorTimer = setTimeout(() => (cmdError.value = ""), 2200);
+}
 </script>
 
 <template>
-  <header class="site-header">
+  <header class="site-header term-window">
+    <div class="term-bar">
+      <span class="term-dot term-dot-red"></span>
+      <span class="term-dot term-dot-amber"></span>
+      <span class="term-dot term-dot-green"></span>
+      <span class="term-bar-title">mini@portfolio: ~</span>
+      <button class="theme-toggle" :aria-label="isDark ? '라이트 모드로 전환' : '다크 모드로 전환'" @click="toggle">
+        <span class="theme-icon">{{ isDark ? "☾" : "☀" }}</span>
+      </button>
+    </div>
+
     <div class="container header-inner">
       <a href="?tab=home" class="logo" @click.prevent="goTo('home')">Mini<span class="logo-dot">.</span></a>
 
@@ -45,9 +84,20 @@ window.addEventListener("resize", moveThumb);
         >{{ link.label }}</a>
       </nav>
 
-      <button class="theme-toggle" :aria-label="isDark ? '라이트 모드로 전환' : '다크 모드로 전환'" @click="toggle">
-        <span class="theme-icon" :class="{ spin: true }">{{ isDark ? "☾" : "☀" }}</span>
-      </button>
+      <form class="cmd-form" @submit.prevent="runCommand">
+        <span class="cmd-prompt">$</span>
+        <input
+          v-model="cmdInput"
+          class="cmd-input"
+          type="text"
+          placeholder="type a command…"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <Transition name="fade-slide">
+          <span v-if="cmdError" class="cmd-error">{{ cmdError }}</span>
+        </Transition>
+      </form>
     </div>
   </header>
 </template>

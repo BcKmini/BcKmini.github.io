@@ -32,16 +32,24 @@ function onError(e) {
       >{{ c.label }}</button>
     </div>
 
-    <div class="stack-panel">
-      <ul class="stack-grid-all">
-        <li v-for="(item, i) in visibleStack" :key="item.name + i" class="tech">
-          <img :src="item.icon" alt="" loading="lazy" :class="{ 'inv-dark': item.invert }" @error="onError" />
-          <span>{{ item.name }}</span>
-        </li>
-      </ul>
+    <div class="term-window stack-panel">
+      <div class="term-bar">
+        <span class="term-dot term-dot-red"></span>
+        <span class="term-dot term-dot-amber"></span>
+        <span class="term-dot term-dot-green"></span>
+        <span class="term-bar-title">stack --list --category={{ active }}</span>
+      </div>
+      <div class="stack-panel-body">
+        <ul class="stack-grid-all">
+          <li v-for="(item, i) in visibleStack" :key="item.name + i" class="tech">
+            <img :src="item.icon" alt="" loading="lazy" :class="{ 'inv-dark': item.invert }" @error="onError" />
+            <span>{{ item.name }}</span>
+          </li>
+        </ul>
 
-      <div v-if="visibleNotes.length" class="skill-notes stack-notes">
-        <p v-for="n in visibleNotes" :key="n.label"><b>{{ n.label }}</b> {{ n.text }}</p>
+        <div v-if="visibleNotes.length" class="skill-notes stack-notes">
+          <p v-for="n in visibleNotes" :key="n.label"><b>{{ n.label }}</b> {{ n.text }}</p>
+        </div>
       </div>
     </div>
   </div>

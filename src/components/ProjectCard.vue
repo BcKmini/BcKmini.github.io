@@ -25,6 +25,12 @@ function onImgError(e) {
     @keydown.space.prevent="emit('open', project)"
     @mousemove="onMove"
   >
+    <div class="svc-strip">
+      <span class="svc-dot"></span>
+      <span class="svc-name">{{ project.service }}</span>
+      <span class="svc-status">active (exited)</span>
+    </div>
+
     <div class="proj-thumb" :data-label="project.label" :style="!project.thumb ? { background: project.thumbGradient } : {}">
       <span>{{ project.tag }}</span>
       <img v-if="project.thumb" :src="project.thumb" alt="" loading="lazy" @error="onImgError" />
