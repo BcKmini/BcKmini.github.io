@@ -1,8 +1,8 @@
 export const experience = [
   {
     start: "2026-07",
-    end: "2026-10",
-    date: "2026.07 – 2026.10",
+    end: "2026-12",
+    date: "2026.07 – 2026.12",
     title: "오픈소스 컨트리뷰션 아카데미 · 멘티",
     desc: "OpenStack & Kubernetes — 운영 문서화 및 국제화 기여",
   },
