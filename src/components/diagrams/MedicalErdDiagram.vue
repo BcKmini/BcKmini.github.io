@@ -29,8 +29,8 @@
       <text x="320" y="158" text-anchor="middle" font-size="9.5" fill="var(--muted)">place_name · rating · content</text>
       <text x="320" y="173" text-anchor="middle" font-size="9.5" fill="var(--muted)">author · review_date</text>
 
-      <text x="320" y="204" text-anchor="middle" font-size="10" fill="var(--muted)">진료·조제 이력과 조인 검증 후에만 리뷰 작성 허용</text>
-      <text x="320" y="224" text-anchor="middle" font-size="10" font-style="italic" fill="var(--muted)">공간 인덱스: 병원·약국 좌표 반경 검색 (2.0s → 0.3s)</text>
+      <text x="320" y="204" text-anchor="middle" font-size="10" fill="var(--muted)">기관명(place_name) 기준으로 리뷰 등록</text>
+      <text x="320" y="224" text-anchor="middle" font-size="10" font-style="italic" fill="var(--muted)">병원·약국 위치는 Kakao Map 장소 검색 위젯으로 표시</text>
     </svg>
   </div>
 </template>

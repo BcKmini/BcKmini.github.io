@@ -172,11 +172,10 @@ export const projects = [
     title: "종합 의료 관리 서비스",
     meta: "2024.04 – 2024.06 · Lead Backend & Data · 팀 3명",
     desc: "병원-약국-환자 데이터를 통합한 의료 정보 관리 플랫폼",
-    chips: ["PHP", "MySQL", "JavaScript", "Kakao Map API", "공공데이터 API"],
+    chips: ["PHP", "MySQL", "JavaScript", "Kakao Map API"],
     stats: [
-      { value: "0.3초", label: "반경 검색 (-85%)" },
-      { value: "3-Role", label: "RBAC 권한 격리" },
-      { value: "0%", label: "데이터 결함률" },
+      { value: "3-Role", label: "회원 유형 분리 (환자·병원·약국)" },
+      { value: "승인제", label: "병원·약국 가입 심사" },
     ],
     diagrams: [
       { key: "flow", label: "아키텍처", component: "medical" },
@@ -184,16 +183,16 @@ export const projects = [
     ],
     tech: [
       {
-        name: "MySQL 공간 인덱스",
-        desc: "전국 의료기관 중에서 반경 검색을 하면 2초 넘게 걸렸습니다. 전체 테이블을 다 훑고 있다는 걸 확인하고, 좌표를 공간 인덱스로 잡을 수 있는 타입으로 바꿔 인덱스를 태웠더니 0.3초로 줄었습니다(85% 단축).",
+        name: "역할별 회원 테이블 + 승인 절차",
+        desc: "환자·병원·약국이 같은 로그인 화면을 쓰지만 서로 권한이 달라야 하는 문제가 있었습니다. 역할별로 테이블(personal_tbl·hospital_tbl·pharmacy_tbl)을 나누고 로그인 시 세션에 사용자 유형을 저장했고, 병원·약국 계정은 관리자 승인 전까지 로그인이 막히도록 승인 플래그를 넣었습니다.",
       },
       {
-        name: "RBAC 권한 격리 (Personal · Hospital · Pharmacy)",
-        desc: "환자·병원·약국이 같은 시스템을 쓰다 보니 서로의 정보에 접근할 수 있으면 안 되는 상황이었습니다. 세 역할을 테이블부터 분리하고 엔드포인트 단위로 접근을 막았고, 처방전은 다운로드가 끝나면 파일과 DB 기록을 바로 지워서 남아있는 자료가 유출될 여지를 없앴습니다.",
+        name: "처방전 삭제 기능",
+        desc: "처방전을 계속 남겨두고 싶어하지 않는 환자도 있을 거라 생각해서, 요청하면 DB에서 처방전 데이터를 바로 지우는 기능을 별도로 만들었습니다.",
       },
       {
-        name: "FK 제약 + 진료 기반 리뷰 인증",
-        desc: "아무나 리뷰를 남길 수 있게 하면 실제로 이용하지 않은 사람도 후기를 쓸 수 있다는 문제가 있었습니다. 처방·조제 이력이 있는 사람만 리뷰를 쓸 수 있게 테이블을 연결해서 막았고, 그 결과 허위 후기로 인한 데이터 결함률은 0%였습니다.",
+        name: "Kakao Map 병원·약국 찾기",
+        desc: "근처 병원·약국을 이름으로 하나하나 찾아야 하는 게 불편해 보여서, Kakao Map의 장소 검색 위젯을 붙여 지도에서 위치와 정보를 바로 확인할 수 있게 했습니다.",
       },
     ],
     link: "https://github.com/BcKmini/Database",
