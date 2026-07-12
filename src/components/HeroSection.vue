@@ -61,10 +61,10 @@ function onLeave(e) {
         </div>
         <div class="hero-term-body">
           <p class="tline"><span class="tprompt">$</span> whoami</p>
-          <p class="tout">김경민</p>
+          <p class="tout">김경민 (KYOUNGMIN KIM)</p>
           <p class="tline"><span class="tprompt">$</span> cat about.txt</p>
           <p class="tout tout-desc">
-            개발자 김경민의 프로젝트, 기술 스택, 경력을 정리한 포트폴리오 사이트입니다.
+            만들고 고치는 걸 좋아하는 개발자입니다 🙂 편하게 둘러보고 가세요!
           </p>
           <p class="tline"><span class="tprompt">$</span> cat contact.env<span class="tcursor"></span></p>
         </div>
