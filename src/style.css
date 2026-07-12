@@ -554,14 +554,38 @@ html.snap-suspend { scroll-snap-type: none !important; }
   font-size: 0.78rem;
 }
 
-.config-block a { display: flex; align-items: baseline; gap: 4px; padding: 12px 18px; transition: background 0.15s; }
-.config-block a:nth-child(odd) { border-right: 1px solid var(--border); }
-.config-block a:nth-child(n + 3) { border-top: 1px solid var(--border); }
-.config-block a:hover { background: var(--accent-soft); }
+.config-block a, .config-block button { display: flex; align-items: baseline; gap: 4px; padding: 12px 18px; transition: background 0.15s; }
+.config-block button { background: none; border: none; font: inherit; color: inherit; text-align: left; width: 100%; cursor: pointer; }
+.config-block a:nth-child(odd), .config-block button:nth-child(odd) { border-right: 1px solid var(--border); }
+.config-block a:nth-child(n + 3), .config-block button:nth-child(n + 3) { border-top: 1px solid var(--border); }
+.config-block a:hover, .config-block button:hover { background: var(--accent-soft); }
 .cfg-key { color: var(--accent); font-weight: 600; }
 .cfg-eq { color: var(--muted); }
 .cfg-val { color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.config-block a:hover .cfg-val { color: var(--accent); }
+.config-block a:hover .cfg-val, .config-block button:hover .cfg-val { color: var(--accent); }
+
+.copy-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 40px;
+  transform: translateX(-50%);
+  z-index: 300;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: #16a34a;
+  color: #fff;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: 999px;
+  box-shadow: 0 4px 18px color-mix(in srgb, #16a34a 40%, transparent);
+}
+[data-theme="dark"] .copy-toast { background: #15803d; }
+.copy-toast-dot { width: 6px; height: 6px; border-radius: 50%; background: #fff; flex-shrink: 0; }
+.copy-toast-fade-enter-active, .copy-toast-fade-leave-active { transition: opacity 0.2s ease, transform 0.2s ease; }
+.copy-toast-fade-enter-from, .copy-toast-fade-leave-to { opacity: 0; transform: translateX(-50%) translateY(8px); }
 
 .avatar-frame {
   perspective: 700px;

@@ -6,6 +6,27 @@ const avatar = "/assets/profile.jpg";
 const show = ref(false);
 const { activeKey, jump } = useSectionNav();
 
+const toast = ref(null);
+let toastTimer = null;
+
+async function copyValue(value, label) {
+  try {
+    await navigator.clipboard.writeText(value);
+  } catch {
+    const ta = document.createElement("textarea");
+    ta.value = value;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+  }
+  toast.value = label;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => (toast.value = null), 1800);
+}
+
 onMounted(() => requestAnimationFrame(() => (show.value = true)));
 
 function onMove(e) {
@@ -56,17 +77,23 @@ function onLeave(e) {
         <a href="https://velog.io/@mi_nini/posts" target="_blank" rel="noopener">
           <span class="cfg-key">BLOG</span><span class="cfg-eq">=</span><span class="cfg-val">velog.io/@mi_nini ↗</span>
         </a>
-        <a href="mailto:akkn920@naver.com">
+        <button type="button" class="cfg-copy" @click="copyValue('akkn920@naver.com', 'EMAIL')">
           <span class="cfg-key">EMAIL</span><span class="cfg-eq">=</span><span class="cfg-val">akkn920@naver.com</span>
-        </a>
-        <a href="tel:010-2204-0546">
+        </button>
+        <button type="button" class="cfg-copy" @click="copyValue('010-2204-0546', 'PHONE')">
           <span class="cfg-key">PHONE</span><span class="cfg-eq">=</span><span class="cfg-val">010-2204-0546</span>
-        </a>
-        <a>
+        </button>
+        <button type="button" class="cfg-copy" @click="copyValue('_m_i_n_i', 'DISCORD')">
           <span class="cfg-key">DISCORD</span><span class="cfg-eq">=</span><span class="cfg-val">_m_i_n_i</span>
-        </a>
+        </button>
       </div>
     </div>
+
+    <Transition name="copy-toast-fade">
+      <div v-if="toast" class="copy-toast">
+        <span class="copy-toast-dot"></span>{{ toast }} 클립보드에 복사됨
+      </div>
+    </Transition>
 
     <div class="avatar-frame" @mousemove="onMove" @mouseleave="onLeave">
       <div class="avatar-term">
