@@ -1,13 +1,20 @@
 export const awards = [
   {
-    date: "2026.06",
+    date: "2026.07 – 2026.08",
+    title: "2026년 제8회 K-디지털 트레이닝 해커톤",
+    tag: { text: "진행중", type: "amber" },
+    host: "주최 한국기술교육대학교 직업능력심사평가원 · 주관 고용노동부",
+    desc: "'AI와 함께, 인간의 가능성을 확장하다'를 주제로 예선 진행 중 (팀)",
+  },
+  {
+    date: "2026.04 – 2026.06",
     title: "제4회 문화체육관광 인공지능·데이터 활용 공모전",
     link: "https://github.com/Chunbae-A/Unity-3D_HanokBuilder",
     host: "주최 문화체육관광부 · 주관 한국문화정보원, 국민체육진흥공단, 한국관광공사, 한국문화예술위원회, 한국콘텐츠진흥원",
     desc: "Unity 3D 기반 한옥 건축 체험 콘텐츠 'HanokBuilder' 개발 (팀)",
   },
   {
-    date: "2026.05",
+    date: "2026.04 – 2026.06",
     title: "2026 AX 아이디어 공모전",
     link: "https://github.com/Chunbae-A/model",
     tag: { text: "본선진출", type: "amber" },
@@ -22,14 +29,14 @@ export const awards = [
     desc: '생성형 AI(Veo3, ChatGPT, Claude)를 활용한 "AI와 함께 살아가는 10~70대" 영상 제작 (개인)',
   },
   {
-    date: "2025.05",
+    date: "2025.04 – 2025.05",
     title: "배리어프리 앱 개발 콘테스트",
     link: "/assets/barrier-free.pdf",
     host: "주최 현대오토에버, 서울사회복지공동모금회 · 주관 (사)그린라이트",
     desc: "아이트래킹과 시선-단어 매핑 TTS·진동 출력을 결합한 소통 보조 도구 '발화' (팀) — 제출 자료 PDF",
   },
   {
-    date: "2024.11",
+    date: "2024.11 – 2024.12",
     title: "공공데이터 활용 경진대회",
     host: "주최 국민체육진흥공단 (체육종합빅데이터센터)",
     desc: "스포츠강좌이용권 사용 트렌드 분석 및 추천 플랫폼 개발 (팀)",
