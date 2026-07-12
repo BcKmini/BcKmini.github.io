@@ -15,14 +15,16 @@ import { vReveal } from "../composables/useReveal";
         <span class="term-bar-title">cat awards.log</span>
       </div>
       <ul class="rows rows-in-term">
-        <li v-for="a in awards" :key="a.title" class="row">
-          <span class="row-date">{{ a.date }}</span>
+        <li v-for="a in awards" :key="a.title" class="row" :class="{ 'row-live': isOngoing(a) }">
+          <span class="row-date">
+            {{ a.date }}
+            <span v-if="isOngoing(a)" class="live-pill"><span class="live-pill-dot"></span>진행중</span>
+          </span>
           <div class="row-body">
             <h3>
               <a v-if="a.link" :href="a.link" target="_blank" rel="noopener">{{ a.title }} ↗</a>
               <template v-else>{{ a.title }}</template>
               <em v-if="a.tag" class="tag" :class="`tag-${a.tag.type}`">{{ a.tag.text }}</em>
-              <span v-if="isOngoing(a)" class="live-pill"><span class="live-pill-dot"></span>진행중</span>
             </h3>
             <p v-if="a.host" class="row-host">{{ a.host }}</p>
             <p>{{ a.desc }}</p>

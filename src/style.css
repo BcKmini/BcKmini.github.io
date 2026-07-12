@@ -75,16 +75,38 @@ a { color: inherit; text-decoration: none; }
   border-bottom: 1px solid var(--border);
 }
 
-.term-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-.term-dot-red { background: #ff5f57; }
-.term-dot-amber { background: #febc2e; }
-.term-dot-green { background: #28c840; }
+/* GNOME/우분투 스타일 창 컨트롤 — 아이콘은 dot 클래스를 재활용해 의사요소로 렌더링 */
+.term-dot {
+  width: auto;
+  height: auto;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--muted);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.68rem;
+  line-height: 1.4;
+  transition: background 0.12s, color 0.12s;
+}
+.term-dot:hover { background: var(--border); color: var(--fg); }
+.term-dot-amber { order: 1; margin-left: auto; }
+.term-dot-amber::before { content: "─"; }
+.term-dot-green { order: 2; }
+.term-dot-green::before { content: "□"; }
+.term-dot-red { order: 3; }
+.term-dot-red::before { content: "✕"; }
+.term-dot-red:hover { background: #e5484d; color: #fff; }
 
 .term-bar-title {
-  margin-left: 6px;
   font-family: "JetBrains Mono", ui-monospace, monospace;
   font-size: 0.72rem;
   color: var(--muted);
+  order: 0;
 }
 
 /* ============ 부팅 시퀀스 ============ */
@@ -555,12 +577,20 @@ html.snap-suspend { scroll-snap-type: none !important; }
   gap: 4px;
   z-index: 1;
 }
-.avatar-term .term-dot { width: 7px; height: 7px; }
+.avatar-term .term-dot {
+  min-width: 8px;
+  height: 8px;
+  padding: 0;
+  font-size: 0;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--muted) 40%, transparent);
+}
+.avatar-term .term-dot-amber { margin-left: 0; }
 
 .avatar {
-  width: clamp(110px, 18vw, 168px);
-  height: clamp(110px, 18vw, 168px);
-  border-radius: 16px;
+  width: clamp(150px, 24vw, 230px);
+  height: clamp(150px, 24vw, 230px);
+  border-radius: 20px;
   border: 3px solid transparent;
   background: linear-gradient(var(--surface), var(--surface)) padding-box,
     linear-gradient(135deg, var(--accent), var(--accent-3)) border-box;
@@ -1039,13 +1069,15 @@ html.snap-suspend { scroll-snap-type: none !important; }
 /* ============ 공통 행 리스트 ============ */
 .rows { list-style: none; }
 .row { display: flex; gap: 28px; padding: 20px 0; border-top: 1px solid var(--border); }
+.row-live { margin: 0 -22px; padding: 20px 22px; border-top-color: transparent; background: linear-gradient(90deg, color-mix(in srgb, #22c55e 9%, transparent), transparent 70%); border-radius: 10px; }
+[data-theme="dark"] .row-live { background: linear-gradient(90deg, color-mix(in srgb, #4ade80 12%, transparent), transparent 70%); }
 
 .rows-in-term { padding: 4px 22px 14px; }
 .rows-in-term .row:first-child { border-top: none; }
 .rows-in-term .row:last-child { border-bottom: none; }
 
 .row:last-child { border-bottom: 1px solid var(--border); }
-.row-date { flex-shrink: 0; width: 150px; font-size: 0.78rem; color: var(--muted); padding-top: 3px; }
+.row-date { flex-shrink: 0; width: 150px; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; font-size: 0.78rem; color: var(--muted); padding-top: 3px; }
 .row-body h3 { font-size: 0.98rem; font-weight: 600; display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
 .row-body h3 a:hover { color: var(--accent); }
 .row-body p { font-size: 0.88rem; color: var(--muted); margin-top: 2px; }
