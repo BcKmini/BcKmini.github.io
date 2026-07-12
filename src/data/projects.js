@@ -49,7 +49,7 @@ export const projects = [
     thumb: "https://raw.githubusercontent.com/KT-TeamProject-11/.github/main/profile/assets/main.png",
     title: "천안 도시재생지원센터 '호동이' 챗봇",
     meta: "2025.07 – 2025.08 · Tech Lead · 팀 4명 · 공공기관 연계",
-    desc: "공공 데이터를 통합해 반복 민원을 자동 응대하는 RAG 기반 지능형 민원 챗봇",
+    desc: "공공 데이터를 통합해 반복 민원을 자동 응대하는 RAG 기반 민원 챗봇",
     chips: ["LangChain", "FAISS", "Redis", "Docker"],
     stats: [
       { value: "+65%", label: "답변 정확도" },
