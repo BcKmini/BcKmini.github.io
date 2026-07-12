@@ -17,7 +17,7 @@ export const awards = [
   {
     date: "2025.07",
     title: "K-AI 컨텐츠 어워드 (KT-KAI 공모전)",
-    tag: { text: "장려상", type: "accent" },
+    tag: { text: "입선작", type: "accent" },
     host: "주최 KT그룹 희망나눔재단 · 주관 KT, KT스카이라이프, 지니뮤직, KT클라우드, 케이뱅크, IAAE",
     desc: '생성형 AI(Veo3, ChatGPT, Claude)를 활용한 "AI와 함께 살아가는 10~70대" 영상 제작 (개인)',
   },
