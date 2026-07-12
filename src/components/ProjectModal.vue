@@ -9,6 +9,7 @@ import HodongDiagram from "./diagrams/HodongDiagram.vue";
 import HodongPipelineDiagram from "./diagrams/HodongPipelineDiagram.vue";
 import BirdDiagram from "./diagrams/BirdDiagram.vue";
 import BirdErdDiagram from "./diagrams/BirdErdDiagram.vue";
+import BirdCacheDiagram from "./diagrams/BirdCacheDiagram.vue";
 import MedicalDiagram from "./diagrams/MedicalDiagram.vue";
 import MedicalErdDiagram from "./diagrams/MedicalErdDiagram.vue";
 
@@ -25,6 +26,7 @@ const diagramComponents = {
   hodongPipeline: HodongPipelineDiagram,
   bird: BirdDiagram,
   birdErd: BirdErdDiagram,
+  birdCache: BirdCacheDiagram,
   medical: MedicalDiagram,
   medicalErd: MedicalErdDiagram,
 };

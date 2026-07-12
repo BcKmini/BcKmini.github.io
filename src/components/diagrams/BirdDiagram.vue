@@ -16,8 +16,8 @@
       <text x="164" y="234" text-anchor="middle" font-size="10" fill="var(--muted)">좌표 → 주소 자동 변환</text>
       <rect x="328" y="194" width="288" height="54" rx="10" fill="var(--bg)" stroke="var(--accent)"/>
       <text x="472" y="216" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--accent)">OpenWeatherMap</text>
-      <text x="472" y="234" text-anchor="middle" font-size="10" fill="var(--muted)">기온 · 강수 · 풍속 · 고도 결합</text>
-      <text x="320" y="270" text-anchor="middle" font-size="10" font-style="italic" fill="var(--muted)">지수 백오프 재시도 + 메모리 캐싱 — 외부 API 장애 격리</text>
+      <text x="472" y="234" text-anchor="middle" font-size="10" fill="var(--muted)">기온 · 강수 · 풍속 결합</text>
+      <text x="320" y="270" text-anchor="middle" font-size="10" font-style="italic" fill="var(--muted)">Open-Elevation API로 고도 결합 · 좌표별 메모리 캐싱으로 중복 호출 방지</text>
       <line x1="320" y1="248" x2="320" y2="288" stroke="var(--muted)" stroke-dasharray="3 3" marker-end="url(#ar-cb)"/>
       <rect x="170" y="292" width="300" height="52" rx="10" fill="var(--bg)" stroke="var(--border)"/>
       <text x="320" y="313" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--text)">MySQL</text>

@@ -135,11 +135,12 @@ export const projects = [
     stats: [
       { value: "-60%", label: "사용자 수동 입력" },
       { value: "75%", label: "생태 데이터 일치율" },
-      { value: "0건", label: "외부 장애 전파" },
+      { value: "3개", label: "외부 API 연동" },
     ],
     diagrams: [
       { key: "flow", label: "아키텍처", component: "bird" },
       { key: "erd", label: "데이터 모델", component: "birdErd" },
+      { key: "cache", label: "좌표 확보 흐름", component: "birdCache" },
     ],
     tech: [
       {
@@ -147,8 +148,8 @@ export const projects = [
         desc: "처음엔 주소·날씨·고도를 사용자가 직접 입력하게 했는데, 매번 다 채우는 게 번거로워 보였습니다. 좌표만 찍으면 카카오맵과 기상 API가 나머지 정보를 자동으로 채워주게 바꿨더니 수동 입력이 60% 줄었습니다.",
       },
       {
-        name: "지수 백오프 + 메모리 캐싱",
-        desc: "외부 API가 느려질 때마다 우리 서버까지 같이 타임아웃 나는 걸 보고, 재시도 로직과 동일 좌표·시간대 캐싱을 넣었습니다. 운영하는 동안 외부 장애가 서비스 전체로 번진 적은 0건이었습니다.",
+        name: "좌표별 메모리 캐싱 + 예외 처리",
+        desc: "같은 좌표를 다시 조회할 때도 매번 외부 API를 새로 부르고 있다는 걸 확인하고, 좌표를 키로 결과를 메모리에 캐싱해 중복 호출을 줄였습니다. API 호출이 실패해도 화면이 깨지지 않고 '정보를 가져올 수 없음' 메시지로 대체되도록 예외 처리도 넣었습니다.",
       },
       {
         name: "Pydantic 스키마 정규화",
