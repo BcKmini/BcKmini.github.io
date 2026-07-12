@@ -62,6 +62,9 @@ function onLeave(e) {
         <a href="tel:010-2204-0546">
           <span class="cfg-key">PHONE</span><span class="cfg-eq">=</span><span class="cfg-val">010-2204-0546</span>
         </a>
+        <a>
+          <span class="cfg-key">DISCORD</span><span class="cfg-eq">=</span><span class="cfg-val">_m_i_n_i</span>
+        </a>
       </div>
     </div>
 

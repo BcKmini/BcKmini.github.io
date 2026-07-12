@@ -63,6 +63,7 @@ export const stack = [
   { cat: "collab", name: "Figma", icon: dv("figma/figma-original.svg") },
   { cat: "collab", name: "Notion", icon: dv("notion/notion-original.svg"), invert: true },
   { cat: "collab", name: "Slack", icon: dv("slack/slack-original.svg") },
+  { cat: "collab", name: "Discord", icon: dv("discord/discord-original.svg"), invert: true },
 ];
 
 export const stackNotes = [
