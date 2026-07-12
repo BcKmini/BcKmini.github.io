@@ -78,10 +78,8 @@ onMounted(async () => {
     <div class="blog-head">
       <p class="eyebrow">Writing</p>
       <h1>블로그</h1>
-      <p class="lede">
-        배운 것을 기록합니다. 최근 10개의 글만 표시되며, 더 많은 글은 Velog에서 볼 수 있습니다.
-        <a class="inline-link" href="https://velog.io/@mi_nini/posts" target="_blank" rel="noopener">velog.io/@mi_nini ↗</a>
-      </p>
+      <p class="lede">배운 것을 기록합니다. 최근 10개의 글만 표시되며, 더 많은 글은 Velog에서 볼 수 있습니다.</p>
+      <a class="inline-link blog-more-link" href="https://velog.io/@mi_nini/posts" target="_blank" rel="noopener">velog.io/@mi_nini ↗</a>
     </div>
 
     <div class="blog-toolbar">

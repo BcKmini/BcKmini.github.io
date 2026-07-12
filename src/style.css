@@ -1077,7 +1077,7 @@ html.snap-suspend { scroll-snap-type: none !important; }
 .rows-in-term .row:last-child { border-bottom: none; }
 
 .row:last-child { border-bottom: 1px solid var(--border); }
-.row-date { flex-shrink: 0; width: 150px; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; font-size: 0.78rem; color: var(--muted); padding-top: 3px; }
+.row-date { flex-shrink: 0; width: 150px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 0.78rem; color: var(--muted); padding-top: 3px; }
 .row-body h3 { font-size: 0.98rem; font-weight: 600; display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
 .row-body h3 a:hover { color: var(--accent); }
 .row-body p { font-size: 0.88rem; color: var(--muted); margin-top: 2px; }
@@ -1093,6 +1093,7 @@ html.snap-suspend { scroll-snap-type: none !important; }
 /* ============ 블로그 ============ */
 .blog-head h1 { font-size: 2.3rem; font-weight: 800; letter-spacing: -0.03em; }
 .blog-head .lede { margin-top: 8px; }
+.blog-more-link { display: inline-block; margin-top: 10px; font-weight: 600; white-space: nowrap; }
 
 .blog-grid { padding: 22px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
 .status-text, .blog-grid > .status-text { grid-column: 1 / -1; color: var(--muted); font-size: 0.92rem; }
