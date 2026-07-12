@@ -36,6 +36,14 @@ export const awards = [
     desc: '생성형 AI(Veo3, ChatGPT, Claude)를 활용한 "AI와 함께 살아가는 10~70대" 영상 제작 (개인)',
   },
   {
+    start: "2025-05",
+    end: "2025-08",
+    date: "2025.05 – 2025.08",
+    title: "공개SW개발자대회",
+    host: "주최 과학기술정보통신부 · 주관 정보통신산업진흥원(NIPA)",
+    desc: "CrowdGuard Alert — Computer Vision 기반 군중 안전 경고 시스템 개발 (개인)",
+  },
+  {
     start: "2025-04",
     end: "2025-05",
     date: "2025.04 – 2025.05",
@@ -51,13 +59,5 @@ export const awards = [
     title: "공공데이터 활용 경진대회",
     host: "주최 국민체육진흥공단 (체육종합빅데이터센터)",
     desc: "스포츠강좌이용권 사용 트렌드 분석 및 추천 플랫폼 개발 (팀)",
-  },
-  {
-    start: "2024-06",
-    end: "2024-08",
-    date: "2024.06 – 2024.08",
-    title: "공개SW개발자대회",
-    host: "주최 과학기술정보통신부 · 주관 정보통신산업진흥원(NIPA)",
-    desc: "CrowdGuard Alert — Computer Vision 기반 군중 안전 경고 시스템 개발 (개인)",
   },
 ];
