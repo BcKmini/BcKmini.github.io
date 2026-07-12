@@ -2,6 +2,7 @@
 import { onMounted, onUnmounted, computed, ref, watch } from "vue";
 import NoteflowDiagram from "./diagrams/NoteflowDiagram.vue";
 import NoteflowErdDiagram from "./diagrams/NoteflowErdDiagram.vue";
+import NoteflowPipelineDiagram from "./diagrams/NoteflowPipelineDiagram.vue";
 import CctvDiagram from "./diagrams/CctvDiagram.vue";
 import CctvErdDiagram from "./diagrams/CctvErdDiagram.vue";
 import HodongDiagram from "./diagrams/HodongDiagram.vue";
@@ -17,6 +18,7 @@ const emit = defineEmits(["close"]);
 const diagramComponents = {
   noteflow: NoteflowDiagram,
   noteflowErd: NoteflowErdDiagram,
+  noteflowPipeline: NoteflowPipelineDiagram,
   cctv: CctvDiagram,
   cctvErd: CctvErdDiagram,
   hodong: HodongDiagram,

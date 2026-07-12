@@ -19,6 +19,7 @@ export const projects = [
     diagrams: [
       { key: "flow", label: "아키텍처", component: "noteflow" },
       { key: "erd", label: "데이터 모델", component: "noteflowErd" },
+      { key: "pipeline", label: "생성 파이프라인", component: "noteflowPipeline" },
     ],
     tech: [
       {
