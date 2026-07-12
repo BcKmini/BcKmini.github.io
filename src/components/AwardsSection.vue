@@ -1,5 +1,6 @@
 <script setup>
 import { awards } from "../data/awards";
+import { isOngoing } from "../composables/useOngoing";
 import { vReveal } from "../composables/useReveal";
 </script>
 
@@ -21,6 +22,7 @@ import { vReveal } from "../composables/useReveal";
               <a v-if="a.link" :href="a.link" target="_blank" rel="noopener">{{ a.title }} ↗</a>
               <template v-else>{{ a.title }}</template>
               <em v-if="a.tag" class="tag" :class="`tag-${a.tag.type}`">{{ a.tag.text }}</em>
+              <span v-if="isOngoing(a)" class="live-pill"><span class="live-pill-dot"></span>진행중</span>
             </h3>
             <p v-if="a.host" class="row-host">{{ a.host }}</p>
             <p>{{ a.desc }}</p>
