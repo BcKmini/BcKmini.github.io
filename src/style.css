@@ -1077,7 +1077,7 @@ html.snap-suspend { scroll-snap-type: none !important; }
 .rows-in-term .row:last-child { border-bottom: none; }
 
 .row:last-child { border-bottom: 1px solid var(--border); }
-.row-date { flex-shrink: 0; width: 150px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 0.78rem; color: var(--muted); padding-top: 3px; }
+.row-date { flex-shrink: 0; width: 150px; font-size: 0.78rem; color: var(--muted); padding-top: 3px; }
 .row-body h3 { font-size: 0.98rem; font-weight: 600; display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
 .row-body h3 a:hover { color: var(--accent); }
 .row-body p { font-size: 0.88rem; color: var(--muted); margin-top: 2px; }
