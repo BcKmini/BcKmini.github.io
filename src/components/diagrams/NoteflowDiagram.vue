@@ -18,7 +18,7 @@
       <line x1="510" y1="58" x2="510" y2="94" stroke="var(--muted)" marker-end="url(#ar-nf)"/>
       <rect x="24" y="98" width="592" height="58" rx="10" fill="var(--bg)" stroke="var(--border)"/>
       <text x="320" y="122" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text)">FastAPI Backend</text>
-      <text x="320" y="141" text-anchor="middle" font-size="10" fill="var(--muted)">auth · note · folder · file 라우터 — Background Tasks 비동기 처리</text>
+      <text x="320" y="141" text-anchor="middle" font-size="10" fill="var(--muted)">auth · note · folder · file 라우터 — StreamingResponse로 순차 전달</text>
       <line x1="124" y1="156" x2="124" y2="192" stroke="var(--muted)" marker-end="url(#ar-nf)"/>
       <line x1="334" y1="156" x2="334" y2="192" stroke="var(--muted)" marker-end="url(#ar-nf)"/>
       <line x1="530" y1="156" x2="530" y2="192" stroke="var(--muted)" marker-end="url(#ar-nf)"/>
@@ -30,8 +30,8 @@
         <text x="334" y="218" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--accent)">OCR 엔진</text>
         <text x="334" y="236" text-anchor="middle" font-size="10" fill="var(--muted)">PyMuPDF · Tesseract</text>
         <rect x="444" y="196" width="172" height="54" rx="10" fill="var(--bg)" stroke="var(--accent)"/>
-        <text x="530" y="218" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--accent)">LLM · LangChain</text>
-        <text x="530" y="236" text-anchor="middle" font-size="10" fill="var(--muted)">요약 · 예상 문제 생성</text>
+        <text x="530" y="218" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--accent)">LLM 추론</text>
+        <text x="530" y="236" text-anchor="middle" font-size="10" fill="var(--muted)">LangChain 요약 · Qwen3-4B 문제 생성</text>
       </g>
       <line x1="320" y1="250" x2="320" y2="286" stroke="var(--muted)" marker-end="url(#ar-nf)"/>
       <rect x="200" y="290" width="240" height="52" rx="10" fill="var(--bg)" stroke="var(--border)"/>

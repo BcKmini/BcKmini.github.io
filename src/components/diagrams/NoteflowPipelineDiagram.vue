@@ -20,9 +20,9 @@
       <line x1="310" y1="307" x2="326" y2="307" stroke="var(--muted)" marker-end="url(#ar-nfp)"/>
       <rect x="330" y="280" width="286" height="54" rx="10" fill="var(--bg)" stroke="var(--border)"/>
       <text x="473" y="302" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--text)">예상 문제 생성</text>
-      <text x="473" y="320" text-anchor="middle" font-size="10" fill="var(--muted)">Few-shot + Self-Refinement</text>
+      <text x="473" y="320" text-anchor="middle" font-size="10" fill="var(--muted)">핵심 요점 추출 + JSON 강제 프롬프트</text>
       <line x1="320" y1="334" x2="320" y2="346" stroke="var(--muted)" marker-end="url(#ar-nfp)"/>
-      <text x="320" y="364" text-anchor="middle" font-size="10" fill="var(--muted)">→ 노트로 저장, 오류율 15%↓ · 생성 지연 20초 이내</text>
+      <text x="320" y="364" text-anchor="middle" font-size="10" fill="var(--muted)">→ 노트로 저장, 생성 지연 20초 이내</text>
     </svg>
   </div>
 </template>
