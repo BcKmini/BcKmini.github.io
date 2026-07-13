@@ -64,7 +64,7 @@ function onLeave(e) {
           <p class="tout">김경민 (KYOUNGMIN KIM)</p>
           <p class="tline"><span class="tprompt">$</span> cat about.txt</p>
           <p class="tout tout-desc">
-            만들고 고치는 걸 좋아하는 개발자입니다 🙂 편하게 둘러보고 가세요!
+            서비스를 떠받치는 인프라가 궁금한 개발자입니다 🙂 편하게 둘러보고 가세요!
           </p>
           <p class="tline"><span class="tprompt">$</span> cat contact.env<span class="tcursor"></span></p>
         </div>
