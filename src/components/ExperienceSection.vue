@@ -28,14 +28,14 @@ const { t } = useLocale();
           <div class="git-content">
             <p class="git-meta">
               <span class="git-date">{{ item.date }}</span>
-              <span v-if="isOngoing(item)" class="live-pill"><span class="live-pill-dot"></span>진행중</span>
+              <span v-if="isOngoing(item)" class="live-pill"><span class="live-pill-dot"></span>{{ t("진행중", "Ongoing") }}</span>
             </p>
             <h3>
-              {{ item.title }}
-              <em v-if="item.type" class="tag tag-accent">{{ item.type }}</em>
+              {{ t(item.title, item.title_en) }}
+              <em v-if="item.type" class="tag tag-accent">{{ t(item.type, item.type_en) }}</em>
             </h3>
-            <p v-if="item.descHtml" v-html="item.descHtml"></p>
-            <p v-else>{{ item.desc }}</p>
+            <p v-if="item.descHtml" v-html="t(item.descHtml, item.descHtml_en)"></p>
+            <p v-else>{{ t(item.desc, item.desc_en) }}</p>
           </div>
         </li>
       </ul>
