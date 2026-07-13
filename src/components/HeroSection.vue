@@ -1,10 +1,12 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useSectionNav } from "../composables/useSectionNav";
+import { useLocale } from "../composables/useLocale";
 
 const avatar = "/assets/profile.png";
 const show = ref(false);
 const { activeKey, jump } = useSectionNav();
+const { t } = useLocale();
 
 const toast = ref(null);
 let toastTimer = null;
@@ -44,7 +46,7 @@ function onLeave(e) {
 </script>
 
 <template>
-  <div class="hero" data-snap-section data-key="hero" data-label="홈">
+  <div class="hero" data-snap-section data-key="hero" :data-label="t('홈', 'Home')">
     <div class="hero-blobs" aria-hidden="true">
       <span class="blob blob-a"></span>
       <span class="blob blob-b"></span>
@@ -61,10 +63,10 @@ function onLeave(e) {
         </div>
         <div class="hero-term-body">
           <p class="tline"><span class="tprompt">$</span> whoami</p>
-          <p class="tout">김경민 (KYOUNGMIN KIM)</p>
+          <p class="tout">{{ t("김경민 (KYOUNGMIN KIM)", "Kyoungmin Kim") }}</p>
           <p class="tline"><span class="tprompt">$</span> cat about.txt</p>
           <p class="tout tout-desc">
-            방문해주셔서 감사합니다 🙂
+            {{ t("방문해주셔서 감사합니다 🙂", "Thanks for stopping by 🙂") }}
           </p>
           <p class="tline"><span class="tprompt">$</span> cat contact.env<span class="tcursor"></span></p>
         </div>
@@ -91,7 +93,7 @@ function onLeave(e) {
 
     <Transition name="copy-toast-fade">
       <div v-if="toast" class="copy-toast">
-        <span class="copy-toast-dot"></span>{{ toast }} 클립보드에 복사됨
+        <span class="copy-toast-dot"></span>{{ toast }} {{ t("클립보드에 복사됨", "copied to clipboard") }}
       </div>
     </Transition>
 
@@ -101,14 +103,14 @@ function onLeave(e) {
         <span class="term-dot term-dot-amber"></span>
         <span class="term-dot term-dot-green"></span>
       </div>
-      <img class="avatar" :src="avatar" alt="김경민 프로필 사진" />
+      <img class="avatar" :src="avatar" :alt="t('김경민 프로필 사진', 'Kyoungmin Kim profile photo')" />
     </div>
 
     <button
       type="button"
       class="scroll-cue"
       :class="{ hide: activeKey !== 'hero' }"
-      aria-label="다음 섹션으로 스크롤"
+      :aria-label="t('다음 섹션으로 스크롤', 'Scroll to next section')"
       @click="jump(1)"
     >
       <span class="scroll-cue-label">Scroll</span>

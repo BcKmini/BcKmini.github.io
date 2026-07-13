@@ -81,5 +81,7 @@ export const stackNotes = [
     cat: "aitools",
     label: "Harness",
     text: "Claude Code 기반 멀티 에이전트·서브에이전트 워크플로우로 반복 작업을 자동화하고, Cursor·Copilot·Gemini·Codex를 상황에 맞게 병행하는 AI 하네스 엔지니어링을 실습하고 있습니다.",
+    text_en:
+      "Practicing AI harness engineering: automating repetitive work with Claude Code-based multi-agent/sub-agent workflows, while mixing in Cursor, Copilot, Gemini, and Codex depending on the task.",
   },
 ];

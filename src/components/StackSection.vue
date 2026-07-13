@@ -2,7 +2,9 @@
 import { ref, computed } from "vue";
 import { categories, stack, stackNotes } from "../data/stack";
 import { vReveal } from "../composables/useReveal";
+import { useLocale } from "../composables/useLocale";
 
+const { t } = useLocale();
 const active = ref("all");
 
 const visibleStack = computed(() =>
@@ -18,8 +20,8 @@ function onError(e) {
 </script>
 
 <template>
-  <div class="section" v-reveal data-snap-section data-key="stack" data-label="스택">
-    <h2 class="sec"><span>01.</span> 기술 스택</h2>
+  <div class="section" v-reveal data-snap-section data-key="stack" :data-label="t('스택', 'Stack')">
+    <h2 class="sec"><span>01.</span> {{ t("기술 스택", "Tech Stack") }}</h2>
 
     <div class="stack-filters">
       <button
@@ -48,7 +50,7 @@ function onError(e) {
         </ul>
 
         <div v-if="visibleNotes.length" class="skill-notes stack-notes">
-          <p v-for="n in visibleNotes" :key="n.label"><b>{{ n.label }}</b> {{ n.text }}</p>
+          <p v-for="n in visibleNotes" :key="n.label"><b>{{ n.label }}</b> {{ t(n.text, n.text_en) }}</p>
         </div>
       </div>
     </div>

@@ -2,9 +2,11 @@
 import { ref, watch, nextTick } from "vue";
 import { useTab } from "../composables/useTab";
 import { useTheme } from "../composables/useTheme";
+import { useLocale } from "../composables/useLocale";
 
 const { tab, goTo } = useTab();
 const { isDark, toggle } = useTheme();
+const { locale, toggleLocale } = useLocale();
 
 const navLinks = [
   { key: "home", label: "~/home" },
@@ -63,6 +65,9 @@ function runCommand() {
       <span class="term-dot term-dot-amber"></span>
       <span class="term-dot term-dot-green"></span>
       <span class="term-bar-title">mini@portfolio: ~</span>
+      <button class="lang-toggle" :aria-label="locale === 'ko' ? 'Switch to English' : '한국어로 전환'" @click="toggleLocale">
+        <span class="lang-icon">{{ locale === "ko" ? "EN" : "KO" }}</span>
+      </button>
       <button class="theme-toggle" :aria-label="isDark ? '라이트 모드로 전환' : '다크 모드로 전환'" @click="toggle">
         <span class="theme-icon">{{ isDark ? "☾" : "☀" }}</span>
       </button>

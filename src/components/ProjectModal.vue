@@ -12,9 +12,11 @@ import BirdErdDiagram from "./diagrams/BirdErdDiagram.vue";
 import BirdCacheDiagram from "./diagrams/BirdCacheDiagram.vue";
 import MedicalDiagram from "./diagrams/MedicalDiagram.vue";
 import MedicalErdDiagram from "./diagrams/MedicalErdDiagram.vue";
+import { useLocale } from "../composables/useLocale";
 
 const props = defineProps({ project: { type: Object, required: true } });
 const emit = defineEmits(["close"]);
+const { t } = useLocale();
 
 const diagramComponents = {
   noteflow: NoteflowDiagram,
@@ -60,29 +62,29 @@ onUnmounted(() => {
         <span class="term-dot term-dot-amber"></span>
         <span class="term-dot term-dot-green"></span>
         <span class="term-bar-title">{{ project.service }}</span>
-        <button class="modal-close" aria-label="닫기" @click="emit('close')">✕</button>
+        <button class="modal-close" :aria-label="t('닫기', 'Close')" @click="emit('close')">✕</button>
       </div>
       <div class="modal-content">
         <p class="m-num">Project {{ project.num }} · <span class="svc-status-inline">active (exited)</span></p>
-        <h3>{{ project.title }}</h3>
-        <p class="m-meta">{{ project.meta }}</p>
+        <h3>{{ t(project.title, project.title_en) }}</h3>
+        <p class="m-meta">{{ t(project.meta, project.meta_en) }}</p>
 
         <p class="term-label"><span class="tprompt">$</span> cat description.md</p>
-        <p class="m-desc">{{ project.desc }}</p>
+        <p class="m-desc">{{ t(project.desc, project.desc_en) }}</p>
         <ul class="chips">
           <li v-for="c in project.chips" :key="c">{{ c }}</li>
         </ul>
 
         <p class="term-label"><span class="tprompt">$</span> ./metrics.sh</p>
         <ul class="m-stats">
-          <li v-for="s in project.stats" :key="s.label"><b>{{ s.value }}</b><span>{{ s.label }}</span></li>
+          <li v-for="s in project.stats" :key="s.label"><b>{{ s.value }}</b><span>{{ t(s.label, s.label_en) }}</span></li>
         </ul>
 
         <figure v-if="project.thumb" class="m-shot">
-          <img :src="project.thumb" :alt="project.title + ' 화면'" loading="lazy" @error="($event) => ($event.target.closest('figure').style.display = 'none')" />
+          <img :src="project.thumb" :alt="t(project.title, project.title_en) + t(' 화면', ' screenshot')" loading="lazy" @error="($event) => ($event.target.closest('figure').style.display = 'none')" />
         </figure>
 
-        <h4>아키텍처 &amp; 데이터 모델</h4>
+        <h4>{{ t("아키텍처 & 데이터 모델", "Architecture & Data Model") }}</h4>
         <div class="diagram-tabs">
           <button
             v-for="d in project.diagrams"
@@ -91,19 +93,19 @@ onUnmounted(() => {
             class="filter-chip"
             :class="{ active: activeDiagram === d.key }"
             @click="activeDiagram = d.key"
-          >{{ d.label }}</button>
+          >{{ t(d.label, d.label_en) }}</button>
         </div>
         <component :is="DiagramComp" />
 
-        <h4>사용 기술과 이유</h4>
+        <h4>{{ t("사용 기술과 이유", "Tech Choices & Reasoning") }}</h4>
         <dl class="tech-dl">
-          <template v-for="t in project.tech" :key="t.name">
-            <dt>{{ t.name }}</dt>
-            <dd>{{ t.desc }}</dd>
+          <template v-for="item in project.tech" :key="item.name">
+            <dt>{{ item.name }}</dt>
+            <dd>{{ t(item.desc, item.desc_en) }}</dd>
           </template>
         </dl>
 
-        <a class="m-link" :href="project.link" target="_blank" rel="noopener">GitHub에서 보기 ↗</a>
+        <a class="m-link" :href="project.link" target="_blank" rel="noopener">{{ t("GitHub에서 보기", "View on GitHub") }} ↗</a>
       </div>
     </div>
   </div>

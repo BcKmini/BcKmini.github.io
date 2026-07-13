@@ -1,8 +1,10 @@
 <script setup>
 import { ref } from "vue";
+import { useLocale } from "../composables/useLocale";
 
 defineProps({ project: { type: Object, required: true } });
 const emit = defineEmits(["open"]);
+const { t } = useLocale();
 
 const expanded = ref(false);
 
@@ -36,7 +38,7 @@ function openLink(e, url) {
       @keydown.enter.prevent="emit('open', project)"
       @keydown.space.prevent="emit('open', project)"
     >
-      <span>{{ project.tag }}</span>
+      <span>{{ t(project.tag, project.tag_en) }}</span>
       <img v-if="project.thumb" :src="project.thumb" alt="" loading="lazy" @error="onImgError" />
 
       <div class="svc-badge">
@@ -54,13 +56,13 @@ function openLink(e, url) {
           class="proj-open"
           :class="{ 'is-open': expanded }"
           :aria-expanded="expanded"
-          aria-label="상세 내용 펼치기"
+          :aria-label="t('상세 내용 펼치기', 'Expand details')"
           @click="expanded = !expanded"
         >⌄</button>
       </div>
-      <h3>{{ project.title }}</h3>
-      <p class="proj-card-meta">{{ project.meta }}</p>
-      <p class="proj-card-desc" :class="{ clamp: !expanded }">{{ project.desc }}</p>
+      <h3>{{ t(project.title, project.title_en) }}</h3>
+      <p class="proj-card-meta">{{ t(project.meta, project.meta_en) }}</p>
+      <p class="proj-card-desc" :class="{ clamp: !expanded }">{{ t(project.desc, project.desc_en) }}</p>
 
       <div class="proj-expand" :class="{ open: expanded }">
         <div class="proj-expand-inner">
@@ -68,10 +70,10 @@ function openLink(e, url) {
             <li v-for="c in project.chips" :key="c">{{ c }}</li>
           </ul>
           <div class="cr-foot">
-            <span class="cr-metric" v-if="project.stats[0]"><b>{{ project.stats[0].value }}</b>{{ project.stats[0].label }}</span>
+            <span class="cr-metric" v-if="project.stats[0]"><b>{{ project.stats[0].value }}</b>{{ t(project.stats[0].label, project.stats[0].label_en) }}</span>
             <button type="button" class="cr-link" @click="openLink($event, project.link)">source ↗</button>
             <button type="button" class="cr-view" @click="emit('open', project)">
-              자세히 보기<span class="cr-view-icon">＋</span>
+              {{ t("자세히 보기", "View details") }}<span class="cr-view-icon">＋</span>
             </button>
           </div>
         </div>
