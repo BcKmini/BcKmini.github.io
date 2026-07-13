@@ -1,8 +1,10 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
 import { useBootSequence } from "../composables/useBootSequence";
+import { useLocale } from "../composables/useLocale";
 
-const { BOOT_LINES, done, skip, finish } = useBootSequence();
+const { locale, t } = useLocale();
+const { BOOT_LINES, done, skip, finish } = useBootSequence(locale.value);
 const rendered = ref([]); // 화면에 그려진 줄들 (완성된 텍스트만)
 const typingLine = ref(""); // 현재 타이핑 중인 줄
 const typingType = ref("cmd");
@@ -90,7 +92,7 @@ onUnmounted(() => {
           {{ typingLine }}<span class="boot-cursor"></span>
         </p>
       </div>
-      <button type="button" class="boot-skip" @click.stop="skipNow">건너뛰기 →</button>
+      <button type="button" class="boot-skip" @click.stop="skipNow">{{ t("건너뛰기 →", "Skip →") }}</button>
     </div>
   </div>
 </template>

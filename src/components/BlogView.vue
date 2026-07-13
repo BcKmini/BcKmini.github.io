@@ -1,6 +1,9 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { useGiscus } from "../composables/useGiscus";
+import { useLocale } from "../composables/useLocale";
+
+const { t } = useLocale();
 
 const VELOG_RSS = "https://api.rss2json.com/v1/api.json?rss_url=" +
   encodeURIComponent("https://v2.velog.io/rss/@mi_nini");
@@ -77,8 +80,8 @@ onMounted(async () => {
   <section class="tab-panel active">
     <div class="blog-head">
       <p class="eyebrow">Writing</p>
-      <h1>블로그</h1>
-      <p class="lede">배운 것을 기록합니다. 최근 10개의 글만 표시되며, 더 많은 글은 Velog에서 볼 수 있습니다.</p>
+      <h1>{{ t("블로그", "Blog") }}</h1>
+      <p class="lede">{{ t("배운 것을 기록합니다. 최근 10개의 글만 표시되며, 더 많은 글은 Velog에서 볼 수 있습니다.", "A record of what I've learned. Only the latest 10 posts are shown here — more are on Velog.") }}</p>
       <a class="inline-link blog-more-link" href="https://velog.io/@mi_nini/posts" target="_blank" rel="noopener">velog.io/@mi_nini ↗</a>
     </div>
 
@@ -89,7 +92,7 @@ onMounted(async () => {
           class="filter-chip"
           :class="{ active: activeSeries === 'all' }"
           @click="activeSeries = 'all'"
-        >all · {{ posts.length }}</button>
+        >{{ t("all", "all") }} · {{ posts.length }}</button>
         <button
           v-for="s in seriesList"
           :key="s"
@@ -101,8 +104,8 @@ onMounted(async () => {
       </div>
 
       <div v-if="posts.length" class="blog-sort">
-        <button type="button" class="filter-chip" :class="{ active: sortOrder === 'new' }" @click="sortOrder = 'new'">최신순</button>
-        <button type="button" class="filter-chip" :class="{ active: sortOrder === 'old' }" @click="sortOrder = 'old'">오래된순</button>
+        <button type="button" class="filter-chip" :class="{ active: sortOrder === 'new' }" @click="sortOrder = 'new'">{{ t("최신순", "Newest") }}</button>
+        <button type="button" class="filter-chip" :class="{ active: sortOrder === 'old' }" @click="sortOrder = 'old'">{{ t("오래된순", "Oldest") }}</button>
       </div>
     </div>
 
@@ -114,12 +117,12 @@ onMounted(async () => {
         <span class="term-bar-title">tail -n 10 velog.log</span>
       </div>
       <div class="blog-grid">
-        <p v-if="status === 'loading'" class="status-text">글을 불러오는 중…</p>
+        <p v-if="status === 'loading'" class="status-text">{{ t("글을 불러오는 중…", "Loading posts…") }}</p>
         <p v-else-if="status === 'error'" class="status-text">
-          글을 불러오지 못했습니다.
-          <a class="inline-link" href="https://velog.io/@mi_nini/posts" target="_blank" rel="noopener">Velog에서 보기 ↗</a>
+          {{ t("글을 불러오지 못했습니다.", "Failed to load posts.") }}
+          <a class="inline-link" href="https://velog.io/@mi_nini/posts" target="_blank" rel="noopener">{{ t("Velog에서 보기 ↗", "View on Velog ↗") }}</a>
         </p>
-        <p v-else-if="!filtered.length" class="status-text">해당 시리즈의 글이 없습니다.</p>
+        <p v-else-if="!filtered.length" class="status-text">{{ t("해당 시리즈의 글이 없습니다.", "No posts in this series.") }}</p>
         <template v-else>
           <a
             v-for="item in filtered"
@@ -149,8 +152,8 @@ onMounted(async () => {
     </div>
 
     <div class="section guestbook">
-      <h2 class="sec"><span>✍</span> 방명록</h2>
-      <p class="sec-sub">방문 기록을 남겨주세요. GitHub 계정으로 남기며, 영구 저장됩니다.</p>
+      <h2 class="sec"><span>✍</span> {{ t("방명록", "Guestbook") }}</h2>
+      <p class="sec-sub">{{ t("방문 기록을 남겨주세요. GitHub 계정으로 남기며, 영구 저장됩니다.", "Leave a note to mark your visit. Uses your GitHub account and is stored permanently.") }}</p>
       <div ref="giscusEl" class="giscus-wrap"></div>
     </div>
   </section>

@@ -1,11 +1,13 @@
 <script setup>
 import { useSectionNav } from "../composables/useSectionNav";
+import { useLocale } from "../composables/useLocale";
 
 const { sections, activeKey, scrollTo } = useSectionNav();
+const { t } = useLocale();
 </script>
 
 <template>
-  <nav v-if="sections.length" class="section-dots" aria-label="섹션 바로가기">
+  <nav v-if="sections.length" class="section-dots" :aria-label="t('섹션 바로가기', 'Jump to section')">
     <button
       v-for="s in sections"
       :key="s.key"

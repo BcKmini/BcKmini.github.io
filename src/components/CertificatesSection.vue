@@ -1,11 +1,14 @@
 <script setup>
 import { certificates } from "../data/certificates";
 import { vReveal } from "../composables/useReveal";
+import { useLocale } from "../composables/useLocale";
+
+const { t } = useLocale();
 </script>
 
 <template>
-  <div class="section" v-reveal data-snap-section data-key="certs" data-label="자격증">
-    <h2 class="sec"><span>05.</span> 자격증</h2>
+  <div class="section" v-reveal data-snap-section data-key="certs" :data-label="t('자격증', 'Certificates')">
+    <h2 class="sec"><span>05.</span> {{ t("자격증", "Certificates") }}</h2>
     <div class="term-window">
       <div class="term-bar">
         <span class="term-dot term-dot-red"></span>
@@ -17,8 +20,8 @@ import { vReveal } from "../composables/useReveal";
         <li v-for="c in certificates" :key="c.title" class="row">
           <span class="row-date">{{ c.date }}</span>
           <div class="row-body">
-            <h3>{{ c.title }}</h3>
-            <p>{{ c.host }}</p>
+            <h3>{{ t(c.title, c.title_en) }}</h3>
+            <p>{{ t(c.host, c.host_en) }}</p>
           </div>
         </li>
       </ul>
