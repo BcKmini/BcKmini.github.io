@@ -1028,7 +1028,6 @@ html.snap-suspend { scroll-snap-type: none !important; }
   margin-left: -1px;
   background: #22c55e;
   box-shadow: 0 0 0 4px color-mix(in srgb, #22c55e 22%, transparent), 0 0 14px 2px color-mix(in srgb, #22c55e 55%, transparent);
-  animation: pulse-live 1.6s ease-in-out infinite;
 }
 [data-theme="dark"] .git-dot.live { background: #4ade80; box-shadow: 0 0 0 4px color-mix(in srgb, #4ade80 25%, transparent), 0 0 14px 2px color-mix(in srgb, #4ade80 60%, transparent); }
 
