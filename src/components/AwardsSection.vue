@@ -16,7 +16,7 @@ import { vReveal } from "../composables/useReveal";
       </div>
       <ul class="rows rows-in-term">
         <li v-for="a in awards" :key="a.title" class="row" :class="{ 'row-live': isOngoing(a) }">
-          <span class="row-date">{{ a.date }}</span>
+          <span class="row-date"><span class="row-dot" :class="{ live: isOngoing(a) }"></span>{{ a.date }}</span>
           <div class="row-body">
             <h3>
               <a v-if="a.link" :href="a.link" target="_blank" rel="noopener">{{ a.title }} ↗</a>

@@ -1100,7 +1100,10 @@ html.snap-suspend { scroll-snap-type: none !important; }
 .rows-in-term .row:last-child { border-bottom: none; }
 
 .row:last-child { border-bottom: 1px solid var(--border); }
-.row-date { flex-shrink: 0; width: 150px; font-size: 0.78rem; color: var(--muted); padding-top: 3px; }
+.row-date { flex-shrink: 0; width: 150px; display: flex; align-items: center; gap: 8px; font-size: 0.78rem; color: var(--muted); padding-top: 3px; }
+.row-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+.row-dot.live { width: 12px; height: 12px; margin-left: -1px; background: #22c55e; box-shadow: 0 0 0 4px color-mix(in srgb, #22c55e 22%, transparent), 0 0 14px 2px color-mix(in srgb, #22c55e 55%, transparent); }
+[data-theme="dark"] .row-dot.live { background: #4ade80; box-shadow: 0 0 0 4px color-mix(in srgb, #4ade80 25%, transparent), 0 0 14px 2px color-mix(in srgb, #4ade80 60%, transparent); }
 .row-body h3 { font-size: 0.98rem; font-weight: 600; display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
 .row-body h3 a:hover { color: var(--accent); }
 .row-body p { font-size: 0.88rem; color: var(--muted); margin-top: 2px; }
