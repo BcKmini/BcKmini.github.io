@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 import { useSectionNav } from "../composables/useSectionNav";
 
-const avatar = "/assets/profile.jpg";
+const avatar = "/assets/profile.png";
 const show = ref(false);
 const { activeKey, jump } = useSectionNav();
 
@@ -64,7 +64,7 @@ function onLeave(e) {
           <p class="tout">김경민 (KYOUNGMIN KIM)</p>
           <p class="tline"><span class="tprompt">$</span> cat about.txt</p>
           <p class="tout tout-desc">
-            서비스를 떠받치는 인프라가 궁금한 개발자입니다 🙂 편하게 둘러보고 가세요!
+            방문해주셔서 반갑습니다! 잘 부탁드립니다 🙂
           </p>
           <p class="tline"><span class="tprompt">$</span> cat contact.env<span class="tcursor"></span></p>
         </div>
