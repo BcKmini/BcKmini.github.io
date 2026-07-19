@@ -11,6 +11,18 @@ export const awards = [
     desc_en: "Taking part in an AI-service development hackathon themed \"Expanding Human Potential, Together with AI\" (Team)",
   },
   {
+    start: "2026-06",
+    end: "2026-08",
+    date: "2026.06 – 2026.08",
+    title: "2026 K-AI Contents Award (Track B 솔루션 부문)",
+    title_en: "2026 K-AI Contents Award (Track B — Solution Division)",
+    link: "https://github.com/BcKmini/copycat-watch",
+    host: "주최 KT그룹희망나눔재단 · 주관 KT, KT skylife, genie music, KT cloud, K bank, IAAE(국제인공지능윤리협회)",
+    host_en: "Hosted by KT Group Hope Sharing Foundation · Organized by KT, KT Skylife, Genie Music, KT Cloud, K bank, IAAE",
+    desc: "온라인 이미지 무단 도용 탐지·신고서 자동 생성 서비스 'Copycat Watch' 출품, 결과 발표 예정 (개인)",
+    desc_en: "Submitted 'Copycat Watch,' an AI service that detects unauthorized use of product photos and auto-generates report drafts — results pending (Individual)",
+  },
+  {
     start: "2026-04",
     end: "2026-06",
     date: "2026.04 – 2026.06",
