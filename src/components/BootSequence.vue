@@ -3,8 +3,8 @@ import { ref, onMounted, onUnmounted } from "vue";
 import { useBootSequence } from "../composables/useBootSequence";
 import { useLocale } from "../composables/useLocale";
 
-const { locale, t } = useLocale();
-const { BOOT_LINES, done, skip, finish } = useBootSequence(locale.value);
+const { t } = useLocale();
+const { BOOT_LINES, done, skip, finish } = useBootSequence();
 const rendered = ref([]); // 화면에 그려진 줄들 (완성된 텍스트만)
 const typingLine = ref(""); // 현재 타이핑 중인 줄
 const typingType = ref("cmd");
