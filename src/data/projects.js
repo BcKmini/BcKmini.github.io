@@ -1,5 +1,48 @@
 export const projects = [
   {
+    id: "fowoco",
+    num: "00",
+    label: "FOWOCO",
+    service: "fowoco.service",
+    tag: "HR SaaS Platform",
+    thumb: "/assets/fowoco.jpg",
+    title: "E-9 외국인근로자 HR Operations 'FOWOCO'",
+    title_en: "E-9 Foreign Worker HR Operations Platform 'FOWOCO'",
+    meta: "2026.07 – 2026.08 · Frontend & Infra Lead · 팀 8명",
+    meta_en: "Jul 2026 – Aug 2026 · Frontend & Infra Lead · Team of 8",
+    desc: "Agent가 체류·계약·서류 업무의 절차와 근거를 준비하고, 담당자가 검토·승인·제출을 수행하는 HR 운영 플랫폼",
+    desc_en: "An HR operations platform where an AI agent prepares the process and evidence for stay/contract/document tasks, and staff review, approve, and file them",
+    chips: ["React", "TypeScript", "Spring Boot", "FastAPI", "Kubernetes", "Terraform"],
+    stats: [
+      { value: "138/181", label: "Client 머지 PR (76%)", label_en: "Client merged PRs (76%)" },
+      { value: "25/26", label: "Infra 머지 PR (96%)", label_en: "Infra merged PRs (96%)" },
+    ],
+    diagrams: [{ key: "flow", label: "업무 자동화 흐름", label_en: "Task Automation Flow", component: "fowoco" }],
+    tech: [
+      {
+        name: "데모 시드 상태 조합 버그 진단",
+        desc: "라이브 QA 중 특정 업무카드에서 근로자 보안 링크 발급이 항상 422로 실패하는 걸 발견했습니다. 원인을 추적해보니 데모 시드가 실제 애플리케이션 로직으로는 절대 만들어질 수 없는 상태 조합(승인 이력 없이 WAITING_WORKER)을 만들어내고 있었습니다. 시드의 상태 전이 경로에 승인 단계를 추가하고, 관련 카운트·감사 로그 테스트를 모두 갱신해 수정했습니다.",
+        desc_en: "During live QA I found that issuing a worker security link always failed with 422 on certain task cards. Tracing the cause, the demo seed was generating a state combination the real application logic could never produce (WAITING_WORKER with no approval history). Fixed by adding the missing approval step to the seed's transition path and updating every dependent count/audit-log test.",
+      },
+      {
+        name: "근로자 공개 API 접두사 누락 발견",
+        desc: "위 버그를 실제로 재검증하려고 로그아웃 상태에서 근로자 링크에 직접 접속해보니 이번엔 다른 에러가 떴습니다. 근로자가 로그인 없이 쓰는 공개 API 3개가 다른 컨트롤러와 다르게 /api/v1 접두사 없이 매핑돼 있었고, 보안 설정의 permitAll 규칙도 똑같이 접두사 없이 정의돼 있어 둘끼리는 앞뒤가 맞았지만 클라이언트가 실제로 호출하는 경로와는 어긋나 있었습니다. 기존 통합 테스트도 잘못된 경로를 그대로 테스트하고 있어 잡아내지 못한 케이스였는데, 정적 리뷰가 아니라 실제로 로그아웃 상태로 접속해봐서 찾은 버그입니다.",
+        desc_en: "Re-verifying the fix above by opening a worker link while logged out surfaced a second, different error. Three public APIs workers use without login were mapped without the /api/v1 prefix that every other controller had, and the security config's permitAll rule matched that same wrong prefix — internally consistent, but not what the client actually called. Existing integration tests tested the wrong path too, so nothing caught it; only live, logged-out testing did.",
+      },
+      {
+        name: "k3s 실운영 장애 진단·수정",
+        desc: "Terraform으로 AWS 인프라를 코드화하고 k3s 클러스터에 Traefik으로 HTTPS를 적용해 운영했습니다. 배포 후 livenessProbe 부재, probe timeout 기본값 문제, PVC에 fsGroup이 빠져 파일 업로드가 조용히 실패하는 문제, AI 서버가 메모리 제한에 걸려 OOMKilled 되는 문제 등을 로그와 kubectl 상태로 직접 진단해 하나씩 고쳤고, 모든 워크로드에 resource requests/limits를 설정했습니다.",
+        desc_en: "Codified AWS infra with Terraform and ran HTTPS through Traefik on a k3s cluster. After deploying, I diagnosed and fixed a missing livenessProbe, a too-short default probe timeout, a PVC missing fsGroup that silently broke file uploads, and the AI server getting OOMKilled from its memory limit — all found by reading logs and kubectl status directly — then set resource requests/limits on every workload.",
+      },
+      {
+        name: "mock → 실데이터 전환 + 근로자 보안 링크",
+        desc: "업무함(Case) 화면을 mock 데이터에서 실제 Server API 기반으로 전환하고, 근로자 등록·서류 업로드를 workers API에 연동했습니다. 근로자가 로그인 없이 접근하는 보안 링크 발급·재발급 기능을 만들고 SOLAPI로 실제 SMS 발송까지 연결했습니다. 사이드바에 근로자 메뉴가 아예 빠져 있어 목록 진입 경로가 없던 문제, 대시보드에 근로자 이름 대신 ID만 뜨던 문제 등도 라이브 QA로 찾아 고쳤습니다.",
+        desc_en: "Migrated the task (Case) screen from mock data to the real Server API, and wired worker registration and document uploads to the workers API. Built the no-login worker security link issue/reissue flow and connected it to real SMS delivery via SOLAPI. Also found and fixed issues like a missing worker menu in the sidebar (no way to reach the worker list at all) and the dashboard showing raw IDs instead of worker names — both caught through live QA.",
+      },
+    ],
+    link: "https://github.com/fowoco",
+  },
+  {
     id: "noteflow",
     num: "01",
     label: "NoteFlow",

@@ -12,6 +12,7 @@ import BirdErdDiagram from "./diagrams/BirdErdDiagram.vue";
 import BirdCacheDiagram from "./diagrams/BirdCacheDiagram.vue";
 import MedicalDiagram from "./diagrams/MedicalDiagram.vue";
 import MedicalErdDiagram from "./diagrams/MedicalErdDiagram.vue";
+import FowocoDiagram from "./diagrams/FowocoDiagram.vue";
 import { useLocale } from "../composables/useLocale";
 
 const props = defineProps({ project: { type: Object, required: true } });
@@ -31,6 +32,7 @@ const diagramComponents = {
   birdCache: BirdCacheDiagram,
   medical: MedicalDiagram,
   medicalErd: MedicalErdDiagram,
+  fowoco: FowocoDiagram,
 };
 
 const activeDiagram = ref(props.project.diagrams[0].key);
