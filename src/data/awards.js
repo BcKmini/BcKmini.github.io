@@ -5,6 +5,7 @@ export const awards = [
     date: "2026.07 – 2026.08",
     title: "2026년 제8회 K-디지털 트레이닝 해커톤",
     title_en: "2026 8th K-Digital Training Hackathon",
+    link: "https://github.com/Chunbae-A/deepsogak",
     tag: { text: "아이디어상", text_en: "Idea Award", type: "accent" },
     host: "주최 한국기술교육대학교 직업능력심사평가원 · 주관 고용노동부",
     host_en: "Hosted by KOREATECH Human Resources Development Service · Organized by the Ministry of Employment and Labor",
