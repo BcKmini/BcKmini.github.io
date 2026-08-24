@@ -17,8 +17,31 @@ export const projects = [
       { value: "138/181", label: "Client 머지 PR (76%)", label_en: "Client merged PRs (76%)" },
       { value: "25/26", label: "Infra 머지 PR (96%)", label_en: "Infra merged PRs (96%)" },
     ],
-    diagrams: [{ key: "flow", label: "업무 자동화 흐름", label_en: "Task Automation Flow", component: "fowoco" }],
+    diagrams: [
+      { key: "flow", label: "업무 자동화 흐름", label_en: "Task Automation Flow", component: "fowoco" },
+      { key: "monitoring", label: "모니터링 아키텍처", label_en: "Monitoring Architecture", component: "fowocoMonitoring" },
+    ],
     tech: [
+      {
+        name: "Prometheus+Grafana 모니터링 스택 구축",
+        desc: "fowoco와 분리된 monitoring 네임스페이스에 node-exporter(노드 리소스)·kube-state-metrics(k8s 오브젝트 상태)·Prometheus·Grafana를 새로 올렸습니다. 기존 노드(2 vCPU/8GiB)에 여유가 있는지 kubectl top/describe로 먼저 확인한 뒤 각 컴포넌트 리소스를 20~200m CPU, 30~256Mi 메모리 수준으로 최소화해 설계했고, client/server/ai의 배포 워크플로우가 파일명을 명시해서 apply하는 방식이라 monitoring 매니페스트가 자동배포에 섞이지 않는다는 것도 미리 확인했습니다. 이후 server가 /actuator/prometheus를 Basic Auth로 막도록 바뀌자 Prometheus의 scrape config에도 인증을 붙여 401 없이 계속 수집되게 맞췄습니다.",
+        desc_en: "Stood up node-exporter, kube-state-metrics, Prometheus, and Grafana in a monitoring namespace kept separate from fowoco. Checked node headroom with kubectl top/describe first (2 vCPU/8GiB), then sized each component down to 20-200m CPU / 30-256Mi memory, and confirmed the app deploy workflows apply infra manifests by explicit filename so monitoring wouldn't get swept into auto-deploys. When the server later locked /actuator/prometheus behind Basic Auth, I added matching auth to Prometheus's scrape config so collection kept working without 401s.",
+      },
+      {
+        name: "Promtail 장애 진단 → Grafana Alloy 교체",
+        desc: "메트릭만으로는 부족해 Loki+Promtail로 로그 수집을 추가했는데, Promtail이 'Starting provider' 로그를 찍은 뒤 파드 디스커버리가 완전히 멈추는 문제를 만났습니다. RBAC 권한, API 직접 접근, 로그 파일 글롭 패턴, relabel_configs 제거, 네임스페이스 단일화, 버전 2개(3.2.1/3.6.11)까지 하나씩 배제하며 원인을 좁혔고, 같은 클러스터에서 Prometheus 자체의 kubernetes_sd는 멀쩡히 동작한다는 점에서 Promtail 디스커버리 구현 자체의 문제로 결론 내렸습니다. Promtail이 유지보수 모드로 전환된 프로젝트라 공식 후속인 Grafana Alloy로 교체했고, Alloy는 hostPath 대신 Kubernetes API로 로그를 스트리밍해 노드마다 뜨는 DaemonSet 없이 단일 Deployment로 충분했습니다.",
+        desc_en: "Added Loki+Promtail for log collection since metrics alone weren't enough, then hit pod discovery silently dying right after Promtail logged 'Starting provider.' Narrowed the cause by ruling out RBAC, direct API access, the log-glob pattern, relabel_configs, namespace scoping, and two Promtail versions one at a time — concluding it was Promtail's own discovery implementation, since Prometheus's own kubernetes_sd worked fine on the same cluster. Promtail is in Grafana's maintenance-mode limbo, so I replaced it with the official successor, Alloy, which streams logs via the Kubernetes API instead of hostPath and only needed a single Deployment instead of a per-node DaemonSet.",
+      },
+      {
+        name: "k3s 실운영 장애 진단·수정",
+        desc: "Terraform으로 AWS 인프라를 코드화하고 k3s 클러스터에 Traefik으로 HTTPS를 적용해 운영했습니다. 배포 후 livenessProbe 부재, probe timeout 기본값 문제, PVC에 fsGroup이 빠져 파일 업로드가 조용히 실패하는 문제, AI 서버가 메모리 제한에 걸려 OOMKilled 되는 문제 등을 로그와 kubectl 상태로 직접 진단해 하나씩 고쳤고, 모든 워크로드에 resource requests/limits를 설정했습니다.",
+        desc_en: "Codified AWS infra with Terraform and ran HTTPS through Traefik on a k3s cluster. After deploying, I diagnosed and fixed a missing livenessProbe, a too-short default probe timeout, a PVC missing fsGroup that silently broke file uploads, and the AI server getting OOMKilled from its memory limit — all found by reading logs and kubectl status directly — then set resource requests/limits on every workload.",
+      },
+      {
+        name: "백업 복구 리허설 + 노드 용량 재해석",
+        desc: "DLM이 EBS 스냅샷을 매일 쌓고는 있었지만 실제로 복구되는지 검증된 적이 없어, 별도 dev 인스턴스에서 최신 스냅샷으로 볼륨을 만들어 SSM으로 읽기 전용 마운트해 postgres·서버 파일 데이터가 실제로 온전한지 확인하는 리허설을 직접 진행했습니다(운영 노드는 건드리지 않음). 리사이즈 이전 스냅샷은 예전 용량으로 복구된다는 점 등 세부 함정까지 확인하고 런북으로 남겼습니다. 별개로, `kubectl describe node`의 limits 합계만 보고 'CPU 여유가 없다'고 오판했던 걸 스케줄러는 requests만 본다는 사실을 다시 확인해 정정했고, `kubectl top`으로 실사용량이 노드 대비 3%에 불과하다는 걸 실측으로 남겨 근거 없는 리사이즈를 막았습니다.",
+        desc_en: "DLM was piling up daily EBS snapshots, but nobody had verified they could actually be restored — so I ran the drill myself: spun up a volume from the latest snapshot on a separate dev instance, mounted it read-only via SSM, and confirmed the postgres and server file data was intact (production node untouched throughout). Documented the gotchas as a runbook, including that a pre-resize snapshot restores at the old, smaller size. Separately, I'd misread `kubectl describe node`'s limits total as \"no CPU headroom left\" — caught and corrected that by remembering the scheduler only looks at requests, then backed it with `kubectl top` showing real usage at 3% of the node, which headed off an unnecessary resize.",
+      },
       {
         name: "데모 시드 상태 조합 버그 진단",
         desc: "라이브 QA 중 특정 업무카드에서 근로자 보안 링크 발급이 항상 422로 실패하는 걸 발견했습니다. 원인을 추적해보니 데모 시드가 실제 애플리케이션 로직으로는 절대 만들어질 수 없는 상태 조합(승인 이력 없이 WAITING_WORKER)을 만들어내고 있었습니다. 시드의 상태 전이 경로에 승인 단계를 추가하고, 관련 카운트·감사 로그 테스트를 모두 갱신해 수정했습니다.",
@@ -28,11 +51,6 @@ export const projects = [
         name: "근로자 공개 API 접두사 누락 발견",
         desc: "위 버그를 실제로 재검증하려고 로그아웃 상태에서 근로자 링크에 직접 접속해보니 이번엔 다른 에러가 떴습니다. 근로자가 로그인 없이 쓰는 공개 API 3개가 다른 컨트롤러와 다르게 /api/v1 접두사 없이 매핑돼 있었고, 보안 설정의 permitAll 규칙도 똑같이 접두사 없이 정의돼 있어 둘끼리는 앞뒤가 맞았지만 클라이언트가 실제로 호출하는 경로와는 어긋나 있었습니다. 기존 통합 테스트도 잘못된 경로를 그대로 테스트하고 있어 잡아내지 못한 케이스였는데, 정적 리뷰가 아니라 실제로 로그아웃 상태로 접속해봐서 찾은 버그입니다.",
         desc_en: "Re-verifying the fix above by opening a worker link while logged out surfaced a second, different error. Three public APIs workers use without login were mapped without the /api/v1 prefix that every other controller had, and the security config's permitAll rule matched that same wrong prefix — internally consistent, but not what the client actually called. Existing integration tests tested the wrong path too, so nothing caught it; only live, logged-out testing did.",
-      },
-      {
-        name: "k3s 실운영 장애 진단·수정",
-        desc: "Terraform으로 AWS 인프라를 코드화하고 k3s 클러스터에 Traefik으로 HTTPS를 적용해 운영했습니다. 배포 후 livenessProbe 부재, probe timeout 기본값 문제, PVC에 fsGroup이 빠져 파일 업로드가 조용히 실패하는 문제, AI 서버가 메모리 제한에 걸려 OOMKilled 되는 문제 등을 로그와 kubectl 상태로 직접 진단해 하나씩 고쳤고, 모든 워크로드에 resource requests/limits를 설정했습니다.",
-        desc_en: "Codified AWS infra with Terraform and ran HTTPS through Traefik on a k3s cluster. After deploying, I diagnosed and fixed a missing livenessProbe, a too-short default probe timeout, a PVC missing fsGroup that silently broke file uploads, and the AI server getting OOMKilled from its memory limit — all found by reading logs and kubectl status directly — then set resource requests/limits on every workload.",
       },
       {
         name: "mock → 실데이터 전환 + 근로자 보안 링크",
