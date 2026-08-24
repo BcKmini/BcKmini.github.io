@@ -8,11 +8,11 @@ export const projects = [
     thumb: "/assets/fowoco.jpg",
     title: "E-9 외국인근로자 HR Operations 'FOWOCO'",
     title_en: "E-9 Foreign Worker HR Operations Platform 'FOWOCO'",
-    meta: "2026.07 – 2026.08 · Frontend & Infra Lead · 팀 8명",
-    meta_en: "Jul 2026 – Aug 2026 · Frontend & Infra Lead · Team of 8",
+    meta: "2026.07 – 2026.08 · Frontend 핵심개발 + Infra 전담(DevOps/SRE) · 팀 8명",
+    meta_en: "Jul 2026 – Aug 2026 · Frontend core dev + sole Infra owner (DevOps/SRE) · Team of 8",
     desc: "Agent가 체류·계약·서류 업무의 절차와 근거를 준비하고, 담당자가 검토·승인·제출을 수행하는 HR 운영 플랫폼",
     desc_en: "An HR operations platform where an AI agent prepares the process and evidence for stay/contract/document tasks, and staff review, approve, and file them",
-    chips: ["React", "TypeScript", "Spring Boot", "FastAPI", "Kubernetes", "Terraform"],
+    chips: ["React", "TypeScript", "Spring Boot", "AWS", "Terraform", "Kubernetes (k3s)", "Prometheus/Grafana"],
     stats: [
       { value: "138/181", label: "Client 머지 PR (76%)", label_en: "Client merged PRs (76%)" },
       { value: "25/26", label: "Infra 머지 PR (96%)", label_en: "Infra merged PRs (96%)" },
@@ -23,6 +23,11 @@ export const projects = [
     ],
     tech: [
       {
+        name: "Terraform으로 AWS 인프라 전체 코드화",
+        desc: "콘솔에서 수동으로 만들어져 있던 AWS 리소스(EC2 메인 k3s 노드 + 개발용 인스턴스, 보안그룹, IAM 역할, DLM 백업 정책, CloudWatch 알람, SNS, Budgets)를 terraform import로 하나도 새로 만들거나 지우지 않고 그대로 state에 편입시켰습니다(plan 결과 0 to add, 0 to destroy). DLM이 백업 대상을 찾는 기준이 root volume의 fowoco-backup=daily 태그라는 걸 확인해 코드에 명시적으로 박아 태그 누락으로 인한 백업 유실을 막았고, 보안그룹 규칙에 description을 붙이면 AWS 프로바이더가 이를 delete+recreate로 처리해 라이브 SG가 순간 끊긴다는 걸 알고 일부러 비워뒀습니다. state 파일은 리소스 속성이 평문으로 담겨 있어 git에는 올리지 않고 별도 백업했습니다.",
+        desc_en: "Brought AWS resources that had been created manually through the console (the main k3s EC2 node plus a dev box, security groups, IAM roles, the DLM backup policy, CloudWatch alarms, SNS, Budgets) into Terraform via `terraform import`, without creating or destroying a single thing (plan showed 0 to add, 0 to destroy). Found that DLM selects backup targets by a `fowoco-backup=daily` tag on the root volume and pinned it explicitly in code so a missing tag can't silently break backups, and deliberately left security-group rule descriptions blank after learning the AWS provider handles description changes as delete+recreate, which would briefly drop a live SG. Kept the state file out of git since it holds resource attributes in plaintext, backing it up separately instead.",
+      },
+      {
         name: "Prometheus+Grafana 모니터링 스택 구축",
         desc: "fowoco와 분리된 monitoring 네임스페이스에 node-exporter(노드 리소스)·kube-state-metrics(k8s 오브젝트 상태)·Prometheus·Grafana를 새로 올렸습니다. 기존 노드(2 vCPU/8GiB)에 여유가 있는지 kubectl top/describe로 먼저 확인한 뒤 각 컴포넌트 리소스를 20~200m CPU, 30~256Mi 메모리 수준으로 최소화해 설계했고, client/server/ai의 배포 워크플로우가 파일명을 명시해서 apply하는 방식이라 monitoring 매니페스트가 자동배포에 섞이지 않는다는 것도 미리 확인했습니다. 이후 server가 /actuator/prometheus를 Basic Auth로 막도록 바뀌자 Prometheus의 scrape config에도 인증을 붙여 401 없이 계속 수집되게 맞췄습니다.",
         desc_en: "Stood up node-exporter, kube-state-metrics, Prometheus, and Grafana in a monitoring namespace kept separate from fowoco. Checked node headroom with kubectl top/describe first (2 vCPU/8GiB), then sized each component down to 20-200m CPU / 30-256Mi memory, and confirmed the app deploy workflows apply infra manifests by explicit filename so monitoring wouldn't get swept into auto-deploys. When the server later locked /actuator/prometheus behind Basic Auth, I added matching auth to Prometheus's scrape config so collection kept working without 401s.",
@@ -31,6 +36,11 @@ export const projects = [
         name: "Promtail 장애 진단 → Grafana Alloy 교체",
         desc: "메트릭만으로는 부족해 Loki+Promtail로 로그 수집을 추가했는데, Promtail이 'Starting provider' 로그를 찍은 뒤 파드 디스커버리가 완전히 멈추는 문제를 만났습니다. RBAC 권한, API 직접 접근, 로그 파일 글롭 패턴, relabel_configs 제거, 네임스페이스 단일화, 버전 2개(3.2.1/3.6.11)까지 하나씩 배제하며 원인을 좁혔고, 같은 클러스터에서 Prometheus 자체의 kubernetes_sd는 멀쩡히 동작한다는 점에서 Promtail 디스커버리 구현 자체의 문제로 결론 내렸습니다. Promtail이 유지보수 모드로 전환된 프로젝트라 공식 후속인 Grafana Alloy로 교체했고, Alloy는 hostPath 대신 Kubernetes API로 로그를 스트리밍해 노드마다 뜨는 DaemonSet 없이 단일 Deployment로 충분했습니다.",
         desc_en: "Added Loki+Promtail for log collection since metrics alone weren't enough, then hit pod discovery silently dying right after Promtail logged 'Starting provider.' Narrowed the cause by ruling out RBAC, direct API access, the log-glob pattern, relabel_configs, namespace scoping, and two Promtail versions one at a time — concluding it was Promtail's own discovery implementation, since Prometheus's own kubernetes_sd worked fine on the same cluster. Promtail is in Grafana's maintenance-mode limbo, so I replaced it with the official successor, Alloy, which streams logs via the Kubernetes API instead of hostPath and only needed a single Deployment instead of a per-node DaemonSet.",
+      },
+      {
+        name: "GitHub Actions 상태체크 + rollout 오탐 진단",
+        desc: "10분마다 도는 GitHub Actions로 HTTP 헬스체크와 kubectl 파드 상태를 함께 확인하는 status-check 워크플로우를 만들었습니다. 클러스터 관리자 kubeconfig 대신 fowoco 네임스페이스 파드 조회만 되는 별도 ServiceAccount를 발급해 secrets 접근이 실제로 Forbidden으로 막히는지 직접 확인 후 등록했고, 10분마다 커밋이 쌓여 main 이력을 어지럽히지 않도록 결과는 별도 status-data 브랜치에만 push했습니다. 이 워크플로우로 ai 서버의 rollout이 반복 실패하는 걸 잡았는데, 코드 문제가 아니라 BGE-M3+reranker 모델이 이미지에 반영되며 크기가 5GB로 커져 노드에 pull하는 데만 7분 넘게 걸리는 게 원인이었습니다(이벤트 로그로 7m22s, 4.97GB 직접 확인). 타임아웃을 180초에서 600초로 늘려 오탐을 없앴습니다.",
+        desc_en: "Built a status-check GitHub Actions workflow that runs every 10 minutes, combining an HTTP health check with actual kubectl pod status. Issued a scoped ServiceAccount (list/get on fowoco-namespace pods only) instead of using the cluster-admin kubeconfig, verifying secrets access was actually Forbidden before wiring it in, and pushed results only to a separate status-data branch so a commit every 10 minutes wouldn't clutter main's history. This workflow caught the ai server's rollout repeatedly failing — not a code problem, but the image growing to ~5GB once the BGE-M3+reranker model got baked in, taking over 7 minutes just to pull (confirmed via event log: 7m22s, 4.97GB). Raised the timeout from 180s to 600s and the false alarm went away.",
       },
       {
         name: "k3s 실운영 장애 진단·수정",
@@ -43,14 +53,9 @@ export const projects = [
         desc_en: "DLM was piling up daily EBS snapshots, but nobody had verified they could actually be restored — so I ran the drill myself: spun up a volume from the latest snapshot on a separate dev instance, mounted it read-only via SSM, and confirmed the postgres and server file data was intact (production node untouched throughout). Documented the gotchas as a runbook, including that a pre-resize snapshot restores at the old, smaller size. Separately, I'd misread `kubectl describe node`'s limits total as \"no CPU headroom left\" — caught and corrected that by remembering the scheduler only looks at requests, then backed it with `kubectl top` showing real usage at 3% of the node, which headed off an unnecessary resize.",
       },
       {
-        name: "데모 시드 상태 조합 버그 진단",
-        desc: "라이브 QA 중 특정 업무카드에서 근로자 보안 링크 발급이 항상 422로 실패하는 걸 발견했습니다. 원인을 추적해보니 데모 시드가 실제 애플리케이션 로직으로는 절대 만들어질 수 없는 상태 조합(승인 이력 없이 WAITING_WORKER)을 만들어내고 있었습니다. 시드의 상태 전이 경로에 승인 단계를 추가하고, 관련 카운트·감사 로그 테스트를 모두 갱신해 수정했습니다.",
-        desc_en: "During live QA I found that issuing a worker security link always failed with 422 on certain task cards. Tracing the cause, the demo seed was generating a state combination the real application logic could never produce (WAITING_WORKER with no approval history). Fixed by adding the missing approval step to the seed's transition path and updating every dependent count/audit-log test.",
-      },
-      {
-        name: "근로자 공개 API 접두사 누락 발견",
-        desc: "위 버그를 실제로 재검증하려고 로그아웃 상태에서 근로자 링크에 직접 접속해보니 이번엔 다른 에러가 떴습니다. 근로자가 로그인 없이 쓰는 공개 API 3개가 다른 컨트롤러와 다르게 /api/v1 접두사 없이 매핑돼 있었고, 보안 설정의 permitAll 규칙도 똑같이 접두사 없이 정의돼 있어 둘끼리는 앞뒤가 맞았지만 클라이언트가 실제로 호출하는 경로와는 어긋나 있었습니다. 기존 통합 테스트도 잘못된 경로를 그대로 테스트하고 있어 잡아내지 못한 케이스였는데, 정적 리뷰가 아니라 실제로 로그아웃 상태로 접속해봐서 찾은 버그입니다.",
-        desc_en: "Re-verifying the fix above by opening a worker link while logged out surfaced a second, different error. Three public APIs workers use without login were mapped without the /api/v1 prefix that every other controller had, and the security config's permitAll rule matched that same wrong prefix — internally consistent, but not what the client actually called. Existing integration tests tested the wrong path too, so nothing caught it; only live, logged-out testing did.",
+        name: "라이브 QA로 찾은 Server 버그 2건",
+        desc: "근로자 보안 링크 발급이 특정 업무카드에서 항상 422로 실패하는 걸 발견해 원인을 추적하니, 데모 시드가 실제 애플리케이션 로직으로는 절대 나올 수 없는 상태 조합(승인 이력 없이 WAITING_WORKER)을 만들고 있었습니다. 시드의 상태 전이 경로에 승인 단계를 추가해 고쳤습니다. 이 수정을 로그아웃 상태로 재검증하다 두 번째 버그를 찾았는데, 근로자가 로그인 없이 쓰는 공개 API 3개가 다른 컨트롤러와 다르게 /api/v1 접두사 없이 매핑돼 있었고 보안 설정의 permitAll 규칙도 똑같이 어긋나 있어 실제 배포 환경에서는 근로자가 링크에 아예 접속할 수 없었습니다. 기존 통합 테스트도 잘못된 경로를 그대로 테스트해 잡아내지 못했던 케이스로, 정적 리뷰가 아니라 실제로 로그아웃 상태로 접속해봐서 찾은 버그입니다.",
+        desc_en: "Found that issuing a worker security link always failed with 422 on certain task cards, and traced it to the demo seed generating a state combination real application logic could never produce (WAITING_WORKER with no approval history) — fixed by adding the missing approval step to the seed's transition path. Re-verifying that fix while logged out surfaced a second bug: three public APIs workers use without login were mapped without the /api/v1 prefix every other controller had, and the security config's permitAll rule matched that same wrong prefix, so in the real deployment workers couldn't reach their links at all. Existing integration tests tested the wrong path too, so nothing caught it — only live, logged-out testing did.",
       },
       {
         name: "mock → 실데이터 전환 + 근로자 보안 링크",

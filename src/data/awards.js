@@ -1,14 +1,15 @@
 export const awards = [
   {
     start: "2026-07",
-    end: "2026-08",
+    end: "2026-07",
     date: "2026.07 – 2026.08",
     title: "2026년 제8회 K-디지털 트레이닝 해커톤",
     title_en: "2026 8th K-Digital Training Hackathon",
+    tag: { text: "아이디어상", text_en: "Idea Award", type: "accent" },
     host: "주최 한국기술교육대학교 직업능력심사평가원 · 주관 고용노동부",
     host_en: "Hosted by KOREATECH Human Resources Development Service · Organized by the Ministry of Employment and Labor",
-    desc: "'AI와 함께, 인간의 가능성을 확장하다'를 주제로 한 AI 활용 서비스 개발 해커톤 참가 (팀)",
-    desc_en: "Taking part in an AI-service development hackathon themed \"Expanding Human Potential, Together with AI\" (Team)",
+    desc: "'AI와 함께, 인간의 가능성을 확장하다'를 주제로 한 AI 활용 서비스 개발 해커톤에서 아이디어상 수상 (팀)",
+    desc_en: "Won the Idea Award at an AI-service development hackathon themed \"Expanding Human Potential, Together with AI\" (Team)",
   },
   {
     start: "2026-06",
