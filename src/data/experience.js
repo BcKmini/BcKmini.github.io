@@ -12,9 +12,9 @@ export const experience = [
       "Mentee on an OpenStack/Kubernetes documentation localization (L10n) project — using the i18n Tracker to find outdated English docs, writing Korean-translation PRs, and going through SIG-Docs team review",
   },
   {
-    start: "2026-06",
-    end: "2026-08",
-    date: "2026.06.29 – 2026.08.26",
+    start: "2026-03",
+    end: "2026-09",
+    date: "2026.03 – 2026.09",
     title: "KT 에이블스쿨(AIVLE) 부트캠프 · AI 트랙",
     title_en: "KT AIVLE School Bootcamp · AI Track",
     desc: "KT의 실무형 AI·DX 인재 양성 부트캠프 트레이니로 참여, AWS·Kubernetes 기반 클라우드 배포 실습과 데이터분석·머신러닝·딥러닝 커리큘럼을 바탕으로 미니·빅 프로젝트를 수행 중",
