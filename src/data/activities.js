@@ -4,9 +4,9 @@ export const activities = [
     title: "인공지능 전문가 양성 마이크로디그리 수료",
     title_en: "AI Specialist Micro-degree — Completed",
     link: "https://github.com/Microdegree-Track",
-    desc: "건국대학교 컴퓨터공학과 마이크로디그리 과정으로 인공지능기초·기계학습·딥러닝·클라우드컴퓨팅·Nano-LAB심화 5개 교과를 이수했습니다. 딥러닝 수업에서는 CNN과 Vision Transformer의 데이터 효율성·강인성(Robustness)을 비교하는 실험을 진행했고, Nano-LAB심화 자유주제 프로젝트로 지금의 포트폴리오 사이트를 직접 구축했습니다.",
+    desc: "대학교 컴퓨터공학과 마이크로디그리 과정으로 인공지능기초·기계학습·딥러닝·클라우드컴퓨팅·Nano-LAB심화 5개 교과를 이수했습니다. 딥러닝 수업에서는 CNN과 Vision Transformer의 데이터 효율성·강인성(Robustness)을 비교하는 실험을 진행했고, Nano-LAB심화 자유주제 프로젝트로 지금의 포트폴리오 사이트를 직접 구축했습니다.",
     desc_en:
-      "Completed a 5-course AI specialist micro-degree at Konkuk University's Computer Science department — AI Fundamentals, Machine Learning, Deep Learning, Cloud Computing, and an advanced Nano-LAB elective. For the Deep Learning course I ran experiments comparing CNN and Vision Transformer on data efficiency and robustness, and for the Nano-LAB elective's open-topic project I built the portfolio site this page is part of.",
+      "Completed a 5-course AI specialist micro-degree in my university's Computer Science department — AI Fundamentals, Machine Learning, Deep Learning, Cloud Computing, and an advanced Nano-LAB elective. For the Deep Learning course I ran experiments comparing CNN and Vision Transformer on data efficiency and robustness, and for the Nano-LAB elective's open-topic project I built the portfolio site this page is part of.",
   },
   {
     date: "2024.05 – 2025.12",
