@@ -20,7 +20,10 @@ const { t } = useLocale();
         <li v-for="a in activities" :key="a.title" class="row">
           <span class="row-date">{{ a.date }}</span>
           <div class="row-body">
-            <h3>{{ t(a.title, a.title_en) }}</h3>
+            <h3>
+              <a v-if="a.link" :href="a.link" target="_blank" rel="noopener">{{ t(a.title, a.title_en) }} ↗</a>
+              <template v-else>{{ t(a.title, a.title_en) }}</template>
+            </h3>
             <p>{{ t(a.desc, a.desc_en) }}</p>
           </div>
         </li>
