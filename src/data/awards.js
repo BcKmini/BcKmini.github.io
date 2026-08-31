@@ -9,8 +9,8 @@ export const awards = [
     tag: { text: "아이디어상", text_en: "Idea Award", type: "accent" },
     host: "주최 한국기술교육대학교 직업능력심사평가원 · 주관 고용노동부",
     host_en: "Hosted by KOREATECH Human Resources Development Service · Organized by the Ministry of Employment and Labor",
-    desc: "'AI와 함께, 인간의 가능성을 확장하다'를 주제로 한 AI 활용 서비스 개발 해커톤에서 아이디어상 수상 (팀)",
-    desc_en: "Won the Idea Award at an AI-service development hackathon themed \"Expanding Human Potential, Together with AI\" (Team)",
+    desc: "'AI와 함께, 인간의 가능성을 확장하다'를 주제로, 공개 웹에서 본인 얼굴이 포함된 사진을 찾아 동일인·딥페이크 여부를 분석해 대응 자료 작성을 돕는 '딥소각'을 팀으로 기획해 아이디어상 수상",
+    desc_en: "Themed \"Expanding Human Potential, Together with AI\" — planned 'Deepsogak' with the team, a service that finds photos of your face on the public web and analyzes them for identity match and deepfake suspicion to help draft a response, winning the Idea Award",
   },
   {
     start: "2026-06",
