@@ -18,9 +18,9 @@ export const experience = [
     date: "2026.03 – 2026.09",
     title: "KT 에이블스쿨(AIVLE) 부트캠프 · AI 트랙",
     title_en: "KT AIVLE School Bootcamp · AI Track",
-    desc: "KT의 실무형 AI·DX 인재 양성 부트캠프 트레이닝으로 참여, AWS·Kubernetes 기반 클라우드 배포 실습과 데이터분석·머신러닝·딥러닝 커리큘럼을 바탕으로 미니·빅 프로젝트를 수행",
+    desc: "고용노동부 K-Digital Training과 KT가 함께 운영하는 국비지원 AI·DX 실무인재 양성 부트캠프. 데이터 처리·분석과 머신러닝/딥러닝으로 시작해 AWS·Kubernetes 기반 클라우드 인프라, 웹 개발·서비스 프레임워크까지 다루는 커리큘럼을 이수하고, 과제 기획부터 시스템 설계·개발·시연까지 전 과정을 직접 수행하는 빅프로젝트로 트레이닝을 마무리",
     desc_en:
-      "Trained in KT's hands-on AI/DX talent bootcamp — practiced AWS/Kubernetes-based cloud deployment and worked through mini/major projects built on a data analysis, ML, and deep learning curriculum",
+      "A government-funded AI/DX bootcamp (K-Digital Training) run jointly by Korea's Ministry of Employment and Labor and KT. Completed a curriculum spanning data processing/analysis, ML/deep learning, and AWS/Kubernetes-based cloud infrastructure and web-service frameworks, capped by a capstone project covering planning, system design, development, and demo",
   },
   {
     start: "2025-01",
