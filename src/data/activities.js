@@ -3,6 +3,7 @@ export const activities = [
     date: "2024.03 – 2025.12",
     title: "인공지능 전문가 양성 마이크로디그리 수료",
     title_en: "AI Specialist Micro-degree — Completed",
+    link: "https://github.com/Microdegree-Track",
     desc: "인공지능기초로 통계적 학습의 기본 원리를 다졌고, 기계학습·딥러닝에서는 CNN과 Vision Transformer의 데이터 효율성·강인성(Robustness) 차이를 실험으로 직접 비교하며 모델을 설계·튜닝하는 감각을 익혔습니다. 클라우드컴퓨팅에서는 학습한 모델을 실제 서비스 환경에 올리는 관점을, Nano-LAB심화에서는 자유주제를 기획부터 구현까지 끝까지 밀어붙이는 방법을 배웠습니다.",
     desc_en:
       "AI Fundamentals grounded me in the basics of statistical learning. Machine Learning and Deep Learning had me directly compare CNN and Vision Transformer on data efficiency and robustness, building a feel for designing and tuning models. Cloud Computing gave me a perspective on getting trained models into real service environments, and the Nano-LAB elective taught me how to carry an open-ended idea from concept to a finished build.",

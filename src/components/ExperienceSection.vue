@@ -31,7 +31,8 @@ const { t } = useLocale();
               <span v-if="isOngoing(item)" class="live-pill"><span class="live-pill-dot"></span>{{ t("진행중", "Ongoing") }}</span>
             </p>
             <h3>
-              {{ t(item.title, item.title_en) }}
+              <a v-if="item.link" :href="item.link" target="_blank" rel="noopener">{{ t(item.title, item.title_en) }} ↗</a>
+              <template v-else>{{ t(item.title, item.title_en) }}</template>
               <em v-if="item.type" class="tag tag-accent">{{ t(item.type, item.type_en) }}</em>
             </h3>
             <p v-if="item.descHtml" v-html="t(item.descHtml, item.descHtml_en)"></p>
