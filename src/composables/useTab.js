@@ -1,6 +1,6 @@
 import { ref } from "vue";
 
-const TABS = ["home", "blog", "stats", "resume"];
+const TABS = ["home", "blog", "stats", "resume", "uses"];
 
 function readTab() {
   const t = new URLSearchParams(location.search).get("tab");

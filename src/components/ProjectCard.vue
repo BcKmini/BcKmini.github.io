@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import { useLocale } from "../composables/useLocale";
 
-defineProps({ project: { type: Object, required: true } });
+defineProps({ project: { type: Object, required: true }, highlighted: { type: Boolean, default: false } });
 const emit = defineEmits(["open"]);
 const { t } = useLocale();
 
@@ -26,7 +26,7 @@ function openLink(e, url) {
 </script>
 
 <template>
-  <article class="proj-card" @mousemove="onMove">
+  <article class="proj-card" :class="{ 'proj-card-highlight': highlighted }" @mousemove="onMove">
     <div
       class="proj-thumb"
       :data-label="project.label"

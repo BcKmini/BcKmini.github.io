@@ -78,7 +78,7 @@ function maxIndex(daily) {
               v-for="(d, i) in stats.daily"
               :key="d.label"
               class="v-col"
-              :data-tip="`${d.label} · ${d.value.toLocaleString()}회`"
+              :data-tip="t(`${d.label} · ${d.value.toLocaleString()}회`, `${d.label} · ${d.value.toLocaleString()} visits`)"
             >
               <span class="v-val" :class="{ show: i === maxIndex(stats.daily) && d.value > 0 }">{{ d.value }}</span>
               <div class="v-bar" :style="{ height: Math.max((d.value / Math.max(...stats.daily.map((x) => x.value), 1)) * 100, 2) + '%' }"></div>

@@ -3,8 +3,10 @@ import { computed, reactive } from "vue";
 import { categories, stack, stackNotes } from "../data/stack";
 import { vReveal } from "../composables/useReveal";
 import { useLocale } from "../composables/useLocale";
+import { useProjectFocus } from "../composables/useProjectFocus";
 
 const { t } = useLocale();
+const { highlightByTech } = useProjectFocus();
 
 const groups = computed(() =>
   categories.map((c) => ({
@@ -59,9 +61,16 @@ function onError(e) {
           <div class="stack-group-collapse">
             <div class="stack-group-collapse-inner">
               <ul class="stack-grid-all">
-                <li v-for="(item, i) in g.items" :key="item.name + i" class="tech">
-                  <img :src="item.icon" alt="" loading="lazy" :class="{ 'inv-dark': item.invert }" @error="onError" />
-                  <span>{{ item.name }}</span>
+                <li v-for="(item, i) in g.items" :key="item.name + i">
+                  <button
+                    type="button"
+                    class="tech"
+                    :title="t(`관련 프로젝트 보기`, `See related projects`)"
+                    @click="highlightByTech(item.name)"
+                  >
+                    <img :src="item.icon" alt="" loading="lazy" :class="{ 'inv-dark': item.invert }" @error="onError" />
+                    <span>{{ item.name }}</span>
+                  </button>
                 </li>
               </ul>
               <div v-if="g.notes.length" class="skill-notes stack-notes">

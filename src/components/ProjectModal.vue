@@ -17,7 +17,7 @@ import FowocoMonitoringDiagram from "./diagrams/FowocoMonitoringDiagram.vue";
 import { useLocale } from "../composables/useLocale";
 
 const props = defineProps({ project: { type: Object, required: true } });
-const emit = defineEmits(["close"]);
+const emit = defineEmits(["close", "navigate"]);
 const { t } = useLocale();
 
 const diagramComponents = {
@@ -47,6 +47,8 @@ const DiagramComp = computed(() => {
 
 function onKeydown(e) {
   if (e.key === "Escape") emit("close");
+  else if (e.key === "ArrowRight") emit("navigate", 1);
+  else if (e.key === "ArrowLeft") emit("navigate", -1);
 }
 onMounted(() => {
   document.body.style.overflow = "hidden";
@@ -66,6 +68,7 @@ onUnmounted(() => {
         <span class="term-dot term-dot-amber"></span>
         <span class="term-dot term-dot-green"></span>
         <span class="term-bar-title">{{ project.service }}</span>
+        <span class="modal-kbd-hint">← →</span>
         <button class="modal-close" :aria-label="t('닫기', 'Close')" @click="emit('close')">✕</button>
       </div>
       <div class="modal-content">

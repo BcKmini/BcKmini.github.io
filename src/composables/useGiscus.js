@@ -1,5 +1,6 @@
 import { watch } from "vue";
 import { useTheme } from "./useTheme";
+import { useLocale } from "./useLocale";
 
 // 배포 후 https://giscus.app 에서 BcKmini/BcKmini.github.io 저장소로 발급받은
 // data-repo-id / data-category-id 값으로 아래 두 줄을 교체해야 방명록이 동작합니다.
@@ -10,13 +11,15 @@ let loaded = false;
 
 export function useGiscus() {
   const { isDark } = useTheme();
+  const { t } = useLocale();
 
   function load(mountEl) {
     if (loaded) return;
     loaded = true;
 
     if (GISCUS_REPO_ID.startsWith("REPLACE")) {
-      mountEl.innerHTML = `<p class="status-text">방명록 설정이 아직 완료되지 않았습니다.</p>`;
+      const msg = t("방명록 설정이 아직 완료되지 않았습니다.", "The guestbook isn't set up yet.");
+      mountEl.innerHTML = `<p class="status-text">${msg}</p>`;
       return;
     }
 
