@@ -729,9 +729,6 @@ main.container { padding: clamp(48px, 8vw, 84px) auto clamp(64px, 11vw, 110px); 
 
 .stack-grid-all { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); gap: 4px; }
 
-.stack-github-chart { display: block; overflow-x: auto; }
-.stack-github-chart img { display: block; width: 100%; min-width: 640px; height: auto; }
-
 .tech {
   display: flex;
   flex-direction: column;
