@@ -1023,7 +1023,7 @@ main.container { padding: clamp(48px, 8vw, 84px) auto clamp(64px, 11vw, 110px); 
 [data-theme="dark"] .m-link { color: #0c0a09; }
 .m-link:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
 
-/* ============ 경험 · 수상 · 자격증 · 교육·활동 — git log 그래프 (커밋처럼 이어지는 타임라인으로 통일) ============ */
+/* ============ 경험 — git log 그래프 ============ */
 .git-log { list-style: none; padding: 8px 22px 18px; }
 
 .git-row { display: flex; gap: 16px; }
@@ -1115,7 +1115,6 @@ main.container { padding: clamp(48px, 8vw, 84px) auto clamp(64px, 11vw, 110px); 
 }
 
 .git-content h3 a:hover { color: var(--accent); }
-.git-content .row-host { font-size: 0.78rem; color: var(--accent); margin-top: 4px; }
 
 .tag { font-size: 0.7rem; font-weight: 500; font-style: normal; padding: 1px 10px; border-radius: 999px; }
 .tag-accent { color: var(--accent); background: var(--accent-soft); }
@@ -1123,6 +1122,84 @@ main.container { padding: clamp(48px, 8vw, 84px) auto clamp(64px, 11vw, 110px); 
 .tag-muted { color: var(--muted); border: 1px solid var(--border); }
 
 @keyframes pulse-live { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.35; transform: scale(0.7); } }
+
+/* ============ 수상 카드 그리드 ============ */
+.award-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+
+.award-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 20px 22px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s;
+}
+.award-card:hover { box-shadow: var(--shadow-lg); border-color: var(--accent); transform: translateY(-2px); }
+.award-card-live { border-color: color-mix(in srgb, #22c55e 45%, var(--border)); }
+
+.award-card-top { display: flex; align-items: center; gap: 8px; }
+.award-date {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-right: auto;
+}
+.award-card h3 { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; }
+.award-card h3 a:hover { color: var(--accent); }
+.award-host { font-size: 0.78rem; color: var(--accent); }
+.award-desc { font-size: 0.86rem; color: var(--muted); line-height: 1.6; }
+
+@media (max-width: 760px) {
+  .award-grid { grid-template-columns: 1fr; }
+}
+
+/* ============ 자격 · 활동 ============ */
+.cred-sub + .cred-sub { margin-top: 36px; }
+
+.cred-sub-title {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+
+.cert-grid { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.cert-badge {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.cert-badge:hover { border-color: var(--accent); transform: translateY(-2px); }
+.cert-badge-title { font-size: 0.88rem; font-weight: 700; }
+.cert-badge-meta { font-size: 0.74rem; color: var(--muted); margin-top: 4px; }
+
+.plain-list { list-style: none; }
+.plain-row { display: flex; gap: 24px; padding: 14px 0; border-top: 1px solid var(--border); }
+.plain-row:last-child { border-bottom: 1px solid var(--border); }
+.plain-row-date {
+  flex-shrink: 0;
+  width: 150px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.76rem;
+  color: var(--muted);
+  padding-top: 2px;
+}
+.plain-row-title { font-size: 0.92rem; font-weight: 600; }
+.plain-row-title a:hover { color: var(--accent); }
+.plain-row-desc { font-size: 0.84rem; color: var(--muted); margin-top: 3px; line-height: 1.6; }
+
+@media (max-width: 640px) {
+  .plain-row { flex-direction: column; gap: 4px; }
+  .plain-row-date { width: auto; }
+}
 
 /* ============ 블로그 ============ */
 .blog-head h1 { font-size: 2.3rem; font-weight: 800; letter-spacing: -0.03em; }

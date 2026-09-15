@@ -5,8 +5,7 @@ import StackSection from "./StackSection.vue";
 import ProjectsSection from "./ProjectsSection.vue";
 import ExperienceSection from "./ExperienceSection.vue";
 import AwardsSection from "./AwardsSection.vue";
-import CertificatesSection from "./CertificatesSection.vue";
-import ActivitiesSection from "./ActivitiesSection.vue";
+import CredentialsSection from "./CredentialsSection.vue";
 import SectionDots from "./SectionDots.vue";
 import { useSectionNav } from "../composables/useSectionNav";
 
@@ -22,8 +21,7 @@ onUnmounted(teardown);
     <ProjectsSection />
     <ExperienceSection />
     <AwardsSection />
-    <CertificatesSection />
-    <ActivitiesSection />
+    <CredentialsSection />
     <SectionDots />
   </section>
 </template>
