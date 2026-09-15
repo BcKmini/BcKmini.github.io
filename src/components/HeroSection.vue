@@ -2,11 +2,13 @@
 import { ref, onMounted } from "vue";
 import { useSectionNav } from "../composables/useSectionNav";
 import { useLocale } from "../composables/useLocale";
+import { useTab } from "../composables/useTab";
 
 const avatar = "/assets/profile.png";
 const show = ref(false);
 const { activeKey, jump } = useSectionNav();
 const { t } = useLocale();
+const { goTo } = useTab();
 
 const toast = ref(null);
 let toastTimer = null;
@@ -82,6 +84,9 @@ function onLeave(e) {
         </a>
         <a href="https://velog.io/@mi_nini/posts" target="_blank" rel="noopener">
           <span class="cfg-key">BLOG</span><span class="cfg-eq">=</span><span class="cfg-val">velog.io/@mi_nini ↗</span>
+        </a>
+        <a href="?tab=resume" @click.prevent="goTo('resume')">
+          <span class="cfg-key">RESUME</span><span class="cfg-eq">=</span><span class="cfg-val">resume.pdf ↓</span>
         </a>
         <button type="button" class="cfg-copy" @click="copyValue('akkn920@naver.com', 'EMAIL')">
           <span class="cfg-key">EMAIL</span><span class="cfg-eq">=</span><span class="cfg-val">akkn920@naver.com</span>

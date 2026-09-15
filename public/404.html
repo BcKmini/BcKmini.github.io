@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>404 — 김경민</title>
+<meta name="robots" content="noindex" />
+<link rel="icon" href="https://avatars.githubusercontent.com/u/151009045?v=4" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    height: 100%;
+    background: #0c0a09;
+    color: #f5f5f4;
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .term-window {
+    width: 100%;
+    max-width: 560px;
+    background: #181513;
+    border: 1px solid #2b2725;
+    border-radius: 12px;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+  }
+  .term-bar {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 14px;
+    background: #1a1614;
+    border-bottom: 1px solid #2b2725;
+    font-size: 0.72rem;
+    color: #a8a29e;
+  }
+  .term-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .term-dot-red { background: #fb7185; margin-left: auto; }
+  .term-dot-amber { background: #fdba74; }
+  .term-dot-green { background: #4ade80; }
+  .term-body { padding: 22px 24px 28px; font-size: 0.86rem; line-height: 1.9; }
+  .prompt { color: #fb7185; }
+  .out { color: #d4d4d2; }
+  .path { color: #c084fc; }
+  a.home-link {
+    display: inline-block;
+    margin-top: 16px;
+    color: #fb7185;
+    text-decoration: none;
+    border-bottom: 1px dashed #fb7185;
+  }
+  a.home-link:hover { color: #fdba74; border-color: #fdba74; }
+  .cursor { display: inline-block; width: 7px; height: 1em; background: #fb7185; vertical-align: -2px; animation: blink 1s step-end infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+</style>
+</head>
+<body>
+  <div class="term-window">
+    <div class="term-bar">
+      <span>mini@portfolio: ~</span>
+      <span class="term-dot term-dot-amber"></span>
+      <span class="term-dot term-dot-green"></span>
+      <span class="term-dot term-dot-red"></span>
+    </div>
+    <div class="term-body">
+      <p><span class="prompt">$</span> cd <span class="path" id="req-path">requested-page</span></p>
+      <p class="out">bash: cd: <span id="req-path-2">requested-page</span>: command not found (404)</p>
+      <p class="out" style="margin-top: 10px;">그 페이지는 없습니다. 홈으로 돌아가세요.</p>
+      <p><a class="home-link" href="/">$ cd ~<span class="cursor"></span></a></p>
+    </div>
+  </div>
+  <script>
+    var p = location.pathname || "/";
+    document.getElementById("req-path").textContent = p;
+    document.getElementById("req-path-2").textContent = p;
+  </script>
+</body>
+</html>

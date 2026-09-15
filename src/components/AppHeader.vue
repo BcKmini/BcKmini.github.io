@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, nextTick } from "vue";
+import { ref, watch, nextTick, onMounted, onUnmounted } from "vue";
 import { useTab } from "../composables/useTab";
 import { useTheme } from "../composables/useTheme";
 import { useLocale } from "../composables/useLocale";
@@ -31,31 +31,65 @@ window.addEventListener("resize", moveThumb);
 // ============ 커맨드 입력 ============
 const cmdInput = ref("");
 const cmdError = ref("");
+const cmdInputEl = ref(null);
 let errorTimer = null;
 
 const COMMANDS = {
   home: "home", about: "home", whoami: "home",
   blog: "blog", posts: "blog", velog: "blog",
   stats: "stats", top: "stats", monitor: "stats",
+  resume: "resume", cv: "resume",
 };
+
+const HELP_TEXT = "commands: home · blog · stats · resume · github · contact · theme · lang";
 
 function runCommand() {
   const raw = cmdInput.value.trim().toLowerCase();
   cmdInput.value = "";
   if (!raw) return;
 
-  if (raw === "help") {
-    cmdError.value = "commands: home · blog · stats";
-  } else if (COMMANDS[raw]) {
-    goTo(COMMANDS[raw]);
+  const [cmd] = raw.split(/\s+/);
+
+  if (cmd === "help") {
+    cmdError.value = HELP_TEXT;
+  } else if (COMMANDS[cmd]) {
+    goTo(COMMANDS[cmd]);
+    return;
+  } else if (cmd === "github" || cmd === "gh") {
+    window.open("https://github.com/BcKmini", "_blank", "noopener");
+    return;
+  } else if (cmd === "contact" || cmd === "mail") {
+    window.location.href = "mailto:akkn920@naver.com";
+    return;
+  } else if (cmd === "theme" || cmd === "dark" || cmd === "light") {
+    toggle();
+    cmdError.value = `theme: ${isDark.value ? "dark" : "light"}`;
+  } else if (cmd === "lang" || cmd === "en" || cmd === "ko") {
+    toggleLocale();
+    cmdError.value = `lang: ${locale.value}`;
+  } else if (cmd === "date") {
+    cmdError.value = new Date().toLocaleString(locale.value === "en" ? "en-US" : "ko-KR");
+  } else if (cmd === "sudo") {
+    cmdError.value = "permission denied: nice try";
+  } else if (cmd === "clear" || cmd === "cls") {
     return;
   } else {
-    cmdError.value = `command not found: ${raw}`;
+    cmdError.value = `command not found: ${cmd}`;
   }
 
   clearTimeout(errorTimer);
   errorTimer = setTimeout(() => (cmdError.value = ""), 2200);
 }
+
+function onGlobalKeydown(e) {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+    e.preventDefault();
+    cmdInputEl.value?.focus();
+  }
+}
+
+onMounted(() => window.addEventListener("keydown", onGlobalKeydown));
+onUnmounted(() => window.removeEventListener("keydown", onGlobalKeydown));
 </script>
 
 <template>
@@ -92,10 +126,11 @@ function runCommand() {
       <form class="cmd-form" @submit.prevent="runCommand">
         <span class="cmd-prompt">$</span>
         <input
+          ref="cmdInputEl"
           v-model="cmdInput"
           class="cmd-input"
           type="text"
-          placeholder="type a command…"
+          placeholder="type a command… (⌘K)"
           autocomplete="off"
           spellcheck="false"
         />

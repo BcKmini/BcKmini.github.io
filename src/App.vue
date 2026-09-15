@@ -11,6 +11,7 @@ import AppFooter from "./components/AppFooter.vue";
 import HomeView from "./components/HomeView.vue";
 import BlogView from "./components/BlogView.vue";
 import StatsView from "./components/StatsView.vue";
+import ResumeView from "./components/ResumeView.vue";
 
 const { tab, initPopstate } = useTab();
 const { init: initTheme } = useTheme();
@@ -33,6 +34,7 @@ onMounted(() => recordVisit());
     <Transition name="fade-slide" mode="out-in">
       <HomeView v-if="tab === 'home'" key="home" />
       <BlogView v-else-if="tab === 'blog'" key="blog" />
+      <ResumeView v-else-if="tab === 'resume'" key="resume" />
       <StatsView v-else key="stats" />
     </Transition>
   </main>

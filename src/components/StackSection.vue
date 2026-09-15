@@ -3,8 +3,10 @@ import { computed } from "vue";
 import { categories, stack, stackNotes } from "../data/stack";
 import { vReveal } from "../composables/useReveal";
 import { useLocale } from "../composables/useLocale";
+import { useTheme } from "../composables/useTheme";
 
 const { t } = useLocale();
+const { isDark } = useTheme();
 
 const groups = computed(() =>
   categories.map((c) => ({
@@ -13,6 +15,9 @@ const groups = computed(() =>
     notes: stackNotes.filter((n) => n.cat === c.key),
   }))
 );
+
+const chartColor = computed(() => (isDark.value ? "fb7185" : "e11d48"));
+const chartSrc = computed(() => `https://ghchart.rshah.org/${chartColor.value}/BcKmini`);
 
 function onError(e) {
   e.target.style.display = "none";
@@ -42,6 +47,13 @@ function onError(e) {
           <div v-if="g.notes.length" class="skill-notes stack-notes">
             <p v-for="n in g.notes" :key="n.label"><b>{{ n.label }}</b> {{ t(n.text, n.text_en) }}</p>
           </div>
+        </div>
+
+        <div class="stack-group">
+          <p class="stack-group-label"><span class="stack-group-branch">./</span>github/activity.svg</p>
+          <a class="stack-github-chart" href="https://github.com/BcKmini" target="_blank" rel="noopener">
+            <img :src="chartSrc" :alt="t('GitHub 커밋 활동 그래프', 'GitHub commit activity graph')" loading="lazy" />
+          </a>
         </div>
       </div>
     </div>
