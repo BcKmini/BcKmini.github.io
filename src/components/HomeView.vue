@@ -1,4 +1,5 @@
 <script setup>
+import { onMounted, onUnmounted } from "vue";
 import HeroSection from "./HeroSection.vue";
 import StackSection from "./StackSection.vue";
 import ProjectsSection from "./ProjectsSection.vue";
@@ -6,6 +7,12 @@ import ExperienceSection from "./ExperienceSection.vue";
 import AwardsSection from "./AwardsSection.vue";
 import CertificatesSection from "./CertificatesSection.vue";
 import ActivitiesSection from "./ActivitiesSection.vue";
+import SectionDots from "./SectionDots.vue";
+import { useSectionNav } from "../composables/useSectionNav";
+
+const { init, teardown } = useSectionNav();
+onMounted(init);
+onUnmounted(teardown);
 </script>
 
 <template>
@@ -17,5 +24,6 @@ import ActivitiesSection from "./ActivitiesSection.vue";
     <AwardsSection />
     <CertificatesSection />
     <ActivitiesSection />
+    <SectionDots />
   </section>
 </template>

@@ -50,12 +50,12 @@ body {
 
 a { color: inherit; text-decoration: none; }
 
-.eyebrow, .row-date, .proj-num, .proj-card-meta, .tag, .logo,
-.blog-date, .m-num, .m-meta, .sec span, .stack-filters, .blog-filters {
+.eyebrow, .proj-num, .proj-card-meta, .tag, .logo,
+.blog-date, .m-num, .m-meta, .sec span, .blog-filters, .stack-group-label {
   font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
-.container { max-width: 860px; margin: 0 auto; padding: 0 clamp(18px, 4vw, 24px); }
+.container { max-width: min(1140px, 92vw); margin: 0 auto; padding: 0 clamp(18px, 4vw, 24px); }
 
 /* ============ 터미널 윈도우 공용 크롬 ============ */
 .term-window {
@@ -344,17 +344,8 @@ main.container { padding: clamp(48px, 8vw, 84px) auto clamp(64px, 11vw, 110px); 
 
 .tab-panel { padding: clamp(48px, 8vw, 84px) 0 clamp(64px, 11vw, 110px); }
 
-/* ============ fullpage 스타일 스냅 스크롤 ============ */
-/* 데스크톱에서만 스냅 적용 — 모바일은 콘텐츠가 훨씬 길어 자연 스크롤이 더 매끄럽다 */
-@media (min-width: 901px) {
-  html.snap-home { scroll-snap-type: y proximity; }
-}
-
-/* 커스텀 easing 스크롤 중에는 네이티브 스냅 엔진이 도착 지점을 재보정하며
-   튀는 현상이 생기므로 애니메이션 동안 잠시 꺼둔다 */
-html.snap-suspend { scroll-snap-type: none !important; }
-
-[data-snap-section] { scroll-snap-align: start; scroll-margin-top: 62px; }
+/* 섹션 점프(스크롤 커서 클릭, 사이드 도트 클릭) 시 고정 헤더에 가리지 않도록 여백만 확보 */
+[data-snap-section] { scroll-margin-top: 62px; }
 
 .section-dots {
   position: fixed;
@@ -416,7 +407,7 @@ html.snap-suspend { scroll-snap-type: none !important; }
   align-items: center;
   justify-content: space-between;
   gap: 48px;
-  min-height: calc(100dvh - 62px);
+  min-height: min(calc(100dvh - 62px), 840px);
 }
 
 .reveal-line {
@@ -545,6 +536,7 @@ html.snap-suspend { scroll-snap-type: none !important; }
 .tout strong { color: var(--text); font-weight: 700; }
 .tout em { font-style: normal; color: var(--accent); font-weight: 600; }
 .tout-desc { max-width: 58ch; }
+.tout-role { max-width: 58ch; color: var(--text); font-weight: 600; }
 
 .tcursor {
   display: inline-block;
@@ -611,11 +603,18 @@ html.snap-suspend { scroll-snap-type: none !important; }
 
 .avatar-term {
   position: absolute;
-  top: -9px;
+  top: -11px;
   left: 14px;
   display: flex;
-  gap: 4px;
+  align-items: center;
+  gap: 6px;
   z-index: 1;
+  padding: 4px 10px 4px 8px;
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(6px);
 }
 .avatar-term .term-dot {
   min-width: 8px;
@@ -626,6 +625,7 @@ html.snap-suspend { scroll-snap-type: none !important; }
   background: color-mix(in srgb, var(--muted) 40%, transparent);
 }
 .avatar-term .term-dot-amber { margin-left: 0; }
+.avatar-term .term-bar-title { font-size: 0.66rem; margin-left: 2px; }
 
 .avatar {
   width: clamp(150px, 24vw, 230px);
@@ -671,8 +671,8 @@ html.snap-suspend { scroll-snap-type: none !important; }
 .chips { list-style: none; display: flex; flex-wrap: wrap; gap: 7px; }
 .chips li { font-size: 0.78rem; font-weight: 500; padding: 3px 12px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
 
-/* ============ 세그먼트 필터 칩 (스택/블로그 공용) ============ */
-.stack-filters, .blog-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+/* ============ 세그먼트 필터 칩 (블로그) ============ */
+.blog-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
 
 .blog-toolbar {
   display: flex;
@@ -704,12 +704,30 @@ html.snap-suspend { scroll-snap-type: none !important; }
 .filter-chip.active { color: #fff; background: var(--accent); border-color: var(--accent); }
 [data-theme="dark"] .filter-chip.active { color: #0c0a09; }
 
-/* ============ 기술 스택 패널 ============ */
+/* ============ 기술 스택 패널 — 카테고리별 트리 구조 ============ */
 .stack-panel-body { padding: 22px 24px 26px; }
 
-.stack-grid-all { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); gap: 4px; }
+.stack-group + .stack-group { margin-top: 22px; padding-top: 20px; border-top: 1px dashed var(--border); }
 
-.tech[hidden] { display: none; }
+.stack-group-label {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+.stack-group-branch { color: var(--accent); }
+.stack-group-count {
+  margin-left: auto;
+  font-weight: 500;
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+.stack-group-count::before { content: "×"; margin-right: 1px; }
+
+.stack-grid-all { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); gap: 4px; }
 
 .tech {
   display: flex;
@@ -1005,16 +1023,7 @@ html.snap-suspend { scroll-snap-type: none !important; }
 [data-theme="dark"] .m-link { color: #0c0a09; }
 .m-link:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
 
-.row-body code {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 0.82em;
-  color: var(--text);
-  background: var(--accent-soft);
-  padding: 1px 6px;
-  border-radius: 5px;
-}
-
-/* ============ 경험 — git log 그래프 ============ */
+/* ============ 경험 · 수상 · 자격증 · 교육·활동 — git log 그래프 (커밋처럼 이어지는 타임라인으로 통일) ============ */
 .git-log { list-style: none; padding: 8px 22px 18px; }
 
 .git-row { display: flex; gap: 16px; }
@@ -1105,25 +1114,8 @@ html.snap-suspend { scroll-snap-type: none !important; }
   .git-meta { flex-wrap: wrap; gap: 6px; }
 }
 
-/* ============ 공통 행 리스트 ============ */
-.rows { list-style: none; }
-.row { display: flex; gap: 28px; padding: 20px 0; border-top: 1px solid var(--border); }
-.row-live { margin: 0 -22px; padding: 20px 22px; border-top-color: transparent; background: linear-gradient(90deg, color-mix(in srgb, #22c55e 9%, transparent), transparent 70%); border-radius: 10px; }
-[data-theme="dark"] .row-live { background: linear-gradient(90deg, color-mix(in srgb, #4ade80 12%, transparent), transparent 70%); }
-
-.rows-in-term { padding: 4px 22px 14px; }
-.rows-in-term .row:first-child { border-top: none; }
-.rows-in-term .row:last-child { border-bottom: none; }
-
-.row:last-child { border-bottom: 1px solid var(--border); }
-.row-date { flex-shrink: 0; width: 150px; display: flex; align-items: center; gap: 8px; font-size: 0.78rem; color: var(--muted); padding-top: 3px; }
-.row-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
-.row-dot.live { width: 12px; height: 12px; margin-left: -1px; background: #22c55e; box-shadow: 0 0 0 4px color-mix(in srgb, #22c55e 22%, transparent), 0 0 14px 2px color-mix(in srgb, #22c55e 55%, transparent); }
-[data-theme="dark"] .row-dot.live { background: #4ade80; box-shadow: 0 0 0 4px color-mix(in srgb, #4ade80 25%, transparent), 0 0 14px 2px color-mix(in srgb, #4ade80 60%, transparent); }
-.row-body h3 { font-size: 0.98rem; font-weight: 600; display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
-.row-body h3 a:hover { color: var(--accent); }
-.row-body p { font-size: 0.88rem; color: var(--muted); margin-top: 2px; }
-.row-body .row-host { font-size: 0.78rem; color: var(--accent); margin-top: 4px; }
+.git-content h3 a:hover { color: var(--accent); }
+.git-content .row-host { font-size: 0.78rem; color: var(--accent); margin-top: 4px; }
 
 .tag { font-size: 0.7rem; font-weight: 500; font-style: normal; padding: 1px 10px; border-radius: 999px; }
 .tag-accent { color: var(--accent); background: var(--accent-soft); }
@@ -1240,8 +1232,6 @@ html.snap-suspend { scroll-snap-type: none !important; }
 @media (max-width: 760px) {
   .hero { flex-direction: column-reverse; align-items: flex-start; gap: 28px; }
   .proj-grid, .blog-grid { grid-template-columns: 1fr; }
-  .row { flex-direction: column; gap: 6px; }
-  .row-date { width: auto; }
   .modal-overlay { padding: 0; align-items: flex-end; }
   .modal { max-width: 100%; max-height: 92dvh; border-radius: 22px 22px 0 0; }
   .modal .term-bar { border-radius: 22px 22px 0 0; }
@@ -1264,7 +1254,12 @@ html.snap-suspend { scroll-snap-type: none !important; }
 
 /* ============ 모션 최소화 ============ */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  /* animation-duration만 0에 가깝게 죽인다. transition-duration까지 같이 죽이면
+     Vue <Transition>이 기다리는 transitionend가 0-duration 전환에서는 발생하지
+     않아(브라우저 공통 이슈), 탭 전환 시 새 뷰가 영원히 opacity:0로 멈추는
+     버그가 생긴다 (~/stats 등으로 전환 시 재현됨). 장식용 반복 애니메이션만
+     끄고, 뷰 전환처럼 기능적으로 필요한 transition은 살려둔다. */
+  *, *::before, *::after { animation-duration: 0.01ms !important; }
   html { scroll-behavior: auto; }
   .section { opacity: 1; transform: none; }
   .blob { animation: none; }

@@ -16,10 +16,14 @@ const { t } = useLocale();
         <span class="term-dot term-dot-green"></span>
         <span class="term-bar-title">cat activities.log</span>
       </div>
-      <ul class="rows rows-in-term">
-        <li v-for="a in activities" :key="a.title" class="row">
-          <span class="row-date">{{ a.date }}</span>
-          <div class="row-body">
+      <ul class="git-log">
+        <li v-for="a in activities" :key="a.title" class="git-row">
+          <div class="git-graph">
+            <span class="git-dot"></span>
+            <span class="git-line"></span>
+          </div>
+          <div class="git-content">
+            <p class="git-meta"><span class="git-date">{{ a.date }}</span></p>
             <h3>
               <a v-if="a.link" :href="a.link" target="_blank" rel="noopener">{{ t(a.title, a.title_en) }} ↗</a>
               <template v-else>{{ t(a.title, a.title_en) }}</template>

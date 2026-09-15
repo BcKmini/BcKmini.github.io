@@ -16,10 +16,14 @@ const { t } = useLocale();
         <span class="term-dot term-dot-green"></span>
         <span class="term-bar-title">cert --list --verified</span>
       </div>
-      <ul class="rows rows-in-term">
-        <li v-for="c in certificates" :key="c.title" class="row">
-          <span class="row-date">{{ c.date }}</span>
-          <div class="row-body">
+      <ul class="git-log">
+        <li v-for="c in certificates" :key="c.title" class="git-row">
+          <div class="git-graph">
+            <span class="git-dot"></span>
+            <span class="git-line"></span>
+          </div>
+          <div class="git-content">
+            <p class="git-meta"><span class="git-date">{{ c.date }}</span></p>
             <h3>{{ t(c.title, c.title_en) }}</h3>
             <p>{{ t(c.host, c.host_en) }}</p>
           </div>

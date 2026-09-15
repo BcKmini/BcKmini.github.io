@@ -64,6 +64,10 @@ function onLeave(e) {
         <div class="hero-term-body">
           <p class="tline"><span class="tprompt">$</span> whoami</p>
           <p class="tout">{{ t("김경민 (KYOUNGMIN KIM)", "Kyoungmin Kim") }}</p>
+          <p class="tline"><span class="tprompt">$</span> cat role.txt</p>
+          <p class="tout tout-role">
+            {{ t("AI Native 환경을 구현하는 Cloud Platform Engineer 지향", "Aspiring Cloud Platform Engineer building AI-native environments") }}
+          </p>
           <p class="tline"><span class="tprompt">$</span> cat about.txt</p>
           <p class="tout tout-desc">
             {{ t("방문해주셔서 감사합니다 🙂", "Thanks for stopping by 🙂") }}
@@ -102,6 +106,7 @@ function onLeave(e) {
         <span class="term-dot term-dot-red"></span>
         <span class="term-dot term-dot-amber"></span>
         <span class="term-dot term-dot-green"></span>
+        <span class="term-bar-title">photo.jpg</span>
       </div>
       <img class="avatar" :src="avatar" :alt="t('김경민 프로필 사진', 'Kyoungmin Kim profile photo')" />
     </div>
