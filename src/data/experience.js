@@ -7,6 +7,7 @@ export const experience = [
     title_en: "Open Source Contribution Academy · Mentee",
     type: "참여형",
     type_en: "Participant",
+    link: "https://github.com/kubernetes/website/pulls?q=is%3Apr+involves%3ABcKmini",
     desc: "Kubernetes SIG Docs 한글화팀 멘티로 kubernetes/website에 이슈 8건·PR 9건(8건 merge)을 올리고 동료 PR 19건을 리뷰했습니다. kubeadm 클러스터링·인증인가·기초 튜토리얼 문서를 한글화했고, 꾸준한 기여로 Kubernetes Org 멤버가 되었습니다. 또한 AWS EC2에 Terraform으로 OpenStack-Helm과 Kubernetes를 함께 배포하는 실습을 진행하고, Octavia 로드밸런싱 개념 문서를 직접 작성해 기여했습니다.",
     desc_en:
       "Mentee on the Kubernetes SIG Docs Korean localization team — filed 8 issues and opened 9 PRs (8 merged) on kubernetes/website, and reviewed 19 peer PRs. Localized docs on kubeadm clustering, auth/authz, and core tutorials, and became a Kubernetes Org member through sustained contribution. Also ran a hands-on lab deploying OpenStack-Helm alongside Kubernetes on AWS EC2 via Terraform, and contributed documentation on Octavia load balancing concepts.",
