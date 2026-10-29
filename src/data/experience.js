@@ -7,9 +7,9 @@ export const experience = [
     title_en: "Open Source Contribution Academy · Mentee",
     type: "참여형",
     type_en: "Participant",
-    desc: "OpenStack·Kubernetes 문서 로컬라이제이션(L10n) 프로젝트 멘티로 참여, i18n Tracker로 outdated 영문 문서를 발굴해 한글화 번역 PR을 작성하고 SIG-Docs 팀 리뷰를 진행 중",
+    desc: "Kubernetes SIG Docs 한글화팀 멘티로 kubernetes/website에 이슈 8건·PR 9건(8건 merge)을 올리고 동료 PR 19건을 리뷰했습니다. kubeadm 클러스터링·인증인가·기초 튜토리얼 문서를 한글화했고, 꾸준한 기여로 Kubernetes Org 멤버가 되었습니다.",
     desc_en:
-      "Mentee on an OpenStack/Kubernetes documentation localization (L10n) project — using the i18n Tracker to find outdated English docs, writing Korean-translation PRs, and going through SIG-Docs team review",
+      "Mentee on the Kubernetes SIG Docs Korean localization team — filed 8 issues and opened 9 PRs (8 merged) on kubernetes/website, and reviewed 19 peer PRs. Localized docs on kubeadm clustering, auth/authz, and core tutorials, and became a Kubernetes Org member through sustained contribution.",
   },
   {
     start: "2026-03",
